@@ -1,0 +1,1036 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Fetching Data</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="be5d385b-9bfa-4fe4-bad2-2f744f317aaf" class="page sans"><header><h1 class="page-title">Fetching Data</h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-created_time"><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesCreatedAt"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM4.54102 8.91211H7.99316C8.30078 8.91211 8.54004 8.67285 8.54004 8.37207V3.8877C8.54004 3.58691 8.30078 3.34766 7.99316 3.34766C7.69238 3.34766 7.45312 3.58691 7.45312 3.8877V7.83203H4.54102C4.2334 7.83203 4.00098 8.06445 4.00098 8.37207C4.00098 8.67285 4.2334 8.91211 4.54102 8.91211Z"></path></svg></span>Created</th><td><time>@December 8, 2023 6:58 PM</time></td></tr><tr class="property-row property-row-checkbox"><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesCheckbox"><path d="M3.85742 14.4561H12.1357C13.6123 14.4561 14.3779 13.6904 14.3779 12.2344V3.91504C14.3779 2.45215 13.6123 1.69336 12.1357 1.69336H3.85742C2.38086 1.69336 1.61523 2.45215 1.61523 3.91504V12.2344C1.61523 13.6973 2.38086 14.4561 3.85742 14.4561ZM3.93945 13.1162C3.30371 13.1162 2.95508 12.7812 2.95508 12.1182V4.02441C2.95508 3.36133 3.30371 3.0332 3.93945 3.0332H12.0537C12.6826 3.0332 13.0381 3.36133 13.0381 4.02441V12.1182C13.0381 12.7812 12.6826 13.1162 12.0537 13.1162H3.93945ZM7.26855 11.3115C7.51465 11.3115 7.72656 11.1885 7.87012 10.9697L10.9258 6.19141C11.0146 6.04785 11.0967 5.88379 11.0967 5.72656C11.0967 5.3916 10.7959 5.16602 10.4746 5.16602C10.2695 5.16602 10.085 5.27539 9.94141 5.50781L7.24121 9.8418L5.96973 8.22168C5.80566 8.00977 5.6416 7.93457 5.43652 7.93457C5.10156 7.93457 4.8418 8.20117 4.8418 8.54297C4.8418 8.70703 4.90332 8.85742 5.01953 9.00098L6.63281 10.9697C6.81738 11.209 7.01562 11.3115 7.26855 11.3115Z"></path></svg></span>Reviewed</th><td><div class="checkbox checkbox-off"></div></td></tr></tbody></table></header><div class="page-body"><ul id="fa8e84ee-e961-4ed1-b2a1-f95affb2f692" class="toggle"><li><details open=""><summary><strong>Índice</strong></summary><nav id="02072843-1691-430e-83d7-607bf6210b10" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ca9a9d79-873c-4cfe-ad86-cda359adf075"><mark class="highlight-teal">Fetching Data from APIs</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0e962a67-eac3-4c31-a52e-d64ebbf72f82"><mark class="highlight-gray">GET Method</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#867b4c58-5b8d-4657-b251-383997da93cc"><mark class="highlight-teal_background">Characteristics</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#92e58d0e-ef0c-4010-9fbf-1e17237f1280"><mark class="highlight-teal_background">Typical Use Cases</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#4737cf6b-1c28-49b7-963f-01a9b26e0eab"><mark class="highlight-teal_background">Example</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#cc27faea-fe46-41b1-9951-f06f757c1c08"><mark class="highlight-gray">POST Method</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#86b7c140-023d-4486-bc09-20b9cc870193"><mark class="highlight-teal_background"><strong>Characteristics</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3c5d8614-3ae4-4f93-ac6f-4446d0fe55b1"><mark class="highlight-teal_background"><strong>Typical Use Cases</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#75f19b15-99f3-427b-8a75-a17de53b73b6"><mark class="highlight-teal_background"><strong>Example</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4a9efd0d-8419-426d-bb73-6832017db55b"><mark class="highlight-gray">PUT Method</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#dd84e5a1-fa60-44ac-b7cd-9fb908b3a199"><mark class="highlight-teal_background"><strong>Characteristics</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#58dc5482-5939-4f4a-af10-29614f5a1053"><mark class="highlight-teal_background"><strong>Typical Use Cases</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#b132ac3b-4ea0-4bd5-b1fc-9053a0c52d90"><mark class="highlight-teal_background"><strong>Example</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#988f40df-2615-4cb5-b143-facd25f9e90f"><mark class="highlight-gray">DELETE Method</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c1dfc524-4a66-4ca2-9d96-c750085b3784"><mark class="highlight-teal_background"><strong>Characteristics</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#152166f2-c1fd-4005-9534-c28722820e33"><mark class="highlight-teal_background"><strong>Typical Use Cases</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#b5286fca-9f88-472f-b1fb-88537b384ebe"><mark class="highlight-teal_background"><strong>Example</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6d37e7ab-1004-490b-9df0-a7c64e4eb0dd"><mark class="highlight-gray">PATCH Method</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1494e8b5-3934-4141-84e6-ce2160ce0f8f"><mark class="highlight-teal_background"><strong>Characteristics</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#32185bb5-3ab1-4ce9-accc-cf896363fac3"><mark class="highlight-teal_background"><strong>Typical Use Case</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#db33c42d-8831-4d52-b6cf-aa50f167766d"><mark class="highlight-teal_background"><strong>Example</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9592d6e5-7d14-4cd8-8ea3-da8c4f5e010b"><mark class="highlight-gray">HEAD Method</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#08614cbe-6e53-41de-ae6c-7cb70bbf299c"><mark class="highlight-teal_background"><strong>Characteristics</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#6df63b61-8d0b-4b44-9edf-4353285c1afd"><mark class="highlight-teal_background"><strong>Typical Use Cases</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c72080e8-fe43-41ea-a8c8-07654c2e7701"><mark class="highlight-teal_background"><strong>Example</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4a3fe40f-e237-47b8-a9b9-52f004be17f7"><mark class="highlight-gray">Axios in Vue.js</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a75ed7d3-9ad9-4938-a9b1-8ff66d8f3e49"><mark class="highlight-gray">REST (Representational State Transfer)</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#23f13f45-89e7-400f-83b3-9bdcde62f96a"><mark class="highlight-gray"><strong>HTTP Status Codes</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0326bbc6-0ff1-4907-8b5a-8b7a9cd72de3"><mark class="highlight-gray"><strong>HATEOAS (Hypermedia As The Engine Of Application State)</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ebd26ba5-b62b-4be9-b574-d7c56702a39b"><mark class="highlight-gray"><strong>Security Considerations</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c4aabf3c-e249-4d5b-af1b-3cdfe74112f3"><mark class="highlight-teal">Generic API Utility Functions</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#34e2e81d-e60e-430c-8812-348bab69ec86"><mark class="highlight-gray"><strong>Common Operations</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#03c43f09-6c82-47a3-8d7a-49b32577a708"><mark class="highlight-gray"><strong>Error Handling</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a386aea7-e9fd-47f6-81ea-e3126e920fb0"><mark class="highlight-gray"><strong>Configuration</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b109054a-ee5b-41ea-996a-c12db6e4c9ae"><mark class="highlight-gray"><strong>Example Code Explanation</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#d3ab7e95-bcf2-41e5-8bbc-1ed5f76a4dfd"><mark class="highlight-teal_background">GET Utility Function</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#696700b3-5d8b-4d73-9702-e225095e8da9"><mark class="highlight-teal_background">POST Utility Function</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#9657b85d-6f42-45b1-83ec-8b9478b351f2"><mark class="highlight-teal_background">Handling Responses</mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d3db61af-6ad2-4b74-b408-d5932b72e09b"><mark class="highlight-teal">Using Pinia Actions in Components</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f12763c2-ebab-499a-8d86-c8b2fd361d7b"><mark class="highlight-gray"><strong>Integrating API Utility Functions in Pinia Actions</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2aad676d-6a1d-4444-be6c-3da72511543f"><mark class="highlight-gray"><strong>Error Handling in Components</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#282dbd97-e907-456f-a09e-721dffdab078">Important Concepts</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#208a83ba-3ec8-4340-b5f4-bdbd2b25133b">Key Takeaways</a></div></nav></details></li></ul><h1 id="ca9a9d79-873c-4cfe-ad86-cda359adf075" class=""><mark class="highlight-teal">Fetching Data from APIs</mark></h1><p id="2d8841f7-e73c-4466-a1a3-b7510afbd09f" class="">When we talk about fetching data from APIs, we’re referring to the process of making HTTP requests to specific endpoints provided by a server. </p><figure id="3fc628d6-ce1a-4fdf-925c-14e90a84ca77" class="image"><a href="Fetching%20Data%20be5d385b9bfa4fe4bad22f744f317aaf/Captura_de_ecr_2023-12-08_120446.png"><img style="width:458px" src="Fetching%20Data%20be5d385b9bfa4fe4bad22f744f317aaf/Captura_de_ecr_2023-12-08_120446.png"/></a></figure><p id="25e8ff6d-9214-4888-ad71-eb72deea66b7" class="">The client initiates a request through HTTP, utilizing methods like GET, POST, DELETE, or PUT. These correspond to the CRUD operations:</p><h2 id="0e962a67-eac3-4c31-a52e-d64ebbf72f82" class=""><mark class="highlight-gray">GET Method</mark></h2><p id="9e30f5ad-0800-4f4f-930a-279b3c6ec53a" class="">The GET method is used to retrieve information from the given server using a given URI. Requests using GET should only retrieve data and should have no other effect on the data.</p><h3 id="867b4c58-5b8d-4657-b251-383997da93cc" class=""><mark class="highlight-teal_background">Characteristics</mark></h3><ul id="094344d9-c02f-4bec-bb2f-0bfe7865be5f" class="bulleted-list"><li style="list-style-type:disc"><strong>Safe</strong>: They should only retrieve data and should not change the data on the server.</li></ul><ul id="3e0dbc3c-d5cd-4b97-ad43-cedc75f21d4a" class="bulleted-list"><li style="list-style-type:disc">Idempotent: This means that making multiple identical requests has the same effect as making a single request.</li></ul><ul id="7b93f298-5c72-4204-b3c3-75d0f2097b5f" class="bulleted-list"><li style="list-style-type:disc">Cacheable: GET requests can be cached and stored for later use, which is efficient for the network.</li></ul><ul id="4dc60c94-6206-4e3c-9511-1f27732d9ea1" class="bulleted-list"><li style="list-style-type:disc">No Data Body: GET requests should not have a request body, so all the data is sent in the URI.</li></ul><h3 id="92e58d0e-ef0c-4010-9fbf-1e17237f1280" class=""><mark class="highlight-teal_background">Typical Use Cases</mark></h3><ul id="29a24f0d-9820-46b6-bec0-91d44b9a8854" class="bulleted-list"><li style="list-style-type:disc">Retrieving a webpage or other resources.</li></ul><ul id="b16da3c3-b0e5-4fc4-9b1a-fb854d4bb1c3" class="bulleted-list"><li style="list-style-type:disc">Querying a database for specific information.</li></ul><h3 id="4737cf6b-1c28-49b7-963f-01a9b26e0eab" class=""><mark class="highlight-teal_background">Example</mark></h3><p id="47a9cf48-ca56-4dff-8017-9b122c5e9855" class="">Imagine we have an API for a library system, and we want to fetch a list of books. Our GET request might look like this:</p><pre id="bf09f8fe-e907-4c04-b5c0-6981b67742a7" class="code"><code>GET /api/books</code></pre><p id="7337aca7-b803-4f0b-aaf1-153937d0f57d" class="">And if we’re looking for a specific book by ID, we might use a request like:</p><pre id="290798b8-0c1c-4d1b-98e4-02b8fc6e58cf" class="code code-wrap"><code>GET /api/books/123</code></pre><p id="10eb97ef-83d3-47b5-beaa-922fce940a7c" class="">If we need to filter the books by a category, for instance, we could use a query parameter:</p><pre id="9721ac57-9980-4cec-a46b-6e5e4db118c3" class="code code-wrap"><code>GET /api/books?category=Novel</code></pre><p id="5fd1859d-94ed-4612-aea5-f8c5016ea82c" class="">When the server receives this request, it will process it and return a response. The response typically has a status code, headers, and a body. For example:</p><pre id="10b698b9-5ec5-4f88-a43a-47ee41047662" class="code"><code>HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: ...
+
+[
+    {
+        &quot;id&quot;: 123,
+        &quot;title&quot;: &quot;The Great Gatsby&quot;,
+        &quot;author&quot;: &quot;F. Scott Fitzgerald&quot;
+    },
+    ...
+]</code></pre><ul id="1aa6c6ed-b664-4e0b-a074-4b6233dd36a0" class="toggle"><li><details open=""><summary><strong>Content-Length header in HTTP requests</strong></summary><p id="8b0469e2-4118-46c4-8f36-69bea1c71c04" class="">The <code><strong>Content-Length</strong></code> header in HTTP requests is used to indicate the size of the body data that is being sent to the server. This header is not always necessary in every type of HTTP request. Here&#x27;s when and why you might include it:</p><ul id="4112b3f8-475d-48b7-a253-4bcb9e605fb4" class="bulleted-list"><li style="list-style-type:disc"><strong>GET request</strong>: The <code>Content-Length</code> would be present in the response, not the request. It informs the client about the size of the response body.</li></ul><ul id="cf88a2ef-73df-46e3-b283-b0d76cb6b57d" class="bulleted-list"><li style="list-style-type:disc"><strong>POST and PUT Requests: </strong>These requests often include a body. The <code>Content-Length</code> header is important here because it tells the server how much data it needs to read from the incoming stream. This helps the server to properly receive and parse the request body.</li></ul><ul id="5293af0a-abcb-4612-bccd-825dcf5247b1" class="bulleted-list"><li style="list-style-type:disc"><strong>DELETE Requests:</strong>
+Typically, DELETE requests do not contain a body as they are used to remove a resource identified by the URI. Therefore, the <code>Content-Length</code> header is generally not required or included.</li></ul><ul id="0ef7c66e-51de-465e-b481-2380e2e4a010" class="bulleted-list"><li style="list-style-type:disc"><strong>PATCH Requests: </strong>Similar to POST and PUT, PATCH requests usually include a body containing the changes to be applied to the resource. The <code>Content-Length</code> header is useful for indicating the size of this body.</li></ul><ul id="7df3fabd-0ddb-477b-ad5f-65076f493762" class="bulleted-list"><li style="list-style-type:disc"><strong>HEAD Requests: </strong>HEAD requests do not have a body; they are used to retrieve the headers for a specific resource. As such, the <code>Content-Length</code> header is not included in the request, although it may be present in the response to indicate the size of the body if the request had been a GET instead of HEAD.</li></ul><p id="d850b982-c916-4302-bbe9-342b3a4dd45f" class="">In practice, when making HTTP requests using tools like <code>fetch</code> or Axios in JavaScript,<span style="border-bottom:0.05em solid"> the </span><span style="border-bottom:0.05em solid"><code>Content-Length</code></span><span style="border-bottom:0.05em solid"> header is often set</span> <span style="border-bottom:0.05em solid">automatically based on the size of the request body provided</span>. We typically don&#x27;t need to set this header manually unless we have a specific reason to do so.</p><p id="53ff1075-46d2-4422-b95c-99fe189f71ae" class="">Here&#x27;s how our example requests would look if we were to include the <code>Content-Length</code> header:</p><pre id="83ef1f3d-1871-4efb-91cf-d0b8871d9409" class="code"><code>POST /api/books
+Content-Type: application/json
+Content-Length: 74
+
+{
+    &quot;title&quot;: &quot;1984&quot;,
+    &quot;author&quot;: &quot;George Orwell&quot;,
+    &quot;year&quot;: 1949
+}
+
+PUT /api/users/123
+Content-Type: application/json
+Content-Length: 70
+
+{
+    &quot;name&quot;: &quot;Updated Name&quot;,
+    &quot;email&quot;: &quot;updated@example.com&quot;
+}
+
+DELETE /api/users/123
+// No Content-Length header as no body is sent.
+
+PATCH /api/users/123
+Content-Type: application/json
+Content-Length: 45
+
+{
+    &quot;email&quot;: &quot;newemail@example.com&quot;
+}
+
+HEAD /api/users/123
+// No Content-Length header as no body is sent.</code></pre></details></li></ul><p id="a0e0c0b5-93ba-4da4-ab21-e2b6962e6336" class="">The <code>200 OK</code> status code indicates that the request was successful, and the JSON array is the body of the response, containing the list of books or the details of a single book.</p><p id="50dfc85c-c2f7-438b-92ae-37a882894425" class="">In our Vue.js application, we could use this GET request to populate a list of books or display the details of a single book. Here&#x27;s a simplified example using the Fetch API:</p><pre id="bd038a7d-2c1a-4019-a635-acd7843b977b" class="code code-wrap"><code>const fetchBooks = async () =&gt; {
+  try {
+    const response = await fetch(&#x27;/api/books&#x27;);
+    if (!response.ok) {
+      throw new Error(&#x27;Network response was not ok&#x27;);
+    }
+    const books = await response.json();
+    console.log(books);
+  } catch (error) {
+    console.error(&#x27;There has been a problem with your fetch operation:&#x27;, error);
+  }
+};
+
+fetchBooks();
+
+</code></pre><p id="256708e0-b67e-49a5-b184-10fe7c98313a" class="">In the <code>fetchBooks</code> function, we send a GET request to the server, and if successful, we print the list of books to the console.</p><h2 id="cc27faea-fe46-41b1-9951-f06f757c1c08" class=""><mark class="highlight-gray">POST Method</mark></h2><p id="78fc8ac5-2101-41a0-b3d4-8986c459e927" class="">The POST method is used to submit data to be processed to a specified resource. Unlike GET requests, POST requests are not safe or idempotent, which means they can create changes on the server and the same request can have different results.</p><h3 id="86b7c140-023d-4486-bc09-20b9cc870193" class=""><mark class="highlight-teal_background"><strong>Characteristics</strong></mark></h3><ul id="e30641ac-272a-4f44-b1b7-b58d2f2eb014" class="bulleted-list"><li style="list-style-type:disc"><strong>Not Safe</strong>: They are intended to change the server state.</li></ul><ul id="d240fd28-eacb-464e-8a43-f0359d1580e4" class="bulleted-list"><li style="list-style-type:disc"><strong>Not Idempotent</strong>: Multiple identical requests may have different effects, such as submitting a form multiple times.</li></ul><ul id="dc10948e-bec9-467a-aa3a-e16e0de85c24" class="bulleted-list"><li style="list-style-type:disc"><strong>Data Body</strong>: POST requests typically include data in the request body rather than in the URI.</li></ul><h3 id="3c5d8614-3ae4-4f93-ac6f-4446d0fe55b1" class=""><mark class="highlight-teal_background"><strong>Typical Use Cases</strong></mark></h3><ul id="0313d622-748a-40da-a261-9c2641ad4464" class="bulleted-list"><li style="list-style-type:disc">Creating a new record in a database, such as a new user registration.</li></ul><ul id="960c7b14-9110-49e6-8b2e-7dbabab4b082" class="bulleted-list"><li style="list-style-type:disc">Submitting form data.</li></ul><h3 id="75f19b15-99f3-427b-8a75-a17de53b73b6" class=""><mark class="highlight-teal_background"><strong>Example</strong></mark></h3><p id="c00ee104-cae0-4342-ab09-596afa404257" class="">Continuing with the library system example, let&#x27;s say we want to add a new book to the library&#x27;s catalog. Our POST request might include data about the book in the request body:</p><pre id="c5a08157-07f0-462e-a4ad-5aa2f2961390" class="code code-wrap"><code>POST /api/books
+Content-Type: application/json
+
+{
+    &quot;title&quot;: &quot;1984&quot;,
+    &quot;author&quot;: &quot;George Orwell&quot;,
+    &quot;year&quot;: 1949
+}</code></pre><p id="37985a4f-dfbf-444e-aa2c-11248c155b2e" class="">When the server receives this request, it will process the provided data and create a new book record. The server might respond with a status code of <code>201 Created</code> to indicate that the book was successfully added to the catalog.</p><p id="81868c61-6514-4352-8596-7dcbfac28f12" class="">In Vue.js, using Axios or the Fetch API, a POST request could look like this:</p><pre id="e602a5df-709d-4aa5-8197-755f22f410fc" class="code code-wrap"><code>const addBook = async (bookData) =&gt; {
+  try {
+    const response = await fetch(&#x27;/api/books&#x27;, {
+      method: &#x27;POST&#x27;,
+      headers: {
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+      },
+      body: JSON.stringify(bookData),
+    });
+
+    if (!response.ok) {
+      throw new Error(&#x27;Network response was not ok&#x27;);
+    }
+
+    const result = await response.json();
+    console.log(result);
+  } catch (error) {
+    console.error(&#x27;There has been a problem with your fetch operation:&#x27;, error);
+  }
+};
+
+const newBook = {
+    title: &quot;1984&quot;,
+    author: &quot;George Orwell&quot;,
+    year: 1949
+};
+
+addBook(newBook);
+</code></pre><p id="5e16e412-cd33-4903-99b0-9ee3f0dea61b" class="">Here, <code>addBook</code> is an async function that sends a POST request to the server with the new book data. If the request is successful, it logs the result, which might include details of the created book or a confirmation message.</p><h2 id="4a9efd0d-8419-426d-bb73-6832017db55b" class=""><mark class="highlight-gray">PUT Method</mark></h2><p id="22e56ef0-7137-48e6-9a39-50ee1b30575c" class="">The PUT method is designed for updating existing resources or creating a new one if it doesn&#x27;t exist at the specified URL. Unlike the POST method, the PUT method is idempotent, meaning that repeated identical requests should have the same effect as a single request.</p><h3 id="dd84e5a1-fa60-44ac-b7cd-9fb908b3a199" class=""><mark class="highlight-teal_background"><strong>Characteristics</strong></mark></h3><ul id="16bcf9cc-ace6-4d27-a9d3-e72033571f21" class="bulleted-list"><li style="list-style-type:disc"><strong>Update or Create</strong>: Used to update existing resources or create new ones if they don&#x27;t exist.</li></ul><ul id="364e0c27-9cc5-459f-a29e-4e49e51ef302" class="bulleted-list"><li style="list-style-type:disc"><strong>Idempotent</strong>: Making the same PUT request multiple times will result in the same state of the server (assuming no other changes between requests).</li></ul><ul id="54b76c9c-a991-49f7-ba2d-e6536e9c4c1d" class="bulleted-list"><li style="list-style-type:disc"><strong>Data in Request Body</strong>: The data to update the resource is typically included in the request body, not in the URI.</li></ul><h3 id="58dc5482-5939-4f4a-af10-29614f5a1053" class=""><mark class="highlight-teal_background"><strong>Typical Use Cases</strong></mark></h3><ul id="59e5f874-1c14-4ed1-bf61-34aa396744dc" class="bulleted-list"><li style="list-style-type:disc">Modifying a record in a database.</li></ul><ul id="8ef4d581-012c-41a9-aaff-b6a01e988131" class="bulleted-list"><li style="list-style-type:disc">Updating user profile information.</li></ul><h3 id="b132ac3b-4ea0-4bd5-b1fc-9053a0c52d90" class=""><mark class="highlight-teal_background"><strong>Example</strong></mark></h3><p id="2ceb99e9-f3a9-427b-9340-34f0dd2be4f6" class="">Let&#x27;s say we have a user in the system with an ID of 123, and we want to update their name and email. The PUT request would look like this:</p><pre id="7e875890-be2f-4626-81f9-536d37e43b3a" class="code code-wrap"><code>PUT /api/users/123
+Content-Type: application/json
+
+{
+    &quot;name&quot;: &quot;Updated Name&quot;,
+    &quot;email&quot;: &quot;updated@example.com&quot;
+}</code></pre><p id="6bd178bf-94d2-484b-b050-e01368262d88" class="">Upon receiving this request, the server will update the user with ID 123 with the provided name and email. If the user does not exist, it may create a new user with the provided details, depending on the API&#x27;s implementation.</p><p id="2958fa8f-da33-4235-8074-0c6da53d761e" class="">In Vue.js, using Axios or the Fetch API, we could send a PUT request like this:</p><pre id="a3ccda6a-35d1-4863-b42d-9fcfdb37fc9c" class="code code-wrap"><code>const updateUser = async (userId, userData) =&gt; {
+  try {
+    const response = await fetch(`/api/users/${userId}`, {
+      method: &#x27;PUT&#x27;,
+      headers: {
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      throw new Error(&#x27;Network response was not ok&#x27;);
+    }
+
+    const result = await response.json();
+    console.log(result);
+  } catch (error) {
+    console.error(&#x27;There has been a problem with your fetch operation:&#x27;, error);
+  }
+};
+
+const updatedUser = {
+    name: &quot;Updated Name&quot;,
+    email: &quot;updated@example.com&quot;
+};
+
+updateUser(123, updatedUser);
+</code></pre><p id="417b861a-9a86-4229-a99a-8e9274337513" class="">Here, <code>updateUser</code> is an async function that sends a PUT request to the server with the user&#x27;s updated data. If the request is successful, it logs the result which would typically include the updated user information.</p><h2 id="988f40df-2615-4cb5-b143-facd25f9e90f" class=""><mark class="highlight-gray">DELETE Method</mark></h2><p id="dca2d9e2-0385-4f12-8cd3-1df6d430317a" class="">The DELETE method is used to remove a specified resource from the server.</p><h3 id="c1dfc524-4a66-4ca2-9d96-c750085b3784" class=""><mark class="highlight-teal_background"><strong>Characteristics</strong></mark></h3><ul id="94b04673-4495-4f19-b85b-bfddaf8af172" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose</strong>: Used to delete a resource identified by a URI.</li></ul><ul id="12f4d4b1-9b44-4858-bd74-f9e153ae7815" class="bulleted-list"><li style="list-style-type:disc"><strong>Idempotent</strong>: Like PUT, the DELETE method is idempotent. This means if we DELETE a resource, it&#x27;s removed. Repeating the DELETE request will end up having the same result – the resource is still gone.</li></ul><ul id="4716c722-9da3-46e2-8acb-54edc0690a00" class="bulleted-list"><li style="list-style-type:disc"><strong>Parameters</strong>: It typically includes an identifier in the URL to specify the resource that should be deleted.</li></ul><h3 id="152166f2-c1fd-4005-9534-c28722820e33" class=""><mark class="highlight-teal_background"><strong>Typical Use Cases</strong></mark></h3><ul id="a66ee358-15ee-40d9-a504-a57d0a47589f" class="bulleted-list"><li style="list-style-type:disc">Removing a user from a database.</li></ul><ul id="8494c786-165b-4636-b727-ef7336b1e172" class="bulleted-list"><li style="list-style-type:disc">Deleting a file or entry.</li></ul><h3 id="b5286fca-9f88-472f-b1fb-88537b384ebe" class=""><mark class="highlight-teal_background"><strong>Example</strong></mark></h3><p id="2e73ff6a-c979-488d-89e4-1d1b6749a588" class="">Suppose we want to remove a user with ID 123 from the system. The DELETE request would look like this:</p><pre id="aca0417b-3e5b-4318-af5f-0e10cbe4b97e" class="code code-wrap"><code>DELETE /api/users/123</code></pre><p id="44dd95ae-32ef-4d45-a066-09ce6ce29772" class="">When the server processes this request, it will delete the user with the specified ID. After a successful operation, the server might respond with a status code of <code>200 OK</code> or <code>204 No Content</code> to indicate that the request was processed successfully but there&#x27;s no content to send back.</p><p id="46624bef-6806-41dd-8cf3-5cb43be9d31c" class="">In Vue.js, sending a DELETE request using Axios or the Fetch API could be done as follows:</p><pre id="d24b845c-195f-408e-b3a8-6be6c0adfa54" class="code code-wrap"><code>const deleteUser = async (userId) =&gt; {
+  try {
+    const response = await fetch(`/api/users/${userId}`, {
+      method: &#x27;DELETE&#x27;,
+    });
+
+    if (!response.ok) {
+      throw new Error(&#x27;Network response was not ok&#x27;);
+    }
+
+    console.log(&#x27;User deleted successfully&#x27;);
+  } catch (error) {
+    console.error(&#x27;There has been a problem with your fetch operation:&#x27;, error);
+  }
+};
+
+deleteUser(123);
+</code></pre><p id="96f8f2da-d7ef-4d31-84b6-41ef425f7fef" class="">In the <code>deleteUser</code> function, we send a DELETE request to the server specifying the user ID to be deleted. If the operation is successful, we log a confirmation message.</p><p id="8f10484d-310e-47bf-8424-78557799b56c" class="">The DELETE method is straightforward but powerful. It&#x27;s crucial to ensure that our API endpoints are secure and that only authorized users can perform delete operations to prevent unauthorized data deletion.</p><h2 id="6d37e7ab-1004-490b-9df0-a7c64e4eb0dd" class=""><mark class="highlight-gray">PATCH Method</mark></h2><p id="c306d133-4405-42de-951a-8d0d8f9185b7" class="">The PATCH method is used to apply partial updates to a resource.</p><h3 id="1494e8b5-3934-4141-84e6-ce2160ce0f8f" class=""><mark class="highlight-teal_background"><strong>Characteristics</strong></mark></h3><ul id="87fdd5f4-59df-4c62-961b-9e8b32b90431" class="bulleted-list"><li style="list-style-type:disc"><strong>Partial Update</strong>: Unlike PUT, which typically requires sending the full entity, PATCH is used to send only the changes to the entity.</li></ul><ul id="4eb89e37-a765-4b6c-bcb5-ac4e0071a96f" class="bulleted-list"><li style="list-style-type:disc"><strong>Idempotent</strong>: Technically, PATCH can be non-idempotent, but it is usually implemented in an idempotent manner.</li></ul><ul id="4edef96e-a0f6-4487-bb76-56784467c4e2" class="bulleted-list"><li style="list-style-type:disc"><strong>Parameters</strong>: The parameters include the changes to be applied, often in the form of a diff, patch, or partial resource representation.</li></ul><h3 id="32185bb5-3ab1-4ce9-accc-cf896363fac3" class=""><mark class="highlight-teal_background"><strong>Typical Use Case</strong></mark></h3><ul id="64ef2243-daa8-41dd-b7ff-95c3775a5653" class="bulleted-list"><li style="list-style-type:disc">Updating a subset of fields for a resource. For instance, if we have a user profile with 10 fields and we only need to update the email address and profile picture, we would use PATCH.</li></ul><h3 id="db33c42d-8831-4d52-b6cf-aa50f167766d" class=""><mark class="highlight-teal_background"><strong>Example</strong></mark></h3><p id="8fcb92c5-5924-44f3-93eb-67d93f8379dd" class="">If we want to update just the email address of a user with ID 123, a PATCH request might look like this:</p><pre id="f5d81089-3c70-4d2e-8f35-3d84f244022a" class="code code-wrap"><code>PATCH /api/users/123
+Content-Type: application/json
+
+{
+    &quot;email&quot;: &quot;newemail@example.com&quot;
+}</code></pre><p id="30513f3a-d2b0-4754-be76-eac5eff92ba8" class="">In Vue.js, using Axios or the Fetch API, a PATCH request could look like this:</p><pre id="00360f1f-483b-44eb-a17b-272961eba9ab" class="code code-wrap"><code>const updateUserEmail = async (userId, newEmail) =&gt; {
+  try {
+    const response = await fetch(`/api/users/${userId}`, {
+      method: &#x27;PATCH&#x27;,
+      headers: {
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+      },
+      body: JSON.stringify({ email: newEmail }),
+    });
+
+    if (!response.ok) {
+      throw new Error(&#x27;Network response was not ok&#x27;);
+    }
+
+    console.log(&#x27;User email updated successfully&#x27;);
+  } catch (error) {
+    console.error(&#x27;There has been a problem with your fetch operation:&#x27;, error);
+  }
+};
+
+updateUserEmail(123, &quot;newemail@example.com&quot;);
+</code></pre><p id="d0383971-8d56-40be-afaa-5d8c61bc043d" class="">The <code>updateUserEmail</code> function is an asynchronous function that takes a <code>userId</code> and <code>newEmail</code> as arguments. It sends a <code>PATCH</code> request to the server to update a specific field of a resource. The request body contains the new email address, which is the only field being updated. If the request is successful, it logs a confirmation message. Error handling is done using a catch block that logs any exceptions that occur during the fetch operation.</p><h2 id="9592d6e5-7d14-4cd8-8ea3-da8c4f5e010b" class=""><mark class="highlight-gray">HEAD Method</mark></h2><p id="a8c57d9e-5e97-4ebf-8297-f98409c41c48" class="">The HEAD method is similar to GET, but it does not return the body in the response. It is used to retrieve the metadata of a specified resource, such as headers, without having to download the entire body.</p><h3 id="08614cbe-6e53-41de-ae6c-7cb70bbf299c" class=""><mark class="highlight-teal_background"><strong>Characteristics</strong></mark></h3><ul id="658d7d4e-9a15-448a-b178-44d17b77560b" class="bulleted-list"><li style="list-style-type:disc"><strong>No Body</strong>: The server will not send back the resource&#x27;s body in the response.</li></ul><ul id="98ccc862-bec7-474d-8c6a-8f7b5b314ba9" class="bulleted-list"><li style="list-style-type:disc"><strong>Retrieve Headers</strong>: Useful for retrieving the headers to understand the resource&#x27;s state, check for updates, or to see if the resource exists before downloading it.</li></ul><h3 id="6df63b61-8d0b-4b44-9edf-4353285c1afd" class=""><mark class="highlight-teal_background"><strong>Typical Use Cases</strong></mark></h3><ul id="4fbfc83e-3007-4f75-8b87-8af97493fe3e" class="bulleted-list"><li style="list-style-type:disc">Checking if a resource exists before deciding to perform a GET request.</li></ul><ul id="5e000568-895f-4ac6-b352-b5e1c7f4b89d" class="bulleted-list"><li style="list-style-type:disc">Checking if a resource has been modified since the last access.</li></ul><h3 id="c72080e8-fe43-41ea-a8c8-07654c2e7701" class=""><mark class="highlight-teal_background"><strong>Example</strong></mark></h3><p id="125ad96f-4e8a-4139-954e-68f80c6b4f19" class="">If we want to check the headers for a user resource with ID 123, a HEAD request might look like this:</p><pre id="9867a072-aa2d-42e5-b1d0-0362d5bf68dc" class="code code-wrap"><code>HEAD /api/users/123</code></pre><p id="594ea8c1-ec45-4478-a8a8-3888161da1e9" class="">In Vue.js, we would handle this similarly to a GET request but without expecting a response body:</p><pre id="49752988-1de9-4e3c-b3c4-a6b706cc5524" class="code code-wrap"><code>// Example using Fetch API to make a HEAD request in Vue.js
+
+const checkResourceExists = async (resourceUrl) =&gt; {
+  try {
+    const response = await fetch(resourceUrl, { method: &#x27;HEAD&#x27; });
+
+    if (response.ok) {
+      // The resource exists, and we can check headers for more information.
+      console.log(`Content-Type: ${response.headers.get(&#x27;Content-Type&#x27;)}`);
+      console.log(`Content-Length: ${response.headers.get(&#x27;Content-Length&#x27;)}`);
+    } else {
+      // The resource does not exist, or there was another error.
+      console.error(&#x27;Resource not found or other error&#x27;);
+    }
+  } catch (error) {
+    console.error(&#x27;Network error:&#x27;, error);
+  }
+};
+
+// Call the function with the URL of the resource you want to check.
+checkResourceExists(&#x27;https://example.com/resource&#x27;);
+</code></pre><p id="f7a21f0d-dc89-4991-9f30-ab618a3d1a9c" class="">In this example, <code>checkResourceExists</code> function makes a HEAD request to the server for a given resource URL. If the resource exists, it logs the <code>Content-Type</code> and <code>Content-Length</code> from the headers. This information could be used to decide whether to make a full GET request to download the resource.</p><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0"><mark class="highlight-gray">Axios in Vue.js</mark></summary><div class="indented"><ul id="552ba836-ac7b-4f16-a25f-bb09d291fbcb" class="bulleted-list"><li style="list-style-type:disc">Axios is a promise-based HTTP client for the browser and Node.js. It provides an easy-to-use API for making HTTP requests and is often used in Vue.js applications for its simplicity and wide range of features, such as automatic JSON data transformation and client-side protection against XSRF.</li></ul><ul id="200f83ea-79fb-46f9-9f3b-2c3b74771cd9" class="bulleted-list"><li style="list-style-type:disc">Example using Axios for a POST request:<pre id="ff9d8e56-bedc-4c2e-a36b-dc4f9e5d4707" class="code code-wrap"><code>javascriptCopy code
+axios.post(&#x27;/api/data&#x27;, { key: &#x27;value&#x27; })
+  .then(response =&gt; console.log(response.data))
+  .catch(error =&gt; console.error(&#x27;Error posting data&#x27;, error));</code></pre><p id="772311c2-0e21-4e41-8c3f-9be31a19e300" class="">Axios simplifies the syntax compared to the Fetch API, handling JSON data transformation and error catching more smoothly.</p></li></ul></div></details><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="3db753df-26f9-46c1-b190-d34fcb3f0930"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">CRUD operations form the backbone of most web services, each corresponding to a fundamental action: CREATE (POST), READ (GET), UPDATE (PUT/PATCH), and DELETE (DELETE).<ul id="8b2b1300-71fb-4be3-8230-bf6563b93749" class="bulleted-list"><li style="list-style-type:disc">GET is used for retrieving resources without any side effects.</li></ul><ul id="62f65ffb-3583-4bc3-ab1e-3495106b257f" class="bulleted-list"><li style="list-style-type:disc">POST is used to create new resources or submit data.</li></ul><ul id="6b8d496c-8f26-4548-a5e4-b93987d628ae" class="bulleted-list"><li style="list-style-type:disc">PUT updates an entire resource or creates it if it doesn&#x27;t exist.</li></ul><ul id="5345fca9-b196-4922-8ebf-452deec225da" class="bulleted-list"><li style="list-style-type:disc">PATCH applies partial updates to a resource.</li></ul><ul id="9c44eab3-a00d-4c23-befa-3ab64fb1c9c1" class="bulleted-list"><li style="list-style-type:disc">DELETE removes resources.</li></ul><p id="90de3886-28f2-45a2-9de7-e207ef97ff29" class="">Understanding these operations and their proper use is crucial for building reliable and effective web applications. In Vue.js, utilizing these operations can be streamlined with libraries like Axios or the native Fetch API, allowing developers to easily manage state and server communication.</p><p id="4a777f03-10c3-47a5-a466-38191fba163a" class="">The HEAD method is used to retrieve the HTTP headers that would be returned if the HEAD request&#x27;s URL was instead requested with the HTTP GET method. This can be useful for checking what a GET request to the URL would return before actually making a GET request - for example, to check what type of content is available, or whether a resource exists, without having to download the content itself.</p></div></figure><h2 id="a75ed7d3-9ad9-4938-a9b1-8ff66d8f3e49" class=""><mark class="highlight-gray">REST (Representational State Transfer)</mark></h2><p id="6e06ba82-dbaf-4d0e-a374-8ff91af19b01" class="">REST is an architectural style that defines certain principles for developing network-based applications. The principles include:</p><ul id="082e8730-55c2-4f45-9ea1-37b175bdb1e4" class="bulleted-list"><li style="list-style-type:disc"><strong>Statelessness</strong>: The server does not keep any client state between requests. Each request from the client to the server must contain all the information the server needs to fulfill that request.</li></ul><ul id="ee57248e-9fdb-4f1e-add3-06b73ffe471b" class="bulleted-list"><li style="list-style-type:disc"><strong>Client-Server Architecture</strong>: There’s a clear separation between the client (the frontend/user interface) and the server (backend/data storage), allowing each to evolve independently. </li></ul><ul id="1e49d798-fc0a-47bf-b327-54dca29cb152" class="bulleted-list"><li style="list-style-type:disc"><strong>Uniform Interface</strong>: REST dictates that the API must have a uniform interface, which simplifies and decouples the architecture, which leads to each part being able to evolve independently.</li></ul><ul id="26ff93ef-ff94-45e6-832f-93eea9cb756d" class="bulleted-list"><li style="list-style-type:disc"><strong>Identification of Resources</strong>: Resources, anything that can be named, are identified using URIs (Uniform Resource Identifiers). For instance, <code>/api/users</code> could be an endpoint that provides access to user resources. </li></ul><ul id="4c44d39f-7d2e-49c8-80c9-d00757a88b31" class="bulleted-list"><li style="list-style-type:disc"><strong>Representation of Resources</strong>: When a client fetches a resource, it gets a representation of that resource, typically in formats like JSON or XML.</li></ul><h2 id="23f13f45-89e7-400f-83b3-9bdcde62f96a" class=""><mark class="highlight-gray"><strong>HTTP Status Codes</strong></mark></h2><p id="aa759ddb-8304-4570-accc-c806f743a38f" class="">The server&#x27;s response to a client request comes with an HTTP status code, as shown in the picture below.</p><figure id="bd8a65c3-6fd3-4465-a0d6-c6d735915570" class="image"><a href="Fetching%20Data%20be5d385b9bfa4fe4bad22f744f317aaf/Captura_de_ecr_2023-12-08_120503.png"><img style="width:488px" src="Fetching%20Data%20be5d385b9bfa4fe4bad22f744f317aaf/Captura_de_ecr_2023-12-08_120503.png"/></a></figure><p id="0fee96f4-4550-40f6-87a7-5591909fec96" class="">Some of the common HTTP status codes include:</p><ul id="61bbb93d-bb2e-44c9-8a49-64b934a33fa1" class="bulleted-list"><li style="list-style-type:disc"><strong>200 OK</strong>: The request was successful, and the server is returning the requested data.</li></ul><ul id="2f18c513-723c-434f-b1a8-0bd36190e354" class="bulleted-list"><li style="list-style-type:disc"><strong>201 Created</strong>: A new resource has been created as a result of the POST request.</li></ul><ul id="bac1eaae-62a1-48d0-bd81-b21b259f1458" class="bulleted-list"><li style="list-style-type:disc"><strong>404 Not Found</strong>: The server has not found anything matching the Request-URI.</li></ul><h2 id="0326bbc6-0ff1-4907-8b5a-8b7a9cd72de3" class=""><mark class="highlight-gray"><strong>HATEOAS (Hypermedia As The Engine Of Application State)</strong></mark></h2><p id="19eaf27b-6241-4e2a-81a9-1208255f20a9" class="">This principle allows clients to dynamically navigate the APIs by including hypermedia links with the responses. This way, the client doesn&#x27;t need to hard-code URIs; it can instead discover them at runtime, making the API more discoverable and self-descriptive.</p><h2 id="ebd26ba5-b62b-4be9-b574-d7c56702a39b" class=""><mark class="highlight-gray"><strong>Security Considerations</strong></mark></h2><p id="2147f12e-7d55-4f15-8ade-c7337261d765" class="">RESTful APIs often use HTTPS (HTTP Secure) to encrypt the communication between the client and server, providing a secure way to exchange data. In addition, to control access to resources, authentication and authorization mechanisms are implemented, like OAuth2 for authentication or JWT (JSON Web Tokens) for both authentication and authorization.</p><h1 id="c4aabf3c-e249-4d5b-af1b-3cdfe74112f3" class=""><mark class="highlight-teal">Generic API Utility Functions</mark></h1><p id="90cac76b-e1e9-4429-8d08-5fed93e773ce" class="">The creation of modular, reusable functions for making API requests is a fundamental aspect of modern web development. The purpose of these utility functions is twofold:</p><ol type="1" id="48161332-0cfb-4fd3-8869-61922b0d3458" class="numbered-list" start="1"><li><strong>Reusability</strong>: They allow us to write common API-related logic once and use it across different parts of the application. This not only saves time but also helps in maintaining consistency throughout our application’s codebase.</li></ol><ol type="1" id="e78f6256-c660-427d-8b01-9da2f4acede6" class="numbered-list" start="2"><li><strong>Abstraction</strong>: These functions abstract the complexities involved in making HTTP requests, handling errors, and processing responses. This allows other parts of our application to use these functions without concerning themselves with the underlying details of the API communications.</li></ol><h2 id="34e2e81d-e60e-430c-8812-348bab69ec86" class=""><mark class="highlight-gray"><strong>Common Operations</strong></mark></h2><ul id="ff03dd4f-40b5-47c4-85ea-7a2e8fa85728" class="bulleted-list"><li style="list-style-type:disc"><strong>CRUD Operations</strong>: Functions are typically implemented for each HTTP method (GET, POST, PUT/PATCH, DELETE) to cover the full spectrum of CRUD (Create, Read, Update, Delete) operations.</li></ul><ul id="9bed37b6-fb2b-4af4-9dac-a8b842dc01f6" class="bulleted-list"><li style="list-style-type:disc"><strong>Headers</strong>: The functions include the ability to set common HTTP headers, such as <code>Content-Type</code> for specifying the media type of the resource or <code>Authorization</code> for securing the API requests.<ul id="7f896b1a-68ea-47cc-bc39-af6b4c92c93c" class="toggle"><li><details open=""><summary><strong><strong>Setting HTTP Headers in Vue.js</strong></strong></summary><p id="e65d6aa0-b10c-48f0-a980-d74b57cd030a" class="">In the context of making HTTP requests, headers are an essential part of the request and response lifecycle. They define the operating parameters of an HTTP transaction. In our Vue.js applications, when making API requests, we often need to set HTTP headers for various reasons, such as content negotiation or authentication.</p><p id="882656ac-da24-430a-984c-655d1ba86935" class="">When we make an API request, we can set HTTP headers using the Fetch API or libraries like Axios. Here&#x27;s how we do it:</p><p id="14c7db70-b810-4e91-bff9-dfb72330aec2" class=""><span style="border-bottom:0.05em solid"><strong>Using Fetch API</strong></span></p><p id="37d3a3ae-58e2-4730-9698-c94a2bb2c060" class="">The Fetch API allows us to make network requests similar to <code>XMLHttpRequest</code> (XHR). It is promise-based and provides a more powerful and flexible feature set. Here&#x27;s an example of how we can set headers using Fetch:</p><pre id="9d5cd5f6-7a92-4bfb-89f1-3c93417b643f" class="code code-wrap"><code>fetch(&#x27;&lt;https://api.example.com/data&gt;&#x27;, {
+  method: &#x27;GET&#x27;, // or &#x27;POST&#x27;, &#x27;PUT&#x27;, &#x27;DELETE&#x27;, etc.
+  headers: {
+    &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+    &#x27;Authorization&#x27;: &#x27;Bearer your-token-here&#x27;,
+    // Other headers can be set here as well
+  }
+})
+.then(response =&gt; response.json())
+.then(data =&gt; console.log(data))
+.catch(error =&gt; console.error(&#x27;Error:&#x27;, error));
+</code></pre><p id="d4ed5f7c-0f62-4587-a733-3c5ebaed7de8" class="">In the above example:</p><ul id="4ad507ec-f222-4327-b7c5-45b80b26e448" class="bulleted-list"><li style="list-style-type:disc">The <code>headers</code> property in the fetch options is an object where the keys are the names of the headers, and the values are the values we want to set for those headers.</li></ul><ul id="c2f9b541-5edc-4e1a-a26d-4bce4c534b1c" class="bulleted-list"><li style="list-style-type:disc"><code>Content-Type</code> is commonly used to specify the nature of the data in the request body, which in this case is JSON.</li></ul><ul id="1219e918-b99a-4522-8986-af4c291c5677" class="bulleted-list"><li style="list-style-type:disc"><code>Authorization</code> is often used to pass credentials, such as when using bearer tokens for OAuth.</li></ul><p id="bf95bedb-ce00-4844-8656-3b7a3a24b0ed" class=""><span style="border-bottom:0.05em solid"><strong>Using Axios</strong></span></p><p id="02c3fe6d-b3b9-4020-b139-2833ec7d6c80" class="">Here&#x27;s an example of setting headers with Axios:</p><pre id="93f001c9-00d3-403a-afe5-88ea4f356125" class="code code-wrap"><code>axios.get(&#x27;&lt;https://api.example.com/data&gt;&#x27;, {
+  headers: {
+    &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+    &#x27;Authorization&#x27;: &#x27;Bearer your-token-here&#x27;
+  }
+})
+.then(response =&gt; console.log(response.data))
+.catch(error =&gt; console.error(&#x27;Error:&#x27;, error));
+</code></pre><p id="cab81394-8f3e-4e07-a7ea-40c62dc19910" class="">Or for a POST request with a body:</p><pre id="28fa7721-4225-4f31-ae65-a436fcab39d5" class="code code-wrap"><code>axios.post(&#x27;&lt;https://api.example.com/data&gt;&#x27;, {
+  /* our data here */
+}, {
+  headers: {
+    &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+    &#x27;Authorization&#x27;: &#x27;Bearer your-token-here&#x27;
+  }
+})
+.then(response =&gt; console.log(response.data))
+.catch(error =&gt; console.error(&#x27;Error:&#x27;, error));
+</code></pre><p id="2c088b1a-f5da-4331-90b2-5db7a38e7f35" class="">In the Axios examples:</p><ul id="8cbd6b80-06db-4adb-8fb6-ae3c3ca5ff64" class="bulleted-list"><li style="list-style-type:disc">The second argument for <code>axios.get</code> and the third argument for <code>axios.post</code> is the configuration object where we can set headers.</li></ul><ul id="48a6f82e-c52c-4466-b190-7a74780ff900" class="bulleted-list"><li style="list-style-type:disc">Axios automatically sets the <code>Content-Type</code> header for requests with a body, but it can be overridden as shown.</li></ul><p id="25291368-d02a-413f-b89a-9ab142df5bfb" class=""><span style="border-bottom:0.05em solid"><strong>Commonly Used HTTP Headers</strong></span></p><ul id="5d7632b1-16a2-46e1-a3ca-6fe048b2fb89" class="bulleted-list"><li style="list-style-type:disc"><code>Content-Type</code>: Indicates the media type of the resource.</li></ul><ul id="37413822-c6aa-4560-8e12-fabb936f5e9d" class="bulleted-list"><li style="list-style-type:disc"><code>Authorization</code>: Carries credentials containing the authentication information of the client for the resource being requested.</li></ul><ul id="8d8d5d42-0432-4c0c-b234-8d35efe31749" class="bulleted-list"><li style="list-style-type:disc"><code>Accept</code>: Tells the server what content types the client can process.</li></ul><ul id="5dd8e063-0140-4055-943c-0789ea4aad1e" class="bulleted-list"><li style="list-style-type:disc"><code>Cache-Control</code>: Directs the caching mechanisms in the request and response chain.</li></ul><ul id="d48dda5b-06e4-49bb-83c5-568cdc918611" class="bulleted-list"><li style="list-style-type:disc"><code>Custom-Headers</code>: Sometimes, we might need to set custom headers specific to our API or web service.</li></ul><p id="29925be1-14ed-461f-a7db-634e90eb9066" class="">Setting the right HTTP headers is crucial for ensuring that our requests are handled correctly by the server and that responses are appropriately understood by our client application. In a Vue.js application, we might often set these headers in a service or utility layer that handles API interactions, ensuring that they&#x27;re consistently applied across our app.</p></details></li></ul></li></ul><h2 id="03c43f09-6c82-47a3-8d7a-49b32577a708" class=""><mark class="highlight-gray"><strong>Error Handling</strong></mark></h2><ul id="84a112ff-d4b2-49f3-b7a8-37d0f84cb8a1" class="bulleted-list"><li style="list-style-type:disc"><strong>Consistent Error Handling</strong>: A uniform method of handling errors across all API requests helps in debugging and provides a predictable outcome for error scenarios.</li></ul><ul id="4191e0e6-f813-40db-ab46-bd00bcb62e6c" class="bulleted-list"><li style="list-style-type:disc"><strong>HTTP Status Codes</strong>: These functions interpret HTTP status codes and translate them into meaningful error messages or responses, which can then be used to inform the user or trigger additional logic within the application.</li></ul><h2 id="a386aea7-e9fd-47f6-81ea-e3126e920fb0" class=""><mark class="highlight-gray"><strong>Configuration</strong></mark></h2><ul id="82cd9e65-2e97-4fae-accd-716d2d95e30c" class="bulleted-list"><li style="list-style-type:disc"><strong>Base URL</strong>: Configuring a base URL parameter allows the functions to adapt to different API environments (like development or production) without changing the endpoint logic.</li></ul><ul id="d74d51b1-e301-4457-8fb8-1c6ba24d3935" class="bulleted-list"><li style="list-style-type:disc"><strong>Timeouts</strong>: These utility functions can be configured to handle timeouts, ensuring that the application remains responsive even if an API request takes too long or fails to get a response.</li></ul><h2 id="b109054a-ee5b-41ea-996a-c12db6e4c9ae" class=""><mark class="highlight-gray"><strong>Example Code Explanation</strong></mark></h2><h3 id="d3ab7e95-bcf2-41e5-8bbc-1ed5f76a4dfd" class=""><mark class="highlight-teal_background">GET Utility Function</mark></h3><pre id="78e22e46-7d44-40f6-8389-f1fe9ecf2edb" class="code"><code>export async function get(apiBaseUrl, endpoint) {
+  try {
+    const response = await fetch(`${apiBaseUrl}/${endpoint}`);
+    return handleResponse(response);
+  } catch (error) {
+    console.error(`Error fetching ${endpoint}:`, error);
+    throw error;
+  }
+}</code></pre><p id="61c5f72f-d196-4653-b43e-aa527107773c" class="">This <code>get</code> function is an asynchronous function that sends a GET request to a specified <code>endpoint</code> at the <code>apiBaseUrl</code>. It uses JavaScript’s fetch API to perform the request. If the request is successful, it calls <code>handleResponse</code> (another function that we assume is defined elsewhere) to process the response. If there’s an error (like a network issue), it logs and re-throws the error. </p><h3 id="696700b3-5d8b-4d73-9702-e225095e8da9" class=""><mark class="highlight-teal_background">POST Utility Function</mark></h3><pre id="162ab58c-9bc7-42ac-afe6-887e56849b74" class="code"><code>export async function post(apiBaseUrl, endpoint, data) {
+  try {
+    const response = await fetch(`${apiBaseUrl}/${endpoint}`, {
+      method: &quot;POST&quot;,
+      headers: {
+        &quot;Content-Type&quot;: &quot;application/json&quot;,
+      },
+      body: JSON.stringify(data),
+    });
+    return handleResponse(response);
+  } catch (error) {
+    console.error(`Error posting to ${endpoint}:`, error);
+    throw error;
+  }
+}</code></pre><p id="a6482667-bd80-4eb4-a3c8-11943e1dd564" class="">Here, the <code>post</code> function is similar to the <code>get</code> function but is designed to send POST requests. It includes additional parameters for the request method, headers, and the request body. The body is the data to be sent which is stringified into JSON format. </p><h3 id="9657b85d-6f42-45b1-83ec-8b9478b351f2" class=""><mark class="highlight-teal_background">Handling Responses</mark></h3><pre id="bc9af75b-3cd8-40b7-a03f-0f37286fba11" class="code"><code>async function handleResponse(response) {
+  if (!response.ok) {
+    const errorMessage = await response.text();
+    throw new Error(
+      `API request failed with status ${response.status}: ${errorMessage}`
+    );
+  }
+  const data = await response.json();
+  return data;
+}</code></pre><p id="69d505d5-4fdc-480e-953c-878d3e06174e" class="">The <code>handleResponse</code> function processes the response from the API request. If the response is not ok (the <code>ok</code> property is a shorthand for status codes 200-299), it gets the response text and throws an error with a message including the status code and the error message from the response. If the response is ok, it parses the JSON body of the response and returns the resulting data.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="7d04c2fb-1e6c-45f1-8db2-bdee2af6ef74"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">These utility functions are essential building blocks for interacting with APIs. They encapsulate common behaviors and provide a more maintainable and scalable way to handle API requests in our application.</div></figure><h1 id="d3db61af-6ad2-4b74-b408-d5932b72e09b" class=""><mark class="highlight-teal">Using Pinia Actions in Components</mark></h1><p id="f0a89353-91d5-4ce9-8996-6ce9080137e1" class="">Pinia is the state management library for Vue, and actions in Pinia are methods associated with the store that typically handle asynchronous operations like fetching data from an API. </p><h2 id="f12763c2-ebab-499a-8d86-c8b2fd361d7b" class=""><mark class="highlight-gray"><strong>Integrating API Utility Functions in Pinia Actions</strong></mark></h2><p id="0c7f1d6f-07c8-4b4c-8eb4-a3a3aa49d09c" class="">We can integrate the API utility functions within Pinia actions to perform CRUD operations and update the store’s state accordingly.</p><pre id="84befc3b-b850-4126-8f52-6326788e007c" class="code"><code>import * as api from &#x27;../api/api&#x27;; // Importing all exported functions from api.js
+
+const DOG_API_BASE_URL = &#x27;https://dog.ceo/api&#x27;;
+
+async fetchDogBreeds() {
+  try {
+    // Make an API GET request using the imported &#x27;get&#x27; method from api.js
+    const data = await api.get(DOG_API_BASE_URL, &#x27;breeds/list/all&#x27;);
+    // Assuming the response has a &#x27;message&#x27; object with breeds as keys,
+    // extract those keys and assign them to the &#x27;dogBreeds&#x27; array.
+    this.dogBreeds = Object.keys(data.message);
+  } catch (error) {
+    // If there&#x27;s an error in the API request, log it to the console and rethrow it.
+    console.error(&quot;Error in store fetching dog breeds:&quot;, error);
+    throw error;
+  }
+},</code></pre><p id="0ca0d6b8-ef39-4d21-a25d-bbd7b92e2dbf" class="">In this example, <code>fetchDogBreeds</code> is a Pinia action that uses the <code>get</code> function from the API utilities to fetch the list of dog breeds from the <code>DOG_API_BASE_URL</code>. The action updates the <code>dogBreeds</code> state within the store with the list of breeds retrieved from the API response.</p><ul id="2cfba603-2a24-47e0-ac8c-faa7b22b49a4" class="bulleted-list"><li style="list-style-type:disc"><strong>async fetchDogBreeds()</strong>: An asynchronous action method within the Pinia store.</li></ul><ul id="bc10aa2f-4b8e-4970-9d30-25bfc643e141" class="bulleted-list"><li style="list-style-type:disc"><strong>api.get</strong>: Calls the imported <code>get</code> utility function, passing in the API base URL and the specific endpoint <code>&#x27;breeds/list/all&#x27;</code>.</li></ul><ul id="bc527228-f4fc-4019-88c3-e10769aac470" class="bulleted-list"><li style="list-style-type:disc"><strong>this.dogBreeds</strong>: Assumes there is a state property <code>dogBreeds</code> in the Pinia store that will be updated with the results.</li></ul><ul id="907592fd-7e8c-453f-bf2a-d95829f9c79c" class="toggle"><li><details open=""><summary><strong><code>Object.keys()</code></strong></summary><p id="ef7a8fd9-48fe-49f7-ac90-10fdb0cfaa25" class="">In JavaScript, <code>Object.keys()</code> is a method that returns an array of a given object&#x27;s own property names, in the same order as we get with a normal loop. The usage of <code>Object.keys()</code> in the example above is a way to extract keys from the <code>message</code> object, which presumably contains the breeds as keys.</p><p id="df27f09e-dc7d-4f42-b94e-8169e6eb025e" class="">Let&#x27;s say the API response for <code>data.message</code> looks like this:</p><pre id="a5c62435-a6f9-44a3-9be1-f825e3ed0d4b" class="code"><code>{
+  &quot;message&quot;: {
+    &quot;bulldog&quot;: [&quot;boston&quot;, &quot;english&quot;, &quot;french&quot;],
+    &quot;terrier&quot;: [&quot;american&quot;, &quot;australian&quot;, &quot;bedlington&quot;],
+    // ... other breeds
+  }
+}</code></pre><p id="519405be-2062-41b9-a22a-c014939930a9" class="">When we call <code>Object.keys(data.message)</code>, it will return an array of the breed names, ignoring the sub-breeds:</p><pre id="24aa24ab-e259-479f-86e7-a440f97b4b74" class="code code-wrap"><code>javascriptCopy code
+[&quot;bulldog&quot;, &quot;terrier&quot;, /* ... other breeds */]</code></pre><p id="afdc11d9-a855-434c-bc41-cfb28cf2230e" class="">So, in our component&#x27;s <code>dogBreeds</code> array, we&#x27;ll have a list of the main dog breeds, which we can then use to render a list in your Vue.js application or perform other actions. The <code>Object.keys()</code> method is very useful for transforming objects into arrays when we&#x27;re interested in the keys (or property names).</p><p id="9b6e54f7-a3e4-43cc-b889-4b2e56aabb35" class="">→ If we want to access the sub-breeds along with the main breeds, we would need to iterate over the values of each key in the <code>data.message</code> object. We can do this by using <code>Object.keys()</code> to get the main breeds and then map over those keys to return both the breed and its sub-breeds. Here&#x27;s how we could modify the <code>fetchDogBreeds</code> function to also include the sub-breeds:</p><pre id="77c61952-9130-41d3-a8a6-c7ae947aac73" class="code code-wrap"><code>async fetchDogBreeds() {
+  try {
+    const data = await api.get(DOG_API_BASE_URL, &#x27;breeds/list/all&#x27;);
+    // Create an array of breeds, where each breed is an object with name and sub-breeds
+    this.dogBreeds = Object.keys(data.message).map(breed =&gt; {
+      return {
+        breed,
+        subBreeds: data.message[breed]
+      };
+    });
+  } catch (error) {
+    console.error(&quot;Error in store fetching dog breeds:&quot;, error);
+    throw error;
+  }
+},
+</code></pre><p id="0709b08a-c732-4fc5-9554-f0f47eb6cdb4" class="">With this approach, <code>this.dogBreeds</code> will be an array of objects, and each object will have a <code>breed</code> property for the main breed&#x27;s name and a <code>subBreeds</code> property for the array of sub-breeds. Here&#x27;s an example of what the <code>dogBreeds</code> array will look like:</p><pre id="47048395-8244-4a57-bae0-cad7cd376ff0" class="code code-wrap"><code>[
+  {
+    breed: &quot;bulldog&quot;,
+    subBreeds: [&quot;boston&quot;, &quot;english&quot;, &quot;french&quot;]
+  },
+  {
+    breed: &quot;terrier&quot;,
+    subBreeds: [&quot;american&quot;, &quot;australian&quot;, &quot;bedlington&quot;]
+  },
+  // ... other breeds
+]
+</code></pre><p id="1f2feb32-41ee-4b91-a366-b1cfc095e14e" class="">This structure gives us a detailed hierarchy of dog breeds, allowing us to access both the main breed and its sub-breeds for use in our application.</p><p id="7c047895-bbd0-4139-89c2-abe664fe3a92" class=""><span style="border-bottom:0.05em solid"><strong>Rendering Dog Breeds and Sub-breeds in Vue.js with Pinia Store</strong></span></p><p id="fcd72049-a36b-4522-8217-3716a8b638a3" class=""><span style="border-bottom:0.05em solid"><strong>Step 1: Create a Pinia Store</strong></span></p><p id="61ff9e69-6fed-4feb-bc89-cacbb7f045e5" class="">First, set up a Pinia store to manage the dog breeds data. This store will handle fetching and storing the breeds and their sub-breeds.</p><pre id="c41b3627-ba98-467d-864c-e91748642029" class="code code-wrap"><code>// store/dogs.js
+import { defineStore } from &#x27;pinia&#x27;;
+
+export const useDogStore = defineStore(&#x27;dogStore&#x27;, {
+  state: () =&gt; ({
+    breeds: {}
+  }),
+  actions: {
+    async fetchDogBreeds() {
+      try {
+        const response = await fetch(&#x27;&lt;https://dog.ceo/api/breeds/list/all&gt;&#x27;);
+        const data = await response.json();
+        this.breeds = data.message; // Structure: { breed: [subbreeds] }
+      } catch (error) {
+        console.error(&quot;Error fetching dog breeds:&quot;, error);
+      }
+    }
+  }
+});
+</code></pre><p id="521895b5-8643-47e2-8df3-f624e451e25a" class=""><span style="border-bottom:0.05em solid"><strong>Step 2: Fetch Data in Component</strong></span></p><p id="2fd95736-8234-43b5-9380-3608c85ff2fd" class="">Use the Pinia store in our Vue component to fetch and access the breeds data. This ensures a single source of truth for our application&#x27;s state.</p><pre id="5c19fec1-ad3b-4b03-a982-63ee1965e484" class="code code-wrap"><code>&lt;template&gt;
+  &lt;!-- Vue template to render the data --&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { useDogStore } from &#x27;@/store/dogs&#x27;;
+
+export default {
+  mounted() {
+    const dogStore = useDogStore();
+    dogStore.fetchDogBreeds(); // Fetch breeds on component mount
+  },
+  computed: {
+    breeds() {
+      const dogStore = useDogStore();
+      return dogStore.breeds;
+    }
+  }
+};
+&lt;/script&gt;
+</code></pre><p id="1784e5e7-6fd2-4dc4-9d50-6734f6d99136" class=""><span style="border-bottom:0.05em solid"><strong>Step 3: Render Breeds and Sub-breeds</strong></span></p><p id="8716e302-627a-4d5a-afee-c04cdd9a2b3a" class="">Use Vue&#x27;s template syntax to render the breeds and their sub-breeds. The <code>v-for</code> directive is perfect for iterating over objects and arrays in Vue.</p><pre id="60463007-6668-492a-9617-fad8665c1b49" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;h1&gt;Dog Breeds&lt;/h1&gt;
+    &lt;ul&gt;
+      &lt;li v-for=&quot;(subBreeds, breed) in breeds&quot; :key=&quot;breed&quot;&gt;
+        {{ breed }}
+        &lt;ul v-if=&quot;subBreeds.length&quot;&gt;
+          &lt;li v-for=&quot;subBreed in subBreeds&quot; :key=&quot;subBreed&quot;&gt;{{ subBreed }}&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre><p id="c34aa7cc-415e-4e77-9748-f2ddf0118ba4" class="">In this setup:</p><ul id="5b9473bd-3c15-4923-8e51-6957c664adde" class="bulleted-list"><li style="list-style-type:disc">The breeds and their sub-breeds are fetched and stored in the Pinia store.</li></ul><ul id="0fd8efb6-ab3a-4cdb-afd6-a6d7eeb13048" class="bulleted-list"><li style="list-style-type:disc">The Vue component accesses this data reactively.</li></ul><ul id="6efe4880-dbfe-4e2f-9fda-78ddeb2f59dc" class="bulleted-list"><li style="list-style-type:disc">The data is rendered in the component&#x27;s template, displaying each breed with its corresponding sub-breeds.</li></ul><p id="ddea3c3e-5491-49df-84ab-f3f407b826bf" class="">This approach provides a clean, maintainable way to handle and display API data in a Vue.js application, with Pinia offering excellent state management capabilities.</p></details></li></ul><h2 id="2aad676d-6a1d-4444-be6c-3da72511543f" class=""><mark class="highlight-gray"><strong>Error Handling in Components</strong></mark></h2><p id="46f224f7-79ae-4bc2-8f5a-40d59f51366f" class="">When we call Pinia actions within our Vue components, it is essential to handle potential errors that may occur during the asynchronous operation. We can use a try-catch block to manage errors gracefully. </p><pre id="87b1f2d0-61a1-4985-a9d8-a984cc241432" class="code"><code>created() {
+  try {
+    this.dogStore.fetchDogBreeds();
+  } catch (error) {
+    alert(error.message);
+  }
+},</code></pre><p id="8ca45628-4432-48f0-9649-4334c2e1d2b4" class="">In the above code:</p><ul id="9834e35c-0491-4269-aeaa-8bbc1d453bde" class="bulleted-list"><li style="list-style-type:disc"><strong>created()</strong>: A Vue lifecycle hook that runs when the component is created.</li></ul><ul id="0b1c6ecd-0a40-4b8d-ac62-952143bf234a" class="bulleted-list"><li style="list-style-type:disc"><strong>this.dogStore.fetchDogBreeds()</strong>: Calls the <code>fetchDogBreeds</code> action from the <code>dogStore</code> Pinia store.</li></ul><ul id="7858fc7b-9632-4828-92d6-8f1dfffa777f" class="bulleted-list"><li style="list-style-type:disc"><strong>try-catch</strong>: Catches any errors that occur during the execution of the <code>fetchDogBreeds</code> action.</li></ul><ul id="7cb8e766-e3d5-4ace-947b-7fb49953eb10" class="bulleted-list"><li style="list-style-type:disc"><strong>alert(error.message)</strong>: Displays an alert with the error message if an error occurs.</li></ul><p id="d013ce91-a687-4556-a4d9-e2cb2dcf759b" class="">This pattern ensures that our application can handle API request failures and prevent unhandled exceptions, which could lead to a poor user experience.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="d7a216cf-0022-4392-adc1-ddb1558323c3"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">Using Pinia actions to encapsulate data-fetching logic provides a clean separation of concerns. The component does not need to know about the intricacies of the API requests and can focus on presenting the data, while the Pinia store handles the state management, including data fetching, updating, and error handling.</div></figure><div id="638eae32-b09f-4078-bb6d-da32e0f6bf7a" class="column-list"><div id="d37687d7-be2d-46e2-94ef-e6e8c24f5600" style="width:50%" class="column"><hr id="ffaf3cdc-885a-4057-8484-85a394a62c5e"/><h1 id="282dbd97-e907-456f-a09e-721dffdab078" class="block-color-teal_background">Important Concepts</h1><ol type="1" id="7a2b1186-0659-4cfd-ae33-3323d1515713" class="numbered-list" start="1"><li><strong>HTTP Methods and CRUD Operations</strong><ul id="55c37108-4005-4eb7-8552-bc8b836cebc3" class="bulleted-list"><li style="list-style-type:disc"><strong>GET</strong>: Safe and idempotent, for retrieving data.</li></ul><ul id="b0aeab09-220a-4c57-bb82-78f9f44ac41e" class="bulleted-list"><li style="list-style-type:disc"><strong>POST</strong>: For creating new resources, not safe or idempotent.</li></ul><ul id="73dc7d7b-04ea-47e5-adc5-c5355b6e1ee3" class="bulleted-list"><li style="list-style-type:disc"><strong>PUT</strong>: For updating entire resources, idempotent.</li></ul><ul id="272b96f2-a95d-4012-8b0e-5790ae98172a" class="bulleted-list"><li style="list-style-type:disc"><strong>DELETE</strong>: For removing resources, idempotent.</li></ul><ul id="3723bf19-0179-434c-9131-310418298c86" class="bulleted-list"><li style="list-style-type:disc"><strong>PATCH</strong>: For applying partial updates, usually idempotent.</li></ul><ul id="aa49ad4e-671e-4b8d-94c1-4acc2af85f40" class="bulleted-list"><li style="list-style-type:disc"><strong>HEAD</strong>: For retrieving headers, similar to GET but without the body.</li></ul></li></ol><ol type="1" id="28efc17f-78ea-4556-958e-30f6673a230b" class="numbered-list" start="2"><li><strong>REST Principles</strong><ul id="2b950306-73be-4a9e-b79e-8dfb65b19ea9" class="bulleted-list"><li style="list-style-type:disc"><strong>Statelessness</strong>: No client state is stored on the server.</li></ul><ul id="a2e16c46-cefa-409e-bf66-6a9f54aeea1c" class="bulleted-list"><li style="list-style-type:disc"><strong>Client-Server Architecture</strong>: Separation of concerns.</li></ul><ul id="878a5bb9-a8cc-4288-ab39-e57135e06420" class="bulleted-list"><li style="list-style-type:disc"><strong>Uniform Interface</strong>: Standardized way to interact with resources.</li></ul><ul id="bafda227-6c0e-4654-866d-6a027192e6c0" class="bulleted-list"><li style="list-style-type:disc"><strong>Resource Identification</strong>: Using URIs.</li></ul><ul id="e0d3b038-fa49-46ee-9ec3-7f72d57c1540" class="bulleted-list"><li style="list-style-type:disc"><strong>Representation</strong>: Resources represented in standard formats like JSON, XML.</li></ul></li></ol><ol type="1" id="dfbe8ffa-9f62-4a72-9c6f-d398a8f3d572" class="numbered-list" start="3"><li><strong>HTTP Status Codes</strong><ul id="01b065a3-6fe8-46cc-94e0-78e502d1b7a9" class="bulleted-list"><li style="list-style-type:disc">Common codes like 200 (OK), 201 (Created), 404 (Not Found).</li></ul></li></ol><ol type="1" id="6950ce05-21cd-4bea-859f-ecba099db74d" class="numbered-list" start="4"><li><strong>HATEOAS</strong>: Dynamic navigation through APIs using hypermedia links.</li></ol><ol type="1" id="9cd4c415-5e47-477f-aafa-0ecca99ed178" class="numbered-list" start="5"><li><strong>Security</strong>: Using HTTPS, authentication, and authorization mechanisms.</li></ol></div><div id="711340eb-a1e3-4b1f-9b55-149106f1f50b" style="width:50%" class="column"><hr id="4981fdd0-b4d3-40a9-a504-ac7b40d523d0"/><h1 id="208a83ba-3ec8-4340-b5f4-bdbd2b25133b" class="block-color-teal_background">Key Takeaways</h1><ol type="1" id="ed315c9c-c565-4087-8c0b-a8d28cc6c631" class="numbered-list" start="1"><li><strong>API Utility Functions</strong><ul id="83d8f1bd-af3a-4af3-a9fc-d7ba36dfcdec" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose</strong>: Reusability and abstraction of API-related logic.</li></ul><ul id="6c287cf8-8e11-4d8d-ab5a-9e6744e81519" class="bulleted-list"><li style="list-style-type:disc"><strong>Operations</strong>: Cover CRUD operations and set common HTTP headers.</li></ul><ul id="5a8f8f81-f4d0-4df5-b4cf-f3c694499400" class="bulleted-list"><li style="list-style-type:disc"><strong>Error Handling</strong>: Consistent approach across API requests.</li></ul><ul id="bdd7adaf-e047-412a-91bf-c63875169c1a" class="bulleted-list"><li style="list-style-type:disc"><strong>Configuration</strong>: Base URL settings and request timeouts.</li></ul></li></ol><ol type="1" id="8c3bf77f-e2f3-4aa3-a9de-7be4ab355e26" class="numbered-list" start="2"><li><strong>Integrating API Functions in Pinia Actions</strong><ul id="4f458062-bfcc-44d9-93ae-51a9c38539a8" class="bulleted-list"><li style="list-style-type:disc">Pinia actions provide a structured way to handle asynchronous API requests and update the application&#x27;s state.</li></ul><ul id="e69c22b1-c033-4b3c-badf-faecae62a536" class="bulleted-list"><li style="list-style-type:disc">Use of <code><strong>try-catch</strong></code> blocks in components for error management.</li></ul><ul id="ee293e6c-00d8-417c-8940-d8deeb701ba6" class="bulleted-list"><li style="list-style-type:disc">Clean separation of concerns between state management and UI logic.</li></ul></li></ol><ol type="1" id="fad865e8-73a3-454f-9b3d-566bc971a0c6" class="numbered-list" start="3"><li><strong>Handling Complex Data Structures</strong><ul id="5818273f-35f4-48a5-99ee-53fd7b1fd1c5" class="bulleted-list"><li style="list-style-type:disc">Techniques like <code><strong>Object.keys()</strong></code> for transforming API responses into usable formats.</li></ul><ul id="7894122e-afce-4b34-a07a-578de89e60f2" class="bulleted-list"><li style="list-style-type:disc">Structuring data in a way that is easy to render and manage within Vue components.</li></ul></li></ol><ol type="1" id="d01682d5-9bce-4669-bb25-f815298b2cfc" class="numbered-list" start="4"><li><strong>Vue.js Integration</strong><ul id="62bc131e-aec3-4384-a10c-336d820a92a4" class="bulleted-list"><li style="list-style-type:disc">Leveraging Vue.js lifecycle hooks for initiating API calls.</li></ul><ul id="ed4077aa-622f-4bda-ba91-1a11b8138bda" class="bulleted-list"><li style="list-style-type:disc">Using computed properties and methods to work with and display data.</li></ul><ul id="38507ced-8c43-4930-ad0e-0808f89de987" class="bulleted-list"><li style="list-style-type:disc">The importance of error handling and responsive design in the context of API interactions.</li></ul></li></ol></div></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

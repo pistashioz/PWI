@@ -1,0 +1,1000 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Pinia PersistedState Plugin</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="0cce6f54-9a4c-4ae1-ba23-e8fb6c8403ff" class="page sans"><header><h1 class="page-title">Pinia PersistedState Plugin</h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-created_time"><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesCreatedAt"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM4.54102 8.91211H7.99316C8.30078 8.91211 8.54004 8.67285 8.54004 8.37207V3.8877C8.54004 3.58691 8.30078 3.34766 7.99316 3.34766C7.69238 3.34766 7.45312 3.58691 7.45312 3.8877V7.83203H4.54102C4.2334 7.83203 4.00098 8.06445 4.00098 8.37207C4.00098 8.67285 4.2334 8.91211 4.54102 8.91211Z"></path></svg></span>Created</th><td><time>@December 8, 2023 6:59 PM</time></td></tr><tr class="property-row property-row-checkbox"><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesCheckbox"><path d="M3.85742 14.4561H12.1357C13.6123 14.4561 14.3779 13.6904 14.3779 12.2344V3.91504C14.3779 2.45215 13.6123 1.69336 12.1357 1.69336H3.85742C2.38086 1.69336 1.61523 2.45215 1.61523 3.91504V12.2344C1.61523 13.6973 2.38086 14.4561 3.85742 14.4561ZM3.93945 13.1162C3.30371 13.1162 2.95508 12.7812 2.95508 12.1182V4.02441C2.95508 3.36133 3.30371 3.0332 3.93945 3.0332H12.0537C12.6826 3.0332 13.0381 3.36133 13.0381 4.02441V12.1182C13.0381 12.7812 12.6826 13.1162 12.0537 13.1162H3.93945ZM7.26855 11.3115C7.51465 11.3115 7.72656 11.1885 7.87012 10.9697L10.9258 6.19141C11.0146 6.04785 11.0967 5.88379 11.0967 5.72656C11.0967 5.3916 10.7959 5.16602 10.4746 5.16602C10.2695 5.16602 10.085 5.27539 9.94141 5.50781L7.24121 9.8418L5.96973 8.22168C5.80566 8.00977 5.6416 7.93457 5.43652 7.93457C5.10156 7.93457 4.8418 8.20117 4.8418 8.54297C4.8418 8.70703 4.90332 8.85742 5.01953 9.00098L6.63281 10.9697C6.81738 11.209 7.01562 11.3115 7.26855 11.3115Z"></path></svg></span>Reviewed</th><td><div class="checkbox checkbox-off"></div></td></tr></tbody></table></header><div class="page-body"><ul id="58a56785-13fd-464a-b18e-4f9fcb00058b" class="toggle"><li><details open=""><summary><strong>Índice</strong></summary><nav id="6bd056a4-4ff4-406e-9d96-20c8a0e30eb2" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#dfc9a911-5dc2-4eb6-9b0d-ec442f4b01f3">Pinia PersistedState Plugin</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#020abfb6-2035-484a-942f-59eaef2ade70">Here’s how to use it</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#565241b1-da5f-4d8c-9e60-e01651b20a70">Configuration</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#7182b2ec-155f-4d3f-8acf-fdd949281720">Key</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#4ee53e43-97f4-4fcb-a1d0-d908c000cf7d">Storage</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c12e0f9b-a22f-4c21-a6e4-02c8104d1102">Paths</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#82f168f6-8a64-411f-a7f8-bef3084633b6">Serializer</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#cb68bff6-6afc-4860-85bb-344cef41186c">beforeRestore</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#4adcaab8-bfdb-403c-a64d-04d2faa5b2b9">afterRestore</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#06eb1598-6287-4154-bb0a-01b790883485">debug</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9b3e4677-78ac-4f35-90c3-2e7988099e2a">Limitations</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#54ff3cb8-a66f-4161-987e-856a66939baf">References are not persisted</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3531e896-5506-4caa-9149-eabe9ec73d3e">Example and Explanation</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#26bb8fec-0d4e-49e5-be79-f469368aff73">Workaround</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7761347b-d3d3-4e27-8398-713c52c9a01e">Non-primitive Types are Not Persisted</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#7b4263c1-6d11-4e68-a22a-9a5d8829a598">Workarounds</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#a0e4ab05-9d20-43fc-a92e-fed3d399e65a">Example</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#af02f47c-55db-49bb-99c5-730293f0c811">Storage Must Be Synchronous</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#a1a7fd1d-52a6-4062-a353-92870869baa4">Workaround</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c91ecb70-5741-4924-9f57-a0c393813b80">Example</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#49d3c6ba-551b-4d12-bce3-47a8e4a23cb4">Advanced Usage</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ddb9deeb-b5a9-47c1-8027-a32594627d29">Global Persistence Options</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c09f5476-5454-415d-8ba1-0a397631e8a5">How It Works</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e1de4e46-d401-486f-81c6-0b5001eb6822">Available Global Options</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#393ac8c8-08a4-455c-b24c-9a2e58393835">Overriding Global Options</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6ebe9339-fd07-46b5-9ecb-2097ffbbd7bc">Global Key Option</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#17483f14-4a2f-4345-ae4b-89d3cafbb1a0">How It Works</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#66715d3f-deb6-41e4-b78f-ff24c5897689">Auto Mode</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#beef6d03-577c-410e-bcb7-ebdd933000e2">How It Works</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#8c72b14a-92d0-483b-95e0-a896f60b4967">Defining a Store in Auto Mode</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#636367d9-2506-455a-a69b-024c02f938ee">Opting Out of Persistence</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#a693e558-7837-47df-8330-539a585f0d4a">Tip</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#48e93f81-1e82-42a3-9e29-ee2678042282">Multiple Persistences Per Store</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e9e9ad56-4d6e-4731-9b4a-95a2211a0af5">Implementing Multiple Persistences</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#d117cc7a-d4c0-45e1-8bf3-db730c62a642">Warning: Data Inconsistency</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#15c374fd-6a3a-4e80-af07-570b94442de9">Tip</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#15dfdad5-65c3-4b4f-9054-052b4fd83604">Forcing the Rehydration</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c7d7ee41-cf53-4063-b8cd-827cac415779"><code>$hydrate</code> Method</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#d6c1b093-045a-4f41-bb3c-854a20462f40">Warning: Use With Caution</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#068eb9c7-343d-482a-bb06-323dcc497aa0">Forcing the Persistence</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1c692a9f-bb44-47a8-b232-bb5dc689889c"><code>$persist</code> Method</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#9b2a9a1d-c444-4f9e-8d5b-7374383e9a91">Warning: Use With Caution</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#50b4c1d8-43d7-45a6-afd7-2e7088e8c69a">Automatic State Persistence with Pinia PersistedState Plugin</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#05101411-8b22-498e-bcde-cbad9052ab3f">Example: Persisting User Array in Local or Session Storage</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a141f838-0f6c-4ee1-ae14-da60d3a0cd10">Important Concepts</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6880350f-8e68-4c71-90b6-2dfdd988a0be">Key Takeaways</a></div></nav></details></li></ul><h1 id="dfc9a911-5dc2-4eb6-9b0d-ec442f4b01f3" class="">Pinia PersistedState Plugin</h1><p id="c6720235-1d96-4c6f-a6b0-c417a68ae3ad" class="">The <code>pinia-plugin-persistedstate</code> is a plugin for Pinia that allows the state of our store to be saved and reloaded from <code>localStorage</code> or <code>sessionStorage</code>. When we use this plugin, we can persist the state of our store across page reloads or even browser sessions, depending on which storage option we choose.</p><h2 id="020abfb6-2035-484a-942f-59eaef2ade70" class="">Here’s how to use it</h2><ol type="1" id="d26e794d-829b-40eb-9e0d-bcfb28be1419" class="numbered-list" start="1"><li>Install the plugin via npm or yarn:<pre id="62e2bab5-d99f-44f4-ba0c-13fb2ca5de93" class="code"><code>npm install pinia-plugin-persistedstate</code></pre></li></ol><ol type="1" id="00e8117f-2681-4c58-94be-caa09cf92a57" class="numbered-list" start="2"><li>Import and apply the plugin to our Pinia store:<pre id="1f2e52e7-4090-4f7a-9311-f4c72a250b4c" class="code"><code>import { createPinia } from &#x27;pinia&#x27;;
+import piniaPluginPersistedstate from &#x27;pinia-plugin-persistedstate&#x27;;
+
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);</code></pre></li></ol><ol type="1" id="59c6fc31-c6e8-40b3-914e-4d0013ba3d6b" class="numbered-list" start="3"><li>Enable persistence in our store definition by setting the <code>persist</code> option to <code>true</code>:<pre id="8459fa4b-b9b7-42d4-b01c-8e379d2869e3" class="code"><code>import { defineStore } from &#x27;pinia&#x27;
+
+export const useStore = defineStore(&#x27;main&#x27;, {
+  state: () =&gt; {
+    return {
+      someState: &#x27;hello pinia&#x27;,
+    }
+  },
+  persist: true,
+})</code></pre></li></ol><h2 id="565241b1-da5f-4d8c-9e60-e01651b20a70" class="">Configuration</h2><p id="949424bc-dc11-4014-a128-24a9bfe2a81b" class="">The plugin comes pre-configured with the following:</p><ul id="c0827640-3fe7-4dae-829b-3ec5b69275fe" class="bulleted-list"><li style="list-style-type:disc"><code>localStorage</code> as storage.</li></ul><ul id="726a9dfe-e76e-4c05-84af-b0a2085355f5" class="bulleted-list"><li style="list-style-type:disc"><code>store.$id</code> as the default key for storage.</li></ul><ul id="32761a55-0971-45c8-92fa-27b758d3a0e9" class="bulleted-list"><li style="list-style-type:disc"><code>JSON.stringify</code>/<code>JSON.parse</code> as serializer/deserializer.</li></ul><ul id="b4107f43-0867-46a5-8297-99ea37d9c155" class="bulleted-list"><li style="list-style-type:disc">The whole state is persisted in the storage.</li></ul><p id="3d40b998-f311-4a62-bda2-1b1f26ee7d63" class="">However, if we do not want to persist the entire state, we can selectively persist parts of it by passing an object to the persist property. This object allows us to configure what is saved and what is not. This provides flexibility to ensure only relevant data is stored, which can be important for performance and avoiding storage bloat.</p><pre id="78a2ed4e-5308-4890-b19c-0afc3c0f9298" class="code"><code>import { defineStore } from &#x27;pinia&#x27;
+
+export const useUserStore = defineStore(&#x27;user&#x27;, {
+  state: () =&gt; ({
+    isLoggedIn: false,
+    userProfile: null,
+    theme: &#x27;light&#x27;,
+    notifications: [],
+    // ... other state properties
+  }),
+  persist: {
+    // Specify only the paths you want to persist
+    paths: [&#x27;isLoggedIn&#x27;, &#x27;userProfile&#x27;, &#x27;theme&#x27;]
+    // Here, &#x27;notifications&#x27; will not be persisted since it&#x27;s not included in the paths array
+  },
+  // ... other options like getters, actions, etc.
+})</code></pre><h3 id="7182b2ec-155f-4d3f-8acf-fdd949281720" class="">Key</h3><ul id="094f0134-ef74-43e3-84c1-d82636d3b519" class="bulleted-list"><li style="list-style-type:disc">type: <code>string</code>.</li></ul><ul id="3625bc6e-4ded-45dd-8e4c-fa784691aa29" class="bulleted-list"><li style="list-style-type:disc">default: <code>store.$id</code>.</li></ul><p id="80b9bc9f-5eac-4eef-b5d6-6a8dedb1b20f" class="">Key is used to reference the stored deserialized data in the storage.</p><pre id="d0d039ce-b7f5-4612-b7d8-f333a7cc40bd" class="code"><code>import { defineStore } from &#x27;pinia&#x27;
+
+export const useStore = defineStore(&#x27;store&#x27;, {
+  state: () =&gt; ({
+    someState: &#x27;hello pinia&#x27;,
+  }),
+  persist: {
+    key: &#x27;my-custom-key&#x27;,
+  },
+})</code></pre><h3 id="4ee53e43-97f4-4fcb-a1d0-d908c000cf7d" class="">Storage</h3><ul id="ed92bacb-f83e-483b-bb27-9a8d5ee0cceb" class="bulleted-list"><li style="list-style-type:disc">type: <code>StorageLike</code>.</li></ul><ul id="b12be53a-4b7f-464f-9e88-b95b96b60e56" class="bulleted-list"><li style="list-style-type:disc">default: <code>localStorage</code>.</li></ul><p id="c1bfe201-8584-4359-bca8-75ca58b7ac31" class="">Storage to persist the data to. Must have <code>getItem: (key: string) =&gt; string | null</code> and <code>setItem: (key: string, value: string) =&gt; void</code> methods.</p><pre id="88607e3f-51c9-4418-84fd-7fb65b071bf2" class="code"><code>import { defineStore } from &#x27;pinia&#x27;
+
+export const useStore = defineStore(&#x27;store&#x27;, {
+  state: () =&gt; ({
+    someState: &#x27;hello pinia&#x27;,
+  }),
+  persist: {
+    storage: sessionStorage,
+  },
+})</code></pre><ul id="b5a88ee9-bb24-44e7-886c-6d3fba9d0d7a" class="toggle"><li><details open=""><summary><strong>Meaning of </strong><strong><code>getItem</code></strong><strong> and </strong><code><strong>setItem</strong></code><strong> Methods</strong></summary><p id="1b9dd86e-968d-4893-b429-1ed294d9dca1" class="">These are methods that must be present in any custom storage solution we use with Pinia’s persisted state plugin.</p><ul id="0315db98-3fed-4ff7-882a-3f957a10877c" class="bulleted-list"><li style="list-style-type:disc"><code>getItem(key: string): string | null</code> is a method that should return the value associated with a given key from the storage, or <code>null</code> if the key does not exist.</li></ul><ul id="f01bf41f-9a41-4024-a2d8-735ac1a238fb" class="bulleted-list"><li style="list-style-type:disc"><code>setItem(key: string, value: string): void</code> is a method that should allow us to set a value for a particular key in the storage.</li></ul><ul id="d7044ef3-a5b7-4e5a-918f-220738d1ca64" class="bulleted-list"><li style="list-style-type:disc"><code>void</code> indicates that <code>setItem</code> does not return a value (in JavaScript, this typically means that the function does not have a <code>return</code> statement, or it returns <code>undefined</code>).</li></ul><p id="7f2f8250-a40e-4d26-858f-8bdc082939c6" class="">The default <code>localStorage</code> in web browsers already implements these methods. If you are using or creating a custom storage system, it must have these methods to be compatible with Pinia&#x27;s persisted state plugin.</p></details></li></ul><h3 id="c12e0f9b-a22f-4c21-a6e4-02c8104d1102" class="">Paths</h3><ul id="7e4b2fc7-ac81-49cf-a6fc-8ad52007b6b9" class="bulleted-list"><li style="list-style-type:disc">type: <code>string[]</code>.</li></ul><ul id="c2e74b8d-50fd-442f-8a76-2ee24b7ba383" class="bulleted-list"><li style="list-style-type:disc">default: <code>undefined</code>.</li></ul><p id="93e6d2c0-d290-4460-9f71-85c069483c26" class="">Array of dot-notation paths to partially persist state. <code>[]</code> means no state is persisted and <code>undefined</code> or <code>null</code> means the whole state is persisted.</p><pre id="96ebf81c-3a95-4de6-a8f9-b6f4a7c6c0eb" class="code"><code>import { defineStore } from &#x27;pinia&#x27;
+
+export const useStore = defineStore(&#x27;store&#x27;, {
+  state: () =&gt; ({
+    save: {
+      me: &#x27;saved&#x27;,
+      notMe: &#x27;not-saved&#x27;,
+    },
+    saveMeToo: &#x27;saved&#x27;,
+  }),
+  persist: {
+    paths: [&#x27;save.me&#x27;, &#x27;saveMeToo&#x27;],
+  },
+})</code></pre><h3 id="82f168f6-8a64-411f-a7f8-bef3084633b6" class="">Serializer</h3><ul id="85c3b8cd-b9c3-4f17-a46e-bf5a2491d9e7" class="bulleted-list"><li style="list-style-type:disc">type: <code>Serializer</code>.</li></ul><ul id="ef7677df-e8e3-4e85-9c8c-2972cd2ecf5f" class="bulleted-list"><li style="list-style-type:disc">default: <code>JSON.stringify</code>/<code>JSON.parse</code>.</li></ul><p id="dc47b771-9d8c-407a-89cb-3b556a3678e8" class="">Custom serializer to serializer data before persisting and deserialize data before rehydrating the store. Must have <code>serialize: (value: StateTree) =&gt; string</code> and <code>deserialize: (value: string) =&gt; StateTree</code> methods.</p><pre id="534d059d-faba-4450-b8a3-d73cfa551685" class="code"><code>import { defineStore } from &#x27;pinia&#x27;
+import { parse, stringify } from &#x27;zipson&#x27;
+
+export const useStore = defineStore(&#x27;store&#x27;, {
+  state: () =&gt; ({
+    someState: &#x27;hello pinia&#x27;,
+  }),
+  persist: {
+    serializer: {
+      deserialize: parse,
+      serialize: stringify
+    }
+  },
+})</code></pre><h3 id="cb68bff6-6afc-4860-85bb-344cef41186c" class="">beforeRestore</h3><ul id="422bd97e-37b1-4f59-9f81-5d63168a1a90" class="bulleted-list"><li style="list-style-type:disc">type: <code>(context: PiniaPluginContext) ⇒ void</code></li></ul><ul id="b1f6ca1d-ddd8-4406-bdf5-3765f41c340a" class="bulleted-list"><li style="list-style-type:disc">default: <code>undefined</code></li></ul><p id="6b811b8b-e729-49f0-81f2-d44fc44ab52f" class="">Hook function run before restoring a persisted state. The hook gives access to the whole <code>PiniaPluginContext</code>. This can be used to enforce specific actions before hydration.</p><pre id="8e30a87f-3f53-4fe0-bdc8-b4f14fc8849c" class="code"><code>import { defineStore } from &#x27;pinia&#x27;
+
+export const useStore = defineStore(&#x27;store&#x27;, {
+  state: () =&gt; ({
+    someState: &#x27;hello pinia&#x27;,
+  }),
+  persist: {
+    beforeRestore: (ctx) =&gt; {
+      console.log(`about to restore &#x27;${ctx.store.$id}&#x27;`)
+    }
+  },
+})</code></pre><h3 id="4adcaab8-bfdb-403c-a64d-04d2faa5b2b9" class="">afterRestore</h3><ul id="e9892ced-c416-4f6a-85fa-59645ca4b474" class="bulleted-list"><li style="list-style-type:disc">type: <code>(context: PiniaPluginContext) ⇒ void</code></li></ul><ul id="1ce60b68-619c-46b2-b1e2-a64bf27e0cb8" class="bulleted-list"><li style="list-style-type:disc">default: <code>undefined</code></li></ul><p id="e7598c89-c7e7-4ce0-a069-c2ed19434e2b" class="">Hook function run after restoring a persisted state. The hook gives access to the whole <code>PiniaPluginContext</code>. This can be used to enforce specific actions after hydration.</p><pre id="8437f119-4d55-41b4-95bf-a8aa36ffea01" class="code"><code>import { defineStore } from &#x27;pinia&#x27;
+
+export const useStore = defineStore(&#x27;store&#x27;, {
+  state: () =&gt; ({
+    someState: &#x27;hello pinia&#x27;,
+  }),
+  persist: {
+    afterRestore: (ctx) =&gt; {
+      console.log(`just restored &#x27;${ctx.store.$id}&#x27;`)
+    }
+  },
+})</code></pre><h3 id="06eb1598-6287-4154-bb0a-01b790883485" class="">debug</h3><ul id="0dbf7d43-9999-400c-aa00-ff5e108ed1cc" class="bulleted-list"><li style="list-style-type:disc">type: <code>boolean</code></li></ul><ul id="e9e8a949-267d-4c53-8df2-ef920cc9f592" class="bulleted-list"><li style="list-style-type:disc">default: <code>false</code></li></ul><p id="4803f78a-85d1-4f6e-84e2-05169a4500b6" class="">When set to true, any error that may occur while persisting/hydrating stores will be logged as <code>console.error</code>.</p><pre id="52efd274-b5ac-40ff-a00c-cb094716b6b2" class="code"><code>import { defineStore } from &#x27;pinia&#x27;
+
+export const useStore = defineStore(&#x27;main&#x27;, {
+  // ...state, actions, getters...
+  persist: {
+    key: &#x27;my-store&#x27;,
+    // other configuration options...
+    debug: true, // Enable debug mode
+  },
+})</code></pre><h1 id="9b3e4677-78ac-4f35-90c3-2e7988099e2a" class="">Limitations</h1><p id="18a18a71-aac7-4131-8ef6-2527623431bc" class="">While the plugin offers a lot of flexibility and functionality, there are some limitations that should be considered.</p><h2 id="54ff3cb8-a66f-4161-987e-856a66939baf" class="">References are not persisted</h2><p id="14d12b18-043f-4a50-8a48-47b48f180dd3" class="">One significant limitation of the Pinia PersistedState Plugin’s serialization process is that it does not maintain references between objects. This limitation arises because serialization and deserialization convert objects into strings and back, which leads to loss of references.</p><h3 id="3531e896-5506-4caa-9149-eabe9ec73d3e" class="">Example and Explanation</h3><ul id="f5822b14-f04e-42ea-a7ac-43d802dfdfb2" class="bulleted-list"><li style="list-style-type:disc"><strong>Before Serialization</strong>: If we have two variables, <code>a</code> and <code>b</code>, pointing to the same object, they are considered equal (<code>a === b</code> is <code>true</code>).</li></ul><ul id="12d37f8c-f4cf-427f-869a-4b51a2b20673" class="bulleted-list"><li style="list-style-type:disc"><strong>After Deserialization</strong>: Once the state is serialized and then deserialized (like during a page refresh), <code>a</code> and <code>b</code> point to different, though identical, objects (<code>a === b</code> becomes <code>false</code>). Consequently, any reactivity or linkage between <code>a</code> and <code>b</code> is lost.</li></ul><p id="709581f2-1a2a-4308-8415-7c0123139ae0" class="">Supposing we have two objects in our state that initially reference the same object:</p><pre id="f3a4947d-9a85-4d6a-aad5-d66db94f2873" class="code"><code>export const useSharedStateStore = defineStore(&#x27;sharedState&#x27;, {
+  state: () =&gt; {
+    const sharedData = { value: &#x27;shared info&#x27; };
+    return {
+      objectA: sharedData,
+      objectB: sharedData
+    };
+  },
+  // other configurations...
+});</code></pre><p id="7562a6cc-056d-48b6-8774-c6340fa84534" class="">Initially, <code>objectA</code> and <code>objectB</code> point to the same object. However, after serialization and deserialization, this reference is lost.</p><h3 id="26bb8fec-0d4e-49e5-be79-f469368aff73" class="">Workaround</h3><ul id="2f3d3f0c-723e-4f85-846c-6a766f952335" class="bulleted-list"><li style="list-style-type:disc"><strong>Excluding From Persistence</strong>: To address this, we can choose to persist only one of the variables (<code>a</code> or <code>b</code>) using the <code>paths</code> option in the plugin&#x27;s configuration.<pre id="df667e78-48f2-4493-a485-66ce8e7c7ea3" class="code"><code>persist: {
+  paths: [&#x27;objectA&#x27;]
+}</code></pre></li></ul><ul id="9d006bab-a9b8-4844-87d1-940c145a9888" class="bulleted-list"><li style="list-style-type:disc"><strong>Re-Populating After Hydration</strong>: Utilize the <code>afterRestore</code> hook to re-assign the non-persisted variable (either <code>a</code> or <code>b</code>) after state hydration, ensuring they reference the same object again, thus restoring reactivity and linkage.<pre id="634e0975-3bc3-40a5-91d6-db59855930b8" class="code"><code>afterRestore: (context) =&gt; {
+  context.store.objectB = context.store.objectA;
+}</code></pre></li></ul><p id="f06bbfd9-f023-43c9-977d-bffa7364e6b6" class="">This workaround ensures that even after the state is reloaded from the storage, the reference integrity and reactivity between related objects are maintained.</p><ul id="fcce884c-3db3-49aa-8487-50a59f6b6ebc" class="toggle"><li><details open=""><summary><strong>Full Store Example</strong></summary><pre id="d678a3b1-1460-4e26-a4c0-8d377e8c7da3" class="code"><code>import { defineStore } from &#x27;pinia&#x27;;
+
+export const useSharedStateStore = defineStore(&#x27;sharedState&#x27;, {
+  state: () =&gt; {
+    const sharedData = { value: &#x27;shared info&#x27; };
+    return {
+      objectA: sharedData,
+      objectB: sharedData
+    };
+  },
+  persist: {
+    paths: [&#x27;objectA&#x27;],
+    afterRestore: (context) =&gt; {
+      context.store.objectB = context.store.objectA;
+    }
+  },
+  // other configurations...
+});</code></pre><ol type="1" id="ff54856b-4540-418f-a46d-80d3c1c59e91" class="numbered-list" start="1"><li><strong>Re-establishing Reference in </strong><strong><code>afterRestore</code></strong><strong> Hook</strong>:<ul id="607e6184-f533-4adc-86fc-b901dc7affff" class="bulleted-list"><li style="list-style-type:disc">If we choose to persist only one object (<code>objectA</code> or <code>objectB</code>), then it is essential to re-establish the reference in the <code>afterRestore</code> hook. This step is crucial because serialization and deserialization break the original reference. By using the <code>afterRestore</code> hook, we restore the reference manually, ensuring that <code>objectA</code> and <code>objectB</code> point to the same object once again.</li></ul></li></ol><ol type="1" id="63173d58-a435-4cbe-bb96-e10e0249e235" class="numbered-list" start="2"><li><strong>Context of </strong><code><strong>afterRestore</strong></code><strong> Hook</strong>:<ul id="6b8b8881-3845-44a6-a411-e23a7634716d" class="bulleted-list"><li style="list-style-type:disc">In the <code>afterRestore</code> hook, <code>context.store</code> refers to the current instance of our store. It&#x27;s a way to access our store&#x27;s state and methods within the hook.</li></ul><ul id="c76cf64e-fcd2-4b6e-b754-e1de24b6c4b6" class="bulleted-list"><li style="list-style-type:disc">Assigning <code>context.store.objectB = context.store.objectA</code> re-links <code>objectB</code> to <code>objectA</code>. Doing it the other way around (<code>context.store.objectA = context.store.objectB</code>) would be redundant since <code>objectA</code> is the persisted object, and we are re-establishing <code>objectB</code> to reference it.</li></ul></li></ol></details></li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="50ffc78b-25c5-4c0a-9ed4-c7587ecb58d3"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">To maintain the shared reference between <code>objectA</code> and <code>objectB</code>, we should persist only one of them and then use the <code>afterRestore</code> hook to reassign the non-persisted object. This process ensures that both objects point to the same instance, preserving their shared reference.</div></figure><h2 id="7761347b-d3d3-4e27-8398-713c52c9a01e" class="">Non-primitive Types are Not Persisted</h2><p id="b12bb0bc-79a7-4063-92d3-5fd7e1114a62" class="">One of the limitations of the Pinia PersistedState Plugin is related to non-primitive data types, like <code>Date</code> objects. During serialization, these types are converted into strings and are not automatically converted back to their original types upon deserialization. As a result, a <code>Date</code> object stored in the state would be rehydrated as a string rather than as a <code>Date</code> object.</p><h3 id="7b4263c1-6d11-4e68-a22a-9a5d8829a598" class="">Workarounds</h3><ol type="1" id="4f7783e4-9ba1-4e8a-925f-e0c9a4221c8d" class="numbered-list" start="1"><li><strong>Using </strong><code><strong>afterRestore</strong></code><strong> Hook</strong>:<ul id="0bfbe688-78b2-4729-895b-22462d1ab96a" class="bulleted-list"><li style="list-style-type:disc">In the <code>afterstore</code> hook, we can manually convert these string representations back into their original data types.</li></ul><ul id="962c9468-3a11-4797-90b4-839ef5b2431a" class="bulleted-list"><li style="list-style-type:disc">For example, if we have a <code>Date</code> stored as a string, we would convert it back to a <code>Date</code> object in this hook.</li></ul></li></ol><ol type="1" id="4b9352ba-cc70-490a-9f50-19a07d139c16" class="numbered-list" start="2"><li><strong>Custom Serializer</strong>:<ul id="6b480b24-b62e-40a1-8c8a-7e04efe470db" class="bulleted-list"><li style="list-style-type:disc">Implement a custom serializer that handles non-primitive types appropriately.</li></ul><ul id="22226a92-cfe1-4213-ada0-2050ccda380f" class="bulleted-list"><li style="list-style-type:disc">This serializer would include logic to convert non-primitive types into a storable format when serializing and then back into their original types when deserializing.</li></ul></li></ol><h3 id="a0e4ab05-9d20-43fc-a92e-fed3d399e65a" class="">Example</h3><pre id="db37b989-df67-421d-b3ba-819d177b0971" class="code"><code>import { defineStore } from &#x27;pinia&#x27;
+
+export const useDateStore = defineStore(&#x27;dateStore&#x27;, {
+  state: () =&gt; ({
+    myDate: new Date(), // A Date object in state
+  }),
+  persist: {
+    serializer: {
+      serialize: (state) =&gt; {
+        // Convert Date objects to ISO string format for storage
+        return JSON.stringify({
+          ...state,
+          myDate: state.myDate.toISOString(),
+        });
+      },
+      deserialize: (value) =&gt; {
+        // Convert stored string back into Date object
+        const parsed = JSON.parse(value);
+        return {
+          ...parsed,
+          myDate: /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/.test(parsed.myDate) ? new Date(parsed.myDate) : parsed.myDate,
+        };
+      }
+    },
+    afterRestore: (context) =&gt; {
+      // The stored string is now converted back into a Date object
+      context.store.myDate = new Date(context.store.myDate);
+    }
+  },
+  // other configurations...
+});</code></pre><ul id="b3421c92-3ba5-4f5a-98b0-5dbf4e462515" class="toggle"><li><details open=""><summary>Explanation of code</summary><ul id="b2fb0e9d-ca2c-412b-998a-3920581faf87" class="bulleted-list"><li style="list-style-type:disc"><code><strong>value</strong></code>: The string being deserialized.</li></ul><ul id="22f86125-f55d-46a0-a7ce-e5b4dfcabc57" class="bulleted-list"><li style="list-style-type:disc"><code><strong>/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/</strong></code>: This is a regular expression that matches the ISO 8601 date format. It checks for a string that starts with a date (YYYY-MM-DD), followed by a &#x27;T&#x27; character, a time (HH:MM:SS), milliseconds (<code><strong>.SSS</strong></code>), and ending with a &#x27;Z&#x27; (indicating UTC time).</li></ul><ul id="4c2f0647-63b4-4937-b546-856f78a05146" class="bulleted-list"><li style="list-style-type:disc"><code><strong>.test(value)</strong></code>: This tests whether the <code><strong>value</strong></code> matches the date format specified in the regular expression.</li></ul><ul id="27045867-aa65-4f12-96e4-80c8f33e905b" class="bulleted-list"><li style="list-style-type:disc"><code><strong>new Date(value)</strong></code>: If the value is a date string, this converts it back into a <code><strong>Date</strong></code> object.</li></ul><ul id="65d3ffaf-5871-4147-bac3-76cc01723f4e" class="bulleted-list"><li style="list-style-type:disc"><code><strong>JSON.parse(value)</strong></code>: If the value is not a date string, it falls back to standard JSON parsing.</li></ul><pre id="cbc0e581-dddd-4ba8-b9f7-65c10a734550" class="code"><code>function formatDateToDDMMYYYY(date) {
+  const day = date.getDate().toString().padStart(2, &#x27;0&#x27;);
+  const month = (date.getMonth() + 1).toString().padStart(2, &#x27;0&#x27;); // January is 0
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
+}
+
+// Example usage
+const myDate = new Date(); // Assume this is the date object
+const formattedDate = formatDateToDDMMYYYY(myDate);
+console.log(formattedDate); // Outputs in DD-MM-YYYY format</code></pre></details></li></ul><ul id="0f725856-1bbe-40dc-b0e9-38be8ebe1a96" class="bulleted-list"><li style="list-style-type:disc">The <code>serialize</code> function converts the <code>Date</code> object into an ISO string format before storing it.</li></ul><ul id="85b3e9f4-b1d4-42db-b0ee-6d4047ab3ebd" class="bulleted-list"><li style="list-style-type:disc">The <code>deserialize</code> function converts this ISO string back into a <code>Date</code> object when rehydrating the store.</li></ul><ul id="6cd338f7-509c-487b-a79c-686a7d86e571" class="bulleted-list"><li style="list-style-type:disc">In the <code>afterRestore</code> hook, <code>context.store.myDate</code> would be the rehydrated state, where <code>myDate</code> is initially a string. The hook then converts it back into a <code>Date</code> object, ensuring that <code>myDate</code> in our store is always a <code>Date</code> object, not a string.</li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="7bc44de4-2cda-4443-8002-0cc77ad84a10"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">Using either a custom serializer or the <code><strong>afterRestore</strong></code> hook should be sufficient for handling non-primitive types like <code><strong>Date</strong></code> objects. We typically wouldn&#x27;t need to use both simultaneously. The choice between them depends on our specific requirements and the complexity of our state. In summary, you can choose either a custom serializer or the <code>afterRestore</code> hook based on our state&#x27;s complexity and the capabilities of the serialization library you are using.</div></figure><h2 id="af02f47c-55db-49bb-99c5-730293f0c811" class="">Storage Must Be Synchronous</h2><p id="fa8cb132-28b7-4234-a13b-fc460695bc85" class="">The Pinia PersistedState Plugin requires that any custom storage provided must have synchronous methods. This is because Pinia&#x27;s state subscription mechanism (<code>$subscribe</code>) is synchronous, much like Vuex mutations. Asynchronous operations in storage methods could lead to unexpected behaviors or timing issues.</p><h3 id="a1a7fd1d-52a6-4062-a353-92870869baa4" class="">Workaround</h3><p id="6439e22c-9115-4338-8a74-52940c9017d4" class="">To incorporate asynchronous behavior (such as using asynchronous storage solutions), we can utilize Pinia&#x27;s <code>$onAction</code> feature:</p><ul id="b1991aea-d7f4-4eec-8128-4302bd100cf4" class="bulleted-list"><li style="list-style-type:disc"><strong><code>$onAction</code></strong>: This Pinia API allows us to subscribe to actions within our store. Since actions in Pinia can be asynchronous, we can leverage this to perform asynchronous tasks related to state changes.</li></ul><h3 id="c91ecb70-5741-4924-9f57-a0c393813b80" class="">Example</h3><p id="d3e8cd41-843c-4605-ae10-cf34cef2684a" class="">Suppose we have a store that saves user data. We want to use an asynchronous storage system (like a server-side database or an API) for persisting this data, but Pinia&#x27;s persisted state requires synchronous methods.</p><ul id="bbb5574d-d554-4b8d-b3e1-ed1e2284a2da" class="toggle"><li><details open=""><summary><strong>Async/Await Explained Simply</strong></summary><ul id="b9c42dd0-da5e-4286-a0ea-6c73f41026cd" class="bulleted-list"><li style="list-style-type:disc"><code><strong>async</strong></code><strong> Keyword</strong>: It&#x27;s used to declare a function as asynchronous. This means the function can perform tasks that take some time to complete, like fetching data from an API or reading files.</li></ul><ul id="b9942a9f-0b79-4e39-9ac4-fb3876023461" class="bulleted-list"><li style="list-style-type:disc"><code><strong>await</strong></code><strong> Keyword</strong>: Used within an async function to wait for a task to complete. It pauses the function execution until the task is done, but it doesn&#x27;t block the entire program.</li></ul></details></li></ul><ol type="1" id="139d33a5-6b58-4f69-acaa-980cc2604080" class="numbered-list" start="1"><li><strong>Define the Store</strong><p id="4822be61-0b85-4103-963a-f1d89123cd6c" class="">We’ll have actions in our store to handle data changes.</p><pre id="e505d59a-606c-46af-8a1d-08dec4aeb654" class="code"><code>import { defineStore } from &#x27;pinia&#x27;;
+
+export const useUserStore = defineStore(&#x27;userStore&#x27;, {
+  state: () =&gt; ({
+    users: [], // Array to store user data
+  }),
+  actions: {
+    async addUser(user) {
+      // Simulate an asynchronous save operation (e.g., API call)
+      await asyncSaveToStorage(user);
+      this.users.push(user); // Update state after saving
+    }
+  }
+}); </code></pre></li></ol><ol type="1" id="cfb6e4ed-787f-4ca9-bb11-de14398c7e63" class="numbered-list" start="2"><li><strong>Simulate Asynchronous Save Operation</strong><p id="066d327d-d8c0-41b6-8ffe-9ef97fbdb3db" class="">This function represents saving data to an asynchronous storage. </p><pre id="012e6b1c-e828-4495-99aa-165b934fdd49" class="code"><code>async function asyncSaveToStorage(user) {
+  // Here we would typically make an API call or interact with async storage
+  await new Promise(resolve =&gt; setTimeout(resolve, 1000)); // Simulating delay
+  console.log(&#x27;User saved asynchronously:&#x27;, user);
+}</code></pre></li></ol><ol type="1" id="d587ac23-914e-4396-b0a9-4400707ecad9" class="numbered-list" start="3"><li><strong>Using </strong><code><strong>$onAction</strong></code>:<p id="e24815be-d564-400b-896c-929fe708667e" class="">Perform additional operations when an action (like <code>addUser</code>) is executed.</p></li></ol><pre id="67368c37-8592-4167-8c0e-0f09dda6a8c1" class="code code-wrap"><code>javascriptCopy code
+const userStore = useUserStore();
+
+userStore.$onAction(async (action) =&gt; {
+  if (action.name === &#x27;addUser&#x27;) {
+    // Log or perform other async tasks when addUser is called
+    await logUserAction(&#x27;New user added&#x27;);
+  }
+});
+
+async function logUserAction(message) {
+  // Simulate async logging
+  await new Promise(resolve =&gt; setTimeout(resolve, 500));
+  console.log(&#x27;Async Action Log:&#x27;, message);
+}
+
+</code></pre><p id="89409a0e-5936-4205-b50c-0124f204dc59" class="">This approach addresses the limitation mentioned in the Pinia PersistedState Plugin documentation by handling asynchronous operations within actions and utilizing <code>$onAction</code> for further asynchronous tasks.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="22a4a86c-b2ae-4e40-9c77-ad13b491ac7b"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">In this workaround, we handle asynchronous storage operations within actions and possibly use <code>$onAction</code> to react to these actions, enabling a pattern that accommodates asynchronous behavior while adhering to Pinia&#x27;s synchronous state subscription requirements. This approach helps manage async operations in Pinia while keeping the core state management synchronous.</div></figure><h1 id="49d3c6ba-551b-4d12-bce3-47a8e4a23cb4" class="">Advanced Usage</h1><h2 id="ddb9deeb-b5a9-47c1-8027-a32594627d29" class="">Global Persistence Options</h2><p id="9832d8b6-1503-421f-a10f-93075e612ee3" class="">The Pinia PersistedState Plugin offers a feature for setting global persistence options. This approach is useful when we want to apply a consistent configuration across all stores in our application.</p><h3 id="c09f5476-5454-415d-8ba1-0a397631e8a5" class="">How It Works</h3><ol type="1" id="4e87a0f1-f956-4d64-b5d9-09c31ecd29cb" class="numbered-list" start="1"><li><strong>Factory Function</strong>: Instead of the default plugin import, <code>createPersistedState</code> is used to initialize the plugin with global options.<pre id="6effa9cc-a7e7-45ee-800c-03f10fbaee79" class="code code-wrap"><code>import { createPinia } from &#x27;pinia&#x27;;
+import { createPersistedState } from &#x27;pinia-plugin-persistedstate&#x27;;
+
+const pinia = createPinia();
+pinia.use(createPersistedState({
+  storage: sessionStorage,
+}));
+</code></pre></li></ol><h3 id="e1de4e46-d401-486f-81c6-0b5001eb6822" class="">Available Global Options</h3><ul id="ceb18abe-7031-48f1-9115-74c48ce8b54e" class="bulleted-list"><li style="list-style-type:disc"><code><strong>storage</strong></code>: Specifies where to persist the state (e.g., <code>localStorage</code>, <code>sessionStorage</code>).</li></ul><ul id="b8b6ac3a-02f5-4493-aa50-322cf8fb3cfd" class="bulleted-list"><li style="list-style-type:disc"><code><strong>serializer</strong></code>: Customizes how state is serialized and deserialized.</li></ul><ul id="40795e56-2e17-4050-8fd2-d96e7c57cd0d" class="bulleted-list"><li style="list-style-type:disc"><code><strong>beforeRestore</strong></code>: A hook that runs before restoring state.</li></ul><ul id="1f9070f4-16fd-4c05-b151-43552d8c1369" class="bulleted-list"><li style="list-style-type:disc"><code><strong>afterRestore</strong></code>: A hook that runs after state is restored.</li></ul><h3 id="393ac8c8-08a4-455c-b24c-9a2e58393835" class="">Overriding Global Options</h3><ul id="da27a60c-2547-4e9e-9c11-66336d73c7e1" class="bulleted-list"><li style="list-style-type:disc"><strong>Individual Store Configuration</strong>: Any option specified in a store&#x27;s <code>persist</code> configuration will override the global settings.</li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e3abed52-7aff-4778-a335-c94aa183e950"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">By implementing this feature, we can have a flexible and customizable persistence behaviour for each store in our application, while still retaining a default setting for the entire app. This advanced setup gives us more control and consistency across all the persisted states in our application, making it easier to configure, especially for larger projects.</div></figure><h2 id="6ebe9339-fd07-46b5-9ecb-2097ffbbd7bc" class="">Global Key Option</h2><p id="8aee8bc4-dbe1-4c3a-9d2c-1e90bda30e5c" class="">The <code>createPersistedState</code> factory function in the Pinia PersistedState Plugin allows for a global <code>key</code> option. This option can be used to customize how store keys are generated globally.</p><h3 id="17483f14-4a2f-4345-ae4b-89d3cafbb1a0" class="">How It Works</h3><ul id="132fd1f6-3868-4745-a915-cc30e1f0e781" class="bulleted-list"><li style="list-style-type:disc">The <code>key</code> option accepts a function that receives the store&#x27;s identifier (<code>id</code>) and returns a string, which will be the new key for the store&#x27;s persisted state.<pre id="dbc75ca2-4a73-4036-87d2-fb260cd038d0" class="code code-wrap"><code>import { createPinia } from &#x27;pinia&#x27;;
+import { createPersistedState } from &#x27;pinia-plugin-persistedstate&#x27;;
+
+const pinia = createPinia();
+pinia.use(createPersistedState({
+  key: id =&gt; `__persisted__${id}`,
+}));
+</code></pre></li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="fd9bd25b-a5ee-48c2-8f38-8a1d089b6b93"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">This global key option is particularly useful when we need to consistently prefix or postfix all store keys in your application, adding an extra layer of customization or namespace organization to our persisted state keys.</div></figure><h2 id="66715d3f-deb6-41e4-b78f-ff24c5897689" class="">Auto Mode</h2><p id="28ee71e5-a32c-46f6-89f0-25dae66430b0" class="">The Pinia PersistedState Plugin includes an &quot;auto mode&quot; feature that enables persistence for all stores by default. This mode can be particularly useful in applications where most of the stores need their state to be persisted, reducing the need to explicitly declare <code>persist: true</code> for each store.</p><h3 id="beef6d03-577c-410e-bcb7-ebdd933000e2" class="">How It Works</h3><ul id="f072968a-ffc4-40f6-8d2d-ae54f108cc5f" class="bulleted-list"><li style="list-style-type:disc"><strong>Enabling Auto Mode</strong>: To activate auto mode, we set the <code>auto</code> option to <code>true</code> in the global configuration of the <code>createPersistedState</code> method.<pre id="f4c4cf63-5f4b-44e2-902b-a301010670be" class="code code-wrap"><code>import { createPinia } from &#x27;pinia&#x27;;
+import { createPersistedState } from &#x27;pinia-plugin-persistedstate&#x27;;
+
+const pinia = createPinia();
+pinia.use(createPersistedState({
+  auto: true,
+}));
+</code></pre></li></ul><h3 id="8c72b14a-92d0-483b-95e0-a896f60b4967" class="">Defining a Store in Auto Mode</h3><pre id="9d4a47ec-788f-4c52-a05d-a62db31e5372" class="code code-wrap"><code>import { defineStore } from &#x27;pinia&#x27;;
+
+defineStore(&#x27;persisted&#x27;, {
+  state: () =&gt; ({ saved: &#x27;&#x27; }),
+  // No need to set persist: true; it&#x27;s automatic
+});
+</code></pre><h3 id="636367d9-2506-455a-a69b-024c02f938ee" class="">Opting Out of Persistence</h3><p id="a4371ae4-0e28-4f50-ab7d-059b41474823" class="">Even with auto mode enabled, we can opt out of persistence for specific stores by setting <code>persist: false</code>.</p><pre id="ce26414c-c2a3-4a37-9498-457fdf5b092f" class="code code-wrap"><code>import { defineStore } from &#x27;pinia&#x27;;
+
+defineStore(&#x27;not-persisted&#x27;, {
+  state: () =&gt; ({ saved: &#x27;&#x27; }),
+  persist: false, // Explicitly opting out of persistence
+});
+</code></pre><h3 id="a693e558-7837-47df-8330-539a585f0d4a" class="">Tip</h3><p id="a71e6211-3d6b-4585-a52f-80ff60d84648" class="">Auto mode streamlines the configuration process in applications where state persistence is the norm rather than the exception. It allows for a more concise store setup while still providing the flexibility to opt out of persistence as needed.</p><h2 id="48e93f81-1e82-42a3-9e29-ee2678042282" class="">Multiple Persistences Per Store</h2><p id="de9881fa-0f90-4694-ad3b-2fa881e05a68" class="">The Pinia PersistedState Plugin allows for multiple persistence configurations within a single store. This feature is useful when different parts of the store&#x27;s state need to be persisted in different storages, like <code>localStorage</code> and <code>sessionStorage</code>.</p><h3 id="e9e9ad56-4d6e-4731-9b4a-95a2211a0af5" class="">Implementing Multiple Persistences</h3><ul id="a3539def-a6d6-41e9-bcbd-ec27c0ea9951" class="bulleted-list"><li style="list-style-type:disc"><strong>Array of Configurations</strong>: The <code>persist</code> option can accept an array of configuration objects, each specifying a different persistence strategy.<pre id="fa1f3533-0326-4602-8c9d-f6b3640e56d3" class="code code-wrap"><code>import { defineStore } from &#x27;pinia&#x27;;
+
+defineStore(&#x27;store&#x27;, {
+  state: () =&gt; ({
+    toLocal: &#x27;&#x27;,
+    toSession: &#x27;&#x27;,
+    toNowhere: &#x27;&#x27;,
+  }),
+  persist: [
+    {
+      paths: [&#x27;toLocal&#x27;],
+      storage: localStorage,
+    },
+    {
+      paths: [&#x27;toSession&#x27;],
+      storage: sessionStorage,
+    },
+  ],
+});
+</code></pre><p id="8b596849-86e9-4789-bb18-3d9bace40c9f" class="">In this setup:</p><ul id="67bf45bd-3f14-487f-a225-a8c5297b729f" class="bulleted-list"><li style="list-style-type:circle"><code>toLocal</code> will be persisted in <code>localStorage</code>.</li></ul><ul id="137c9762-e2fe-4ea3-9636-8e5b099d8777" class="bulleted-list"><li style="list-style-type:circle"><code>toSession</code> will be persisted in <code>sessionStorage</code>.</li></ul><ul id="d884f1d9-5a80-4747-8006-14648757d30d" class="bulleted-list"><li style="list-style-type:circle"><code>toNowhere</code> is not included in any persistence paths, so it won&#x27;t be persisted.</li></ul></li></ul><h3 id="d117cc7a-d4c0-45e1-8bf3-db730c62a642" class="">Warning: Data Inconsistency</h3><ul id="b930b523-49d6-4338-b28d-dc1f487d22be" class="bulleted-list"><li style="list-style-type:disc">When not specifying <code>paths</code> or targeting the same path in multiple persistence configurations, there&#x27;s a risk of data inconsistency.</li></ul><ul id="15933f2c-90eb-4e30-a803-d271383bf6be" class="bulleted-list"><li style="list-style-type:disc">During rehydration, persistences are processed in the order they are declared, which can lead to later configurations overriding earlier ones.<pre id="632daa8e-1e3a-4ea8-941f-3d723b4e17eb" class="code code-wrap"><code>import { defineStore } from &#x27;pinia&#x27;;
+
+defineStore(&#x27;store&#x27;, {
+  state: () =&gt; ({
+    someData: &#x27;Hello Pinia&#x27;
+  }),
+  persist: [
+    {
+      storage: localStorage,
+    },
+    {
+      storage: sessionStorage,
+    },
+  ],
+});
+</code></pre><p id="f4dcbc1f-f25f-4f26-8514-edc8c161bd8f" class="">In this case:</p><ul id="4d9f9e42-35e9-4ded-9bca-2fe7ac0aab8e" class="bulleted-list"><li style="list-style-type:circle">On hydration, the data retrieved from <code>sessionStorage</code> will replace the data retrieved from <code>localStorage</code>.</li></ul><ul id="e235a74f-94e1-4a26-9438-89913c839326" class="bulleted-list"><li style="list-style-type:circle">This behavior occurs because the configurations are processed sequentially.</li></ul></li></ul><h3 id="15c374fd-6a3a-4e80-af07-570b94442de9" class="">Tip</h3><p id="0010a91c-f940-4ddc-8e55-c4f78bece00c" class="">When using multiple persistences in a single store, it&#x27;s important to clearly define <code>paths</code> for each configuration to ensure that data is stored and retrieved as intended, avoiding any unintended data overrides.</p><h2 id="15dfdad5-65c3-4b4f-9054-052b4fd83604" class="">Forcing the Rehydration</h2><p id="5fc3bcaa-6718-436e-9253-1c00254fd783" class="">The Pinia PersistedState Plugin provides a feature to manually trigger the rehydration of store state from storage. This can be particularly useful in advanced scenarios where we need explicit control over when and how the store state is rehydrated from the persisted data.</p><h3 id="c7d7ee41-cf53-4063-b8cd-827cac415779" class=""><code>$hydrate</code> Method</h3><p id="c16d08a1-6e7f-45fc-8d67-4a8db622203a" class="">The <code>$hydrate</code> method allows us to manually fetch data from storage and replace the current state with it.</p><ul id="01c72adf-1ee6-4e06-bcaf-bd699dd76919" class="bulleted-list"><li style="list-style-type:disc"><strong>Usage</strong>: It can be called on any store instance.<p id="030e157b-e06d-42fc-937e-a522af1f7322" class="">Given a store:</p><pre id="026b2e3c-a6b5-4695-b838-561637dbcda5" class="code code-wrap"><code>import { defineStore } from &#x27;pinia&#x27;;
+
+const useStore = defineStore(&#x27;store&#x27;, {
+  state: () =&gt; ({
+    someData: &#x27;Hello Pinia&#x27;
+  }),
+  // Enabling automatic persistence
+  persist: true
+});</code></pre><p id="1bcd568c-1582-4bdd-824a-5ff90a4997fa" class="">We can force rehydration as follows:</p><pre id="439b86c1-c231-446e-9b6b-9c80729d42a8" class="code code-wrap"><code>const store = useStore();
+store.$hydrate({ runHooks: false });
+</code></pre><p id="1822c0f4-6e03-44c3-a3a2-b59d8adb899e" class="">In this example, the store&#x27;s current state will be replaced with data fetched from storage, and the <code>beforeRestore</code> and <code>afterRestore</code> hooks will not be triggered due to <code>{ runHooks: false }</code>.</p><ul id="d2446c43-9621-4aca-b1bb-55649cfa1b1b" class="toggle"><li><details open=""><summary><strong>Real scenarios</strong></summary><ol type="1" id="bcbf5a39-7769-40e8-b555-6e2c914b6c84" class="numbered-list" start="1"><li><strong>Dynamic Storage Update</strong>:<ul id="bde76544-1fe2-444d-991b-c3a31a9903e3" class="bulleted-list"><li style="list-style-type:disc"><strong>Scenario</strong>: Consider an application where user-specific settings are stored under different keys in <code><strong>localStorage</strong></code>, each key corresponding to a different user account.</li></ul><ul id="5e3c1497-c8ab-4680-b716-00d76eca2e1e" class="bulleted-list"><li style="list-style-type:disc"><strong>Automatic Persistence Limitation</strong>: Simply changing the <code><strong>loggedUser</strong></code> state might not be enough if the settings are stored under different keys. Automatic persistence will save changes to the current key, but it won’t automatically load settings from another key when the user changes.</li></ul><ul id="2509eb58-6a25-4470-873b-22e6e0d7cb29" class="bulleted-list"><li style="list-style-type:disc"><strong>Advantage of </strong><code><strong>$hydrate</strong></code>: It allows us to explicitly load settings from a different key in storage when a user switches accounts. This is beyond the scope of what automatic persistence can handle, as it is typically tied to a single key in storage.</li></ul></li></ol><ol type="1" id="116d5674-6e78-48c5-ac16-6aaf4e9471dd" class="numbered-list" start="2"><li><strong>Complex State Synchronization Across Tabs</strong>:<ul id="664f1aa7-b844-4413-9f6a-a42832b2fc0b" class="bulleted-list"><li style="list-style-type:disc"><strong>Scenario</strong>: If our app&#x27;s state needs to be synchronized across multiple browser tabs, and one tab makes a change to the shared state in <code><strong>localStorage</strong></code>.</li></ul><ul id="52aaed08-30e2-49d5-86c1-c75b52a2ed94" class="bulleted-list"><li style="list-style-type:disc"><strong>Automatic Persistence Limitation</strong>: The other tabs won’t automatically know about this change. Automatic persistence only saves changes but doesn’t listen for changes made elsewhere.</li></ul><ul id="e1510f33-491a-430b-8f09-bd3ecd4b0654" class="bulleted-list"><li style="list-style-type:disc"><strong>Advantage of </strong><code><strong>$hydrate</strong></code>: By using event listeners (like the <code><strong>storage</strong></code> event in browsers), we can listen for changes in <code><strong>localStorage</strong></code> and then use <code><strong>$hydrate</strong></code> to manually update the state in all other tabs to reflect these changes.</li></ul></li></ol></details></li></ul></li></ul><h3 id="d6c1b093-045a-4f41-bb3c-854a20462f40" class="">Warning: Use With Caution</h3><ul id="cd8b1bfb-9ad0-41e8-aa4f-5792c4ec6d0e" class="bulleted-list"><li style="list-style-type:disc"><strong>Uncommon Use</strong>: Manual rehydration is an advanced feature and is not commonly required in typical use cases.</li></ul><ul id="c39852e5-ee96-4ad7-8279-d8a0b0c83bdd" class="bulleted-list"><li style="list-style-type:disc"><strong>Potential Issues</strong>: It&#x27;s essential to ensure that the need to use <code>$hydrate</code> is not due to a bug or a misunderstanding of the plugin&#x27;s functionality.</li></ul><ul id="8e2b4c22-0c91-42ea-b3dd-20cf11afb60a" class="bulleted-list"><li style="list-style-type:disc"><strong>Understanding Implications</strong>: If we decide to use <code>$hydrate</code>, make sure we understand its implications and that it fits we specific use case.</li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f10bce93-3c0e-41c9-88df-13da2ca70c69"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">The <code>$hydrate</code> method offers a way to take explicit control over the rehydration process, allowing for flexibility in complex application scenarios. However, its use should be well-considered and justified.</div></figure><h3 id="068eb9c7-343d-482a-bb06-323dcc497aa0" class="">Forcing the Persistence</h3><p id="5b23a6e0-1fa7-4564-9dbe-cf4cf93953ff" class="">The Pinia PersistedState Plugin provides a <code>$persist</code> method for each store, which allows you to manually trigger the persistence of the store&#x27;s state to the configured storage. This feature is useful in advanced scenarios where you require explicit control over the timing and conditions of persisting the store&#x27;s state.</p><h3 id="1c692a9f-bb44-47a8-b232-bb5dc689889c" class=""><code>$persist</code> Method</h3><p id="466daeae-fce7-4d21-82ed-5d2d8396fa81" class="">The <code>$persist</code> method enables manual saving of the current state of the store into the configured storage options.</p><ul id="92686bfd-6b61-4687-9b30-517a705efb9a" class="bulleted-list"><li style="list-style-type:disc"><strong>Usage</strong>: It can be used on any store instance to enforce immediate persistence.<p id="7737f27f-0961-47fe-8438-7bc6cb33bf53" class="">Given a store:</p><pre id="035ce4c8-bd25-42b4-81a7-1ddaffe34203" class="code code-wrap"><code>import { defineStore } from &#x27;pinia&#x27;;
+
+const useStore = defineStore(&#x27;store&#x27;, {
+  state: () =&gt; ({
+    someData: &#x27;Hello Pinia&#x27;
+  }),
+  // Enabling automatic persistence
+  persist: true
+});
+</code></pre><p id="86650bd8-b740-4cf2-8f5f-2b44fc2e0bb3" class="">You can force persistence as follows:</p><pre id="6b33e9ac-10c7-4e6a-bbd6-0bde4553431b" class="code code-wrap"><code>const store = useStore();
+store.$persist();
+</code></pre><p id="cbcb803e-3a57-4e5a-966c-4cc91c0a1b58" class="">In this example, invoking <code>store.$persist()</code> will immediately save the current state of the store (<code>someData: &#x27;Hello Pinia&#x27;</code>) to the storage as configured in the store&#x27;s <code>persist</code> settings.</p><ul id="bf30f1db-906b-456b-8ccc-7cfe94383850" class="toggle"><li><details open=""><summary><strong>Real scenarios</strong></summary><ol type="1" id="6f1a6e3d-ff62-42e3-8f7a-57a670bdfd8f" class="numbered-list" start="1"><li><strong>Manual Save Feature in Complex Applications</strong>:<ul id="a0f73935-4ae7-4cc3-a47a-63c56ab58cdb" class="bulleted-list"><li style="list-style-type:disc"><strong>Scenario</strong>: In a complex application like a document editor, users might make numerous changes, but we might want to provide a manual &#x27;Save&#x27; button for users to explicitly save changes.</li></ul><ul id="5fdd0c40-e761-44da-90ce-5d786f417775" class="bulleted-list"><li style="list-style-type:disc"><strong>Automatic Persistence Limitation</strong>: Although automatic persistence saves state changes, it doesn’t provide a mechanism for user-initiated saves, which can be important for user experience and control.</li></ul><ul id="3e1f0c54-7cf9-418c-a2a2-57b8c0a81a0f" class="bulleted-list"><li style="list-style-type:disc"><strong>Advantage of </strong><code><strong>$persist</strong></code>: It allows us to provide a manual save option that gives users explicit control over when their changes are saved.</li></ul></li></ol><ol type="1" id="b44818da-c09a-4e0b-af7d-5952386a428d" class="numbered-list" start="2"><li><strong>Conditional Persistence Based on Specific Logic</strong>:<ul id="6a1f0281-6cf3-4d73-8720-45296bd81059" class="bulleted-list"><li style="list-style-type:disc"><strong>Scenario</strong>: There might be cases where we want to save the state only under certain conditions, like after a certain amount of time or when a specific action is completed.</li></ul><ul id="e4755352-5145-414a-83bc-15cf8e614d7c" class="bulleted-list"><li style="list-style-type:disc"><strong>Automatic Persistence Limitation</strong>: Automatic persistence is continuous and doesn’t allow for such conditional logic.</li></ul><ul id="4cd0c626-c521-423a-b8f7-991c2b925bc5" class="bulleted-list"><li style="list-style-type:disc"><strong>Advantage of </strong><code><strong>$persist</strong></code>: We can write custom logic to determine when the state should be saved and then use <code><strong>$persist</strong></code> to save it at the right moment, giving you finer control over the persistence behavior.</li></ul></li></ol></details></li></ul></li></ul><h3 id="9b2a9a1d-c444-4f9e-8d5b-7374383e9a91" class="">Warning: Use With Caution</h3><ul id="bf865049-8b4a-4388-b810-d9fa86b1e06d" class="bulleted-list"><li style="list-style-type:disc"><strong>Uncommon Use</strong>: Like <code>$hydrate</code>, manual persistence is an advanced feature and typically not required in most applications.</li></ul><ul id="00b429f9-d732-43dd-bd82-21e16aacabdf" class="bulleted-list"><li style="list-style-type:disc"><strong>Potential Misuse</strong>: Ensure that the need for using <code>$persist</code> is not a result of incorrect implementation or misunderstanding of the plugin’s functionality.</li></ul><ul id="d08c4c7b-7d7a-4b30-bca3-8ec35c05f373" class="bulleted-list"><li style="list-style-type:disc"><strong>Understanding Consequences</strong>: If we choose to use <code>$persist</code>, be certain of its role in our application and that it aligns with our specific requirements.</li></ul><p id="89a13916-c249-4664-95fc-870dc52551eb" class="">The <code>$persist</code> method offers granular control over the persistence process, enabling direct management of when and how the state is saved. However, it should be used judiciously and with a clear understanding of its implications.</p><hr id="a04bc3b1-be66-408e-be14-a1b0350a03b0"/><h1 id="50b4c1d8-43d7-45a6-afd7-2e7088e8c69a" class="">Automatic State Persistence with Pinia PersistedState Plugin</h1><p id="285cde3f-256f-47e6-b48f-ea7d03f87e2c" class="">When using the Pinia PersistedState Plugin, manual use of <code>localStorage.setItem</code> and <code>localStorage.getItem</code> is no longer necessary for state management. The plugin automatically handles saving and retrieving our store&#x27;s state to and from the storage, streamlining the process and reducing the need for additional code.</p><h3 id="05101411-8b22-498e-bcde-cbad9052ab3f" class="">Example: Persisting User Array in Local or Session Storage</h3><p id="4379bf57-7169-483f-99b4-be2e8bd1d4dc" class="">Here&#x27;s how we could set up a Pinia store to persist a <code>users</code> array, either in <code>localStorage</code> or <code>sessionStorage</code>, and then retrieve specific users from the array:</p><pre id="8369d64c-0069-4ce7-ab22-f68a258ccd28" class="code code-wrap"><code>import { defineStore } from &#x27;pinia&#x27;
+import piniaPluginPersistedstate from &#x27;pinia-plugin-persistedstate&#x27;
+
+// Create your store
+export const useUserStore = defineStore(&#x27;user&#x27;, {
+  state: () =&gt; ({
+    // Dummy users added to the users array
+    users: [
+      { id: 1, name: &#x27;Alice&#x27;, email: &#x27;alice@example.com&#x27; },
+      { id: 2, name: &#x27;Bob&#x27;, email: &#x27;bob@example.com&#x27; },
+      { id: 3, name: &#x27;Charlie&#x27;, email: &#x27;charlie@example.com&#x27; }
+    ],
+  }),
+  getters: {
+    // Getter to retrieve specific users (e.g., by ID)
+    getUserById: (state) =&gt; (id) =&gt; state.users.find(user =&gt; user.id === id),
+  },
+  persist: {
+    storage: window.localStorage, // or window.sessionStorage
+  },
+})
+
+// Example usage in a component
+export default {
+  setup() {
+    const userStore = useUserStore();
+    const user = userStore.getUserById(2); // Retrieve user with ID 2
+    return { user };
+  },
+}</code></pre><p id="ec4b76e0-6ea1-417d-b7a4-83ab1bdea272" class="">In this setup, the <code>users</code> array is automatically persisted to the specified storage (local or session). The <code>getUserById</code> getter allows for retrieving specific users without manually interacting with the storage APIs. This approach offers a more streamlined and efficient state management solution.</p><hr id="09d02c97-5b2b-48c0-b47f-be01b70e7eb3"/><h1 id="a141f838-0f6c-4ee1-ae14-da60d3a0cd10" class="block-color-teal_background">Important Concepts</h1><ol type="1" id="900c253a-4939-4baf-abef-cdf5593f0605" class="numbered-list" start="1"><li><strong>Basic Usage</strong>: Installation and application of the plugin for state persistence.</li></ol><ol type="1" id="afbab6c2-5fe1-4a73-9e50-df64a2b24003" class="numbered-list" start="2"><li><strong>Configuration Options</strong>: Customization of key, storage, paths, serializer, and hooks.</li></ol><ol type="1" id="47d9c912-d975-40d5-b05d-43ce48ed563f" class="numbered-list" start="3"><li><strong>Serialization and Deserialization</strong>: Handling of data conversion for storage and retrieval.</li></ol><ol type="1" id="9f6c4d00-77a5-4b47-84c6-3f842bb55e60" class="numbered-list" start="4"><li><strong>Hooks (</strong><code><strong>beforeRestore</strong></code><strong> and </strong><code><strong>afterRestore</strong></code><strong>)</strong>: Custom actions before and after state restoration.</li></ol><ol type="1" id="2ee4b1b8-c3fd-46d3-91af-5e753f99759d" class="numbered-list" start="5"><li><strong>Debugging</strong>: Error logging during persisting/hydrating processes.</li></ol><hr id="1193a6fd-c851-4de4-aa0d-8836c3736913"/><h1 id="6880350f-8e68-4c71-90b6-2dfdd988a0be" class="block-color-teal_background">Key Takeaways</h1><ul id="ecd464c4-0ece-4fa7-b4f2-4a8c0777b42e" class="bulleted-list"><li style="list-style-type:disc"><strong>Selective Persistence</strong>: Ability to specify which parts of the state to persist using <code><strong>paths</strong></code>.</li></ul><ul id="f2e50936-176d-4856-b373-f5d476d24d10" class="bulleted-list"><li style="list-style-type:disc"><strong>Custom Storage and Serialization</strong>: Flexibility to define custom storage mechanisms and serialization/deserialization methods.</li></ul><ul id="71bdf949-efff-4ea1-a296-6a7008bb20f7" class="bulleted-list"><li style="list-style-type:disc"><strong>Limitations and Workarounds</strong>:<ul id="39dc67f7-8eb7-476a-8ee6-693c1138f8a1" class="bulleted-list"><li style="list-style-type:circle"><strong>Reference Persistence</strong>: Serialization breaks object references, requiring workarounds like re-establishing references after restoration.</li></ul><ul id="1559e7fe-7432-4661-b3b2-a733ff4e1914" class="bulleted-list"><li style="list-style-type:circle"><strong>Non-Primitive Type Handling</strong>: Custom serializers or hooks are needed to correctly handle non-primitive types like <code><strong>Date</strong></code>.</li></ul><ul id="7661ae48-6f22-4ee6-9e77-fb9dd85e60ea" class="bulleted-list"><li style="list-style-type:circle"><strong>Synchronous Storage Requirement</strong>: Asynchronous operations need to be handled within actions, leveraging <code><strong>$onAction</strong></code>.</li></ul></li></ul><ul id="b1c0d264-c75a-4dfe-a7d7-f5667132c3c8" class="bulleted-list"><li style="list-style-type:disc"><strong>Advanced Usage Features</strong>:<ul id="5f756e4b-d5fb-4cbe-8ce9-e03e506a9689" class="bulleted-list"><li style="list-style-type:circle"><strong>Global Persistence Options</strong>: Setting default persistence behaviors across all stores.</li></ul><ul id="0408ad4b-6e6d-4d12-a445-23c328844bc4" class="bulleted-list"><li style="list-style-type:circle"><strong>Global Key Customization</strong>: Ability to globally prefix/postfix store keys.</li></ul><ul id="f209077d-745a-4461-97da-14d0706ea3e1" class="bulleted-list"><li style="list-style-type:circle"><strong>Auto Mode</strong>: Enabling default persistence for all stores, with opt-out options.</li></ul><ul id="a1650859-75f6-4a98-8485-da5e8c985f2b" class="bulleted-list"><li style="list-style-type:circle"><strong>Multiple Persistences</strong>: Support for different persistence strategies within a single store.</li></ul><ul id="0ee122bb-fb5d-472a-88b8-4abfed354c0c" class="bulleted-list"><li style="list-style-type:circle"><strong>Manual Rehydration (</strong><code><strong>$hydrate</strong></code><strong>)</strong>: Explicitly triggering state restoration from storage.</li></ul><ul id="e7d1e434-1251-4d6d-aec8-54adb3cb38f6" class="bulleted-list"><li style="list-style-type:circle"><strong>Manual Persistence (</strong><code><strong>$persist</strong></code><strong>)</strong>: Forcing the immediate saving of the store&#x27;s state.</li></ul></li></ul><ul id="0f02e4ba-7daa-4aba-8724-e43a5b5d27c0" class="bulleted-list"><li style="list-style-type:disc"><strong>Use Cases for </strong><code><strong>$hydrate</strong></code><strong> and </strong><code><strong>$persist</strong></code>: These methods offer additional control in complex scenarios but should be used with caution and understanding.</li></ul><hr id="9290ed60-1965-4535-969e-61f888c0c45e"/></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

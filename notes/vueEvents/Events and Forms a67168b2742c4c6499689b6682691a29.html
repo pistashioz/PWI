@@ -1,0 +1,1490 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Events and Forms</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a67168b2-742c-4c64-9968-9b6682691a29" class="page sans"><header><h1 class="page-title">Events and Forms</h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-created_time"><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesCreatedAt"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM4.54102 8.91211H7.99316C8.30078 8.91211 8.54004 8.67285 8.54004 8.37207V3.8877C8.54004 3.58691 8.30078 3.34766 7.99316 3.34766C7.69238 3.34766 7.45312 3.58691 7.45312 3.8877V7.83203H4.54102C4.2334 7.83203 4.00098 8.06445 4.00098 8.37207C4.00098 8.67285 4.2334 8.91211 4.54102 8.91211Z"></path></svg></span>Created</th><td><time>@December 9, 2023 7:03 PM</time></td></tr><tr class="property-row property-row-checkbox"><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesCheckbox"><path d="M3.85742 14.4561H12.1357C13.6123 14.4561 14.3779 13.6904 14.3779 12.2344V3.91504C14.3779 2.45215 13.6123 1.69336 12.1357 1.69336H3.85742C2.38086 1.69336 1.61523 2.45215 1.61523 3.91504V12.2344C1.61523 13.6973 2.38086 14.4561 3.85742 14.4561ZM3.93945 13.1162C3.30371 13.1162 2.95508 12.7812 2.95508 12.1182V4.02441C2.95508 3.36133 3.30371 3.0332 3.93945 3.0332H12.0537C12.6826 3.0332 13.0381 3.36133 13.0381 4.02441V12.1182C13.0381 12.7812 12.6826 13.1162 12.0537 13.1162H3.93945ZM7.26855 11.3115C7.51465 11.3115 7.72656 11.1885 7.87012 10.9697L10.9258 6.19141C11.0146 6.04785 11.0967 5.88379 11.0967 5.72656C11.0967 5.3916 10.7959 5.16602 10.4746 5.16602C10.2695 5.16602 10.085 5.27539 9.94141 5.50781L7.24121 9.8418L5.96973 8.22168C5.80566 8.00977 5.6416 7.93457 5.43652 7.93457C5.10156 7.93457 4.8418 8.20117 4.8418 8.54297C4.8418 8.70703 4.90332 8.85742 5.01953 9.00098L6.63281 10.9697C6.81738 11.209 7.01562 11.3115 7.26855 11.3115Z"></path></svg></span>Reviewed</th><td><div class="checkbox checkbox-off"></div></td></tr></tbody></table></header><div class="page-body"><ul id="7628a318-583e-49ed-8759-c738c988f231" class="toggle"><li><details open=""><summary><strong>Índice</strong></summary><nav id="da0e48c4-446a-46a0-8c92-6926f538fd64" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#199989a3-5414-4876-83b8-ef68f11a0b41">Event Handling</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#77765dd3-8f38-4b43-88f1-3f6c35b75cd0">Method Event Handlers</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5dcd3018-4316-4f06-815f-f36144947258">Inline Method Handlers</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ebd4f60e-1e0b-4e70-9d9b-4676617688a3">Accessing the Original Event Object</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a56a4b4d-6bad-4576-b6e5-1ab70b730e34">Event Modifiers</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#ed8d65b0-108c-4740-b249-dd84b7071a60"><code>.stop</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#48e37317-359d-4f09-9799-50b0709cecae"><code>.prevent</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#4add99bb-4ae6-4df1-80f7-840b4da41cd2"><code>.capture</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#b3fb2527-df24-44d4-817d-2c7ffa683342"><code>.self</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#6175fb7d-6247-4163-a5a1-abb37836eb1b"><code>.once</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#6a5f5d08-6f3b-47a4-aad8-d53fc57a8fcb"><code>.passive</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9129f0bb-1fa3-43f2-9c8a-17e3c279c9b7">Key Modifiers</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#fd64552a-82b6-4afa-bdfd-9dbed4c18cf6"><code>.enter</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#b7029eee-0002-45b8-9b4e-5e9043344f30"><code>.tab</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0e507f1a-af2a-44c6-8a67-67a7a5cbd458"><code>.esc</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c356f105-691e-426d-8ceb-ebe36594ddd8"><code>.space</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#9117ff92-5b62-4eef-823e-6fa5bd4f11cb"><code>.delete</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#ec40e442-be94-4009-bcfa-5a138727ffad"><strong>Arrow Keys: .up, .down, .left, .right</strong></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3048a4ac-d47b-4d13-8704-1b974c9ea312">System Modifier Keys</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#ab3e242a-734b-4378-b5e7-0d2244a11f0b"><code>.ctrl</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#72a4af63-ccaf-476c-8829-38a7717e8533"><code>.alt</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#9ac18c29-d063-40ac-9679-380d0801dfc2"><code>.shift</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#90775b41-b106-423c-ba16-0a290c553b70"><code>.meta</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5bdfa2e3-e53d-4c65-95d3-ecacdb37a424">The <code>.exact</code> Modifier</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#61e54aed-f24d-4cd6-ac84-a8ad59518e17">Mouse Button Modifiers</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#35893d68-4606-4743-9da3-4da69ea61c17"><code>.left</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#a6859292-e6f0-4af9-bb48-37b885d29fe7"><code>.right</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0347b842-4651-48ab-8252-f5e52b5f2420"><code>.middle</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#91338b40-8d2b-4c0c-bd14-d124555c6993">Handling other events</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c88ea397-ea52-473f-aae5-78413ecaecef">Keyboard events other than the default ones</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c97f55bc-fed0-4a13-99f4-a2d44d87be7e">Double Click</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#02babd77-8ca2-4a98-a465-929497886342">Tab Change</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#ef08ca85-1c52-4ff3-9d1f-e010e75368ec">Scroll Events</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#22fbe4b0-6356-4629-93b0-21566fcced89">Forms Binding</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#79cb5ec2-0d6a-48ca-97e2-54a4dd90970b"><code><strong>v-model</strong></code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#5db1c38d-193d-4b9d-824a-05da4e5212b9"><strong>Syntax of </strong><code><strong>v-model</strong></code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ad73fc62-aeee-468e-90f4-bdb60835cbbe">Checkboxes</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#66f8d4e4-cbca-4b8d-9f36-b5b0b4c7211f">Single Checkbox</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#fab69197-1056-437f-8f8a-7721f96c1648">Multiple Checkboxes</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#2ea274b9-a75c-4f3b-9f03-848074cd41f7">Checkboxes with Dynamic Data</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ec011058-270b-49a5-81b5-499e0dc4ca79">Radio Buttons</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#bc540af9-222b-4e7a-8169-efdbbf29a758">Radio Buttons with Dynamic Data</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c9e3fbb6-0e66-4655-9cb7-8627d79cb196">Select</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#16e07ac9-4aa7-4107-bbaa-5a76d90b14f4">Multi-select</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#33cb787c-6f89-4833-ac03-bd34eca086c9">Select with Dynamic Data</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#496375f7-4a27-4065-8781-c67bdc6f4c7b">Modifiers</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3b2b943f-5ace-4f3b-a277-15098e59f844"><code>lazy</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#96f4d835-4dde-4ec2-977a-1757531ff1b2"><code>number</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#72c93b0a-37bb-4c12-a30b-a4548b788b03"><code>trim</code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#679b7a7c-9265-403a-97b5-dd431f963bc1">Combining Modifiers</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#84da04cd-05f7-4127-9b39-ac79ae97f222">Practical Applications</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#bddf4742-3d6c-4bfe-ac1f-e06a47c465d1">Template refs</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a19ecf2b-4155-4e7f-a567-e24000e399ac">Direct Access to DOM Elements</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#77c68d6f-4a02-4bf0-a514-7c522246bae2">Accessing the Refs</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b192ff54-bb2a-4cd6-b1da-6191359253f6">Refs inside v-for</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4b20f586-580a-4aad-b4ea-ebc1d73cb821">Practical Use Case</a></div></nav></details></li></ul><h1 id="199989a3-5414-4876-83b8-ef68f11a0b41" class="">Event Handling</h1><p id="d01deb73-c9b2-4563-9dc8-b895c706f45e" class="">Vue.js uses the <code>v-on</code> directive to listen for DOM events and execute JavaScript when they fire. For example, if we want to increase a counter each time a button is clicked, we would write:</p><pre id="22699210-5e52-48de-b7ab-e1c61bf9e2f9" class="code"><code>&lt;template&gt;
+  &lt;div id=&quot;intro&quot;&gt;
+    &lt;button v-on:click=&quot;counter += 1&quot;&gt;Click me&lt;/button&gt;
+    &lt;p&gt;The button was clicked {{ counter }} times!&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      counter: 0
+    }
+  }
+}
+&lt;/script&gt;</code></pre><h2 id="77765dd3-8f38-4b43-88f1-3f6c35b75cd0" class="">Method Event Handlers</h2><p id="7e4366aa-5354-4235-9bbe-41af258fc0ed" class="">Instead of directly writing JavaScript code within the <code>v-on</code> attribute, it’s often better to reference a method. This is especially true for more complex operations or when we want to reuse functionality:</p><pre id="59b41f55-9be2-46f4-b825-7da37712b838" class="code"><code>&lt;template&gt;
+  &lt;div id=&quot;intro&quot;&gt;
+    &lt;button v-on:click=&quot;greet&quot;&gt;Greet&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      name: &#x27;Vue.js&#x27;
+    }
+  },
+  methods: {
+    greet(event) {
+      alert(`Hello ${this.name}`);
+      if (event) {
+        alert(event.target.tagName); // Shows &#x27;BUTTON&#x27;
+      }
+    }
+  }
+}
+&lt;/script&gt;</code></pre><p id="8072d0ce-900f-4f41-b5ac-1b9375347481" class="">Vue.js implicitly passes the <strong>event</strong> object to the <strong>greet</strong> method when the button is clicked. This is why we have access to <strong>event</strong> within the <strong>greet</strong> method and can use it to access properties such as <strong>event.target.tagName</strong>.</p><p id="b74189de-bec8-4b50-8780-499e29774c31" class="">However, if we want to pass the <strong>event</strong> object explicitly or pass it along with other parameters, we use the <strong>$event</strong> variable in the template.</p><h2 id="5dcd3018-4316-4f06-815f-f36144947258" class="">Inline Method Handlers</h2><p id="0206a3a4-29b4-45f7-921c-706a5e758e37" class="">Vue also allows for inline method invocation with parameters, which can be useful for passing custom arguments directly from the template:</p><pre id="eb21e3d5-fd57-4c86-9650-04c06336c19a" class="code"><code>&lt;template&gt;
+  &lt;div id=&quot;intro&quot;&gt;
+    &lt;button v-on:click=&quot;say(&#x27;hello&#x27;)&quot;&gt;Say hello&lt;/button&gt;
+    &lt;button v-on:click=&quot;say(&#x27;good morning&#x27;)&quot;&gt;Say good morning&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    say(message) {
+      alert(message);
+    }
+  }
+}
+&lt;/script&gt;</code></pre><h2 id="ebd4f60e-1e0b-4e70-9d9b-4676617688a3" class="">Accessing the Original Event Object</h2><p id="86f10c4b-c5a1-4157-aa28-f8e1470f2de4" class="">Sometimes we need access to the original DOM event. Vue.js allows us to pass it into a method using the special <code>$event</code> variable:</p><pre id="9815950d-d363-4c34-a1a1-19dec8e2b06a" class="code"><code>&lt;template&gt;
+  &lt;div id=&quot;intro&quot;&gt;
+    &lt;button v-on:click=&quot;warn(&#x27;Form cannot be submitted&#x27;, $event)&quot;&gt;Submit&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    warn(message, event) {
+      // Stop form submission
+      if (event) event.preventDefault();
+      alert(message);
+    }
+  }
+}
+&lt;/script&gt;</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="3c5f042d-bb5e-4037-81dd-2e313ba050be"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">The <code><strong>v-on</strong></code> directive is versatile and can be used for simple operations directly in the template or can refer to methods for more complex logic. It&#x27;s always good practice to keep our templates clean and our logic within methods, especially as our application grows in complexity.</div></figure><h2 id="a56a4b4d-6bad-4576-b6e5-1ab70b730e34" class="">Event Modifiers</h2><p id="afab9671-a759-4b25-a25b-da547c48d713" class="">Vue provides event modifiers as <code>v-on</code> directive suffixes. These modifiers tell Vue to do something before executing the event handler code, like calling <code>event.preventDefault()</code> or <code>event.stopPropagation()</code>. The available modifiers include:</p><h3 id="ed8d65b0-108c-4740-b249-dd84b7071a60" class=""><code>.stop</code></h3><p id="dc50ff77-b272-4a36-88fa-7e5c63c565ca" class="">The <code>.stop</code> modifier tells Vue to call <code>event.stopPropagation()</code>, which stops the event from propagating up to parent elements. It&#x27;s useful when we don&#x27;t want an event to trigger handlers on parent components.</p><pre id="f458fca9-98f9-472d-8048-a9bef3449f0f" class="code"><code>&lt;template&gt;
+  &lt;div v-on:click=&quot;parentClick&quot;&gt;
+    Parent
+    &lt;button v-on:click.stop=&quot;childClick&quot;&gt;Child&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    parentClick() {
+      alert(&quot;Parent clicked&quot;);
+    },
+    childClick() {
+      alert(&quot;Child clicked&quot;);
+    }
+  }
+}
+&lt;/script&gt;</code></pre><h3 id="48e37317-359d-4f09-9799-50b0709cecae" class=""><code>.prevent</code></h3><p id="61be9b8b-317b-4f20-aae0-4725e5fb5576" class="">The <code>.prevent</code> modifier is used to call <code>event.preventDefault()</code>, preventing the default action the browser would take on that event.</p><pre id="cb53cc0e-78a8-491e-8b31-d071a38c5df8" class="code"><code>&lt;template&gt;
+  &lt;form v-on:submit.prevent=&quot;onSubmit&quot;&gt;
+    &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onSubmit() {
+      alert(&quot;Form submitted&quot;);
+    }
+  }
+}
+&lt;/script&gt;</code></pre><h3 id="4add99bb-4ae6-4df1-80f7-840b4da41cd2" class=""><code>.capture</code></h3><p id="f28809e0-b43b-4d27-8c0c-a6ccd87824a8" class="">The <code>.capture</code> modifier uses event capturing instead of bubbling. In the capturing phase, events are handled by the outermost ancestor first and then propagate down to descendant elements.</p><pre id="e6cc8a40-3eab-443a-a595-71ea93e8b0bc" class="code"><code>&lt;template&gt;
+  &lt;div v-on:click.capture=&quot;captureClick&quot;&gt;
+    &lt;button v-on:click=&quot;buttonClick&quot;&gt;Button&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    captureClick() {
+      alert(&quot;Click captured&quot;);
+    },
+    buttonClick() {
+      alert(&quot;Button clicked&quot;);
+    }
+  }
+}
+&lt;/script&gt;</code></pre><h3 id="b3fb2527-df24-44d4-817d-2c7ffa683342" class=""><code>.self</code></h3><p id="4079972c-a0a9-4460-9749-0437d1f0570a" class="">The <code><strong>.self</strong></code> modifier ensures that the event is only triggered if <code>event.target</code> is the element itself, not from a child element.</p><pre id="ce6fe833-8b3f-4324-8233-1071510c35c5" class="code"><code>&lt;template&gt;
+  &lt;div v-on:click.self=&quot;divClick&quot;&gt;
+    &lt;button v-on:click=&quot;buttonClick&quot;&gt;Button&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    divClick() {
+      alert(&quot;Div clicked directly&quot;);
+    },
+    buttonClick() {
+      alert(&quot;Button clicked&quot;);
+    }
+  }
+}
+&lt;/script&gt;</code></pre><h3 id="6175fb7d-6247-4163-a5a1-abb37836eb1b" class=""><code>.once</code></h3><p id="e85b05d2-1acd-4517-bd50-2955d9d3b5f3" class="">The <code><strong>.once</strong></code> modifier makes sure that an event handler is executed only once.</p><pre id="1ae67f02-5674-4da1-b020-9f7406946106" class="code"><code>&lt;template&gt;
+  &lt;button v-on:click.once=&quot;onceClick&quot;&gt;Click me once&lt;/button&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onceClick() {
+      alert(&quot;This will only be alerted once&quot;);
+    }
+  }
+}
+&lt;/script&gt;</code></pre><h3 id="6a5f5d08-6f3b-47a4-aad8-d53fc57a8fcb" class=""><code>.passive</code></h3><p id="97a4e61e-68a4-4eda-b16a-9ad3c0379e09" class="">The <code>.passive</code> modifier is used primarily to improve scrolling performance on touch and wheel events. It&#x27;s a hint to the browser that you don&#x27;t intend to prevent the default behavior.</p><pre id="e802462c-50eb-4e2a-9d62-fa79e67b26ff" class="code"><code>&lt;template&gt;
+  &lt;div v-on:scroll.passive=&quot;onScroll&quot;&gt;Scroll here&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onScroll() {
+      // Handle scrolling
+    }
+  }
+}
+&lt;/script&gt;</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="4eb6a1da-bcca-4b0e-9a4b-f8f3dccadf4d"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">Using these event modifiers helps keep the template clean and makes it clear at a glance what the intended behavior is. They encapsulate common JavaScript event behaviors in a declarative syntax.</div></figure><h2 id="9129f0bb-1fa3-43f2-9c8a-17e3c279c9b7" class="">Key Modifiers</h2><p id="a8838c66-7b6c-4ce1-bc03-30b098941ba7" class="">Key modifiers make it simple to handle keyboard events. Vue allows us to use key aliases for the most common key codes as modifiers on v-on.</p><h3 id="fd64552a-82b6-4afa-bdfd-9dbed4c18cf6" class=""><code>.enter</code></h3><p id="82cb4af0-335e-4376-b2ca-fb5ef73913b9" class="">The <code><strong>.enter</strong></code> key modifier allows you to call a method when the Enter key is pressed.</p><pre id="4b207e76-0eb4-4736-96fa-09ceaac51749" class="code"><code>&lt;template&gt;
+  &lt;input v-on:keyup.enter=&quot;onEnter&quot; placeholder=&quot;Press Enter&quot; /&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onEnter() {
+      alert(&#x27;Enter key pressed&#x27;);
+    }
+  }
+}
+&lt;/script&gt;</code></pre><h3 id="b7029eee-0002-45b8-9b4e-5e9043344f30" class=""><code>.tab</code></h3><p id="86333a97-a110-419a-ba5a-39e340bdbcd4" class="">The <code><strong>.tab</strong></code> key modifier responds to the Tab key press.</p><pre id="50e562b9-2c88-40ef-8a26-c943c5b7760b" class="code"><code>&lt;template&gt;
+  &lt;input v-on:keyup.tab=&quot;onTab&quot; placeholder=&quot;Press Tab&quot; /&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onTab() {
+      alert(&#x27;Tab key pressed&#x27;);
+    }
+  }
+}
+&lt;/script&gt;</code></pre><h3 id="0e507f1a-af2a-44c6-8a67-67a7a5cbd458" class=""><code>.esc</code></h3><p id="8286febd-cb17-4d01-9e4c-aff818fe53ba" class="">The <code><strong>.esc</strong></code> key modifier is used for the Escape key.</p><pre id="b9f0a96a-ca8d-44c8-9722-a7100bd728f2" class="code"><code>&lt;template&gt;
+  &lt;input v-on:keyup.esc=&quot;onEsc&quot; placeholder=&quot;Press Escape&quot; /&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onEsc() {
+      alert(&#x27;Escape key pressed&#x27;);
+    }
+  }
+}
+&lt;/script&gt;</code></pre><h3 id="c356f105-691e-426d-8ceb-ebe36594ddd8" class=""><code>.space</code></h3><p id="68f83b6c-e45e-4245-a320-b81b8c95e87a" class="">The <code><strong>.space</strong></code> key modifier responds to the Space key press.</p><pre id="7a4bf44c-f8e4-4520-992c-7822c02faf7c" class="code"><code>&lt;template&gt;
+  &lt;button v-on:keyup.space=&quot;onSpace&quot;&gt;Press Space&lt;/button&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onSpace() {
+      alert(&#x27;Space key pressed&#x27;);
+    }
+  }
+}
+&lt;/script&gt;</code></pre><h3 id="9117ff92-5b62-4eef-823e-6fa5bd4f11cb" class=""><code>.delete</code></h3><p id="2708abba-cb46-405b-afc1-43de6301c4f2" class="">The <code><strong>.delete</strong></code> key modifier handles both the &quot;Delete&quot; and &quot;Backspace&quot; keys.</p><pre id="6bedc81a-6206-4759-8224-40607e640918" class="code"><code>&lt;template&gt;
+  &lt;input v-on:keyup.delete=&quot;onDelete&quot; placeholder=&quot;Press Delete or Backspace&quot; /&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onDelete() {
+      alert(&#x27;Delete or Backspace key pressed&#x27;);
+    }
+  }
+}
+&lt;/script&gt;</code></pre><h3 id="ec40e442-be94-4009-bcfa-5a138727ffad" class=""><strong>Arrow Keys: .up, .down, .left, .right</strong></h3><p id="aa43b47a-22ab-41c8-92df-1417487fde00" class="">These modifiers are for the arrow keys on the keyboard.</p><pre id="6eb1caf3-1191-4eb9-b5aa-8303759901ec" class="code"><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button v-on:keyup.up=&quot;onUp&quot;&gt;Up Arrow&lt;/button&gt;
+    &lt;button v-on:keyup.down=&quot;onDown&quot;&gt;Down Arrow&lt;/button&gt;
+    &lt;button v-on:keyup.left=&quot;onLeft&quot;&gt;Left Arrow&lt;/button&gt;
+    &lt;button v-on:keyup.right=&quot;onRight&quot;&gt;Right Arrow&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onUp() {
+      alert(&#x27;Up arrow key pressed&#x27;);
+    },
+    onDown() {
+      alert(&#x27;Down arrow key pressed&#x27;);
+    },
+    onLeft() {
+      alert(&#x27;Left arrow key pressed&#x27;);
+    },
+    onRight() {
+      alert(&#x27;Right arrow key pressed&#x27;);
+    }
+  }
+}
+&lt;/script&gt;</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f98dd9d9-5921-4d84-8f12-e68f07ddcbb5"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">Using these key modifiers makes our template more declarative and easy to understand, as the key&#x27;s behavior is clearly described in the <code><strong>v-on</strong></code> directive. They help us keep the event handling logic for keyboard interactions concise and maintainable.</div></figure><h2 id="3048a4ac-d47b-4d13-8704-1b974c9ea312" class="">System Modifier Keys</h2><p id="e67ccec2-9b1b-46da-b9b5-55daa0104980" class="">System modifier keys in Vue.js allow us to react to keyboard events in combination with specific system keys, such as Control, Alt, Shift, and Meta. Here is a detailed look at each one with examples.</p><h3 id="ab3e242a-734b-4378-b5e7-0d2244a11f0b" class=""><code>.ctrl</code></h3><p id="536d2a70-5b09-4789-809d-99dd2bb0fd64" class="">The <code><strong>.ctrl</strong></code> modifier allows us to handle an event only when the Control key is pressed.</p><pre id="1a634136-ebc3-437c-b806-1e48fc6e04d0" class="code"><code>&lt;template&gt;
+  &lt;button v-on:click.ctrl=&quot;onCtrlClick&quot;&gt;Save (Ctrl+Click)&lt;/button&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onCtrlClick() {
+      alert(&#x27;Control key and click combination detected&#x27;);
+    }
+  }
+}
+&lt;/script&gt;</code></pre><h3 id="72a4af63-ccaf-476c-8829-38a7717e8533" class=""><code>.alt</code></h3><p id="53120faf-4251-458b-bc3b-f80eb375f887" class="">The <code>.alt</code> modifier responds to an event only when the Alt key is pressed.</p><pre id="843ded45-7afd-4907-b1e3-0cc0d1ed26ec" class="code code-wrap"><code>&lt;template&gt;
+  &lt;button v-on:click.alt=&quot;onAltClick&quot;&gt;Menu (Alt+Click)&lt;/button&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onAltClick() {
+      alert(&#x27;Alt key and click combination detected&#x27;);
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><h3 id="9ac18c29-d063-40ac-9679-380d0801dfc2" class=""><code>.shift</code></h3><p id="0a1ad78c-2174-436f-af67-2e38d165e563" class="">The <code>.shift</code> modifier is used for the Shift key.</p><pre id="e9455356-e815-432e-a005-a8195a83700f" class="code code-wrap"><code>&lt;template&gt;
+  &lt;input v-on:keyup.shift.enter=&quot;onShiftEnter&quot; placeholder=&quot;Shift+Enter&quot; /&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onShiftEnter() {
+      alert(&#x27;Shift+Enter keys combination detected&#x27;);
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><h3 id="90775b41-b106-423c-ba16-0a290c553b70" class=""><code>.meta</code></h3><p id="f054f677-570a-49b9-9df5-f9969c6a8a2d" class="">The <code>.meta</code> modifier corresponds to the Command key on Mac keyboards and the Windows key on Windows keyboards.</p><pre id="3e819c98-018a-4335-9071-350a21889f70" class="code code-wrap"><code>&lt;template&gt;
+  &lt;input v-on:keyup.meta=&quot;onMetaKey&quot; placeholder=&quot;Cmd on Mac or Windows key on PC&quot; /&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onMetaKey() {
+      alert(&#x27;Meta key detected&#x27;);
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="da2a5317-85a8-4956-9576-b60f592903bc"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">The use of system modifiers is particularly useful when we want to implement keyboard shortcuts or special interactions that require combination key presses. They enable a more natural and user-friendly interface in web applications, especially for complex actions.</div></figure><h2 id="5bdfa2e3-e53d-4c65-95d3-ecacdb37a424" class="">The <code>.exact</code> Modifier</h2><p id="d63fe75b-a54e-44f1-8146-5ea6afd9c9a4" class="">The <code>.exact</code> modifier in Vue.js is used to control which exact combination of system modifier keys must be pressed for an event to be triggered. It ensures that the event only fires when no other system modifiers except the specified ones are pressed.</p><p id="9ef7295e-2a5c-4a1a-a63b-8a6a006c33ac" class="">Without the <code>.exact</code> modifier, the event could be triggered even if additional modifier keys are pressed. For instance, if we listen for <code>ctrl+click</code>, the event would fire even if the user pressed <code>ctrl+shift+click</code>. With <code>.exact</code>, we can make sure the handler only triggers with <code>ctrl+click</code> and nothing else.</p><p id="6cb8c355-433b-41d6-ac4a-8a1fbc7e60a0" class="">Here are three scenarios to illustrate how <code>.exact</code> can be used:</p><ol type="1" id="e5042275-e75c-4b1a-9bf8-76915e063b08" class="numbered-list" start="1"><li><strong>Only with Ctrl key:</strong></li></ol><pre id="6aa71a39-7697-438c-8fad-00167c771272" class="code code-wrap"><code>&lt;template&gt;
+  &lt;!-- This will only trigger if the Ctrl key is pressed, without any other modifier keys. --&gt;
+  &lt;button v-on:click.ctrl.exact=&quot;onCtrlClick&quot;&gt;A&lt;/button&gt;
+&lt;/template&gt;
+</code></pre><ol type="1" id="5e433193-1bef-451e-9b32-70ca24ed0d2e" class="numbered-list" start="2"><li><strong>No Modifier Keys:</strong></li></ol><pre id="c9722aba-7c3e-41c2-9c6f-91401a66ab17" class="code code-wrap"><code>&lt;template&gt;
+  &lt;!-- This will only trigger if no modifier keys are pressed at all. --&gt;
+  &lt;button v-on:click.exact=&quot;onClick&quot;&gt;A&lt;/button&gt;
+&lt;/template&gt;
+</code></pre><ol type="1" id="9d770241-7ebe-4231-9a38-a7c4b6e59330" class="numbered-list" start="3"><li><strong>Specific Combination of Keys:</strong></li></ol><pre id="8176eafa-2b1d-4b03-92a3-c8e3b30d9a8d" class="code code-wrap"><code>&lt;template&gt;
+  &lt;!-- This will trigger only if both Ctrl and Alt keys are pressed, but no others. --&gt;
+  &lt;button v-on:click.ctrl.alt.exact=&quot;onCtrlAltClick&quot;&gt;A&lt;/button&gt;
+&lt;/template&gt;
+</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="db8c8075-4fbc-41f2-8e4e-4ed99faa0d9d"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">By using the <code>.exact</code> modifier, we can provide a more precise user experience, especially for complex applications that might have many keyboard shortcuts or special interactions. It&#x27;s a useful feature to avoid conflicts between similar shortcuts that differ only by an additional modifier key.</div></figure><h2 id="61e54aed-f24d-4cd6-ac84-a8ad59518e17" class="">Mouse Button Modifiers</h2><p id="0a804946-4e8e-4b11-a213-b89f19fefb42" class="">Mouse button modifiers in Vue.js are used to execute event handlers based on which mouse button was pressed. Here&#x27;s how each one works:</p><h3 id="35893d68-4606-4743-9da3-4da69ea61c17" class=""><code>.left</code></h3><p id="31566c94-973e-4446-8ce7-73663232ae8a" class="">The <code>.left</code> modifier ensures that the event handler is called only when the left mouse button is clicked, which is the primary button typically used for selection and interaction.</p><pre id="d3c60f82-b517-42d5-8220-2f07995354ba" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div v-on:click.left=&quot;onLeftClick&quot;&gt;Left Click on Me&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onLeftClick() {
+      alert(&#x27;Left mouse button clicked&#x27;);
+    }
+  }
+}
+&lt;/script&gt;</code></pre><h3 id="a6859292-e6f0-4af9-bb48-37b885d29fe7" class=""><code>.right</code></h3><p id="1a94e751-3ef4-49bf-9a2b-1c5c726aa79e" class="">The <code>.right</code> modifier is used for the right mouse button, commonly associated with the context menu in most operating systems.</p><pre id="96d424e8-fbbc-4775-ad8e-3f85e1a4c67a" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div v-on:click.right=&quot;onRightClick&quot;&gt;Right Click on Me&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onRightClick(event) {
+      event.preventDefault(); // Prevent the context menu from opening
+      alert(&#x27;Right mouse button clicked&#x27;);
+    }
+  }
+}
+&lt;/script&gt;</code></pre><h3 id="0347b842-4651-48ab-8252-f5e52b5f2420" class=""><code>.middle</code></h3><p id="9527b136-5215-4e8a-8db9-0703f1524f93" class="">The <code>.middle</code> modifier corresponds to the middle mouse button (often the scroll wheel click).</p><pre id="6735f4f8-2b0b-4c1c-87a2-df1a2d513d2f" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div v-on:click.middle=&quot;onMiddleClick&quot;&gt;Middle Click on Me&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onMiddleClick() {
+      alert(&#x27;Middle mouse button clicked&#x27;);
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="11010f66-fb52-4015-806d-5baa49a192ca"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">These modifiers are particularly useful for creating context-sensitive user interfaces and for capturing user interactions that go beyond the standard left-click behavior. They allow us to easily handle different mouse buttons directly within our Vue.js templates, providing a clean and declarative way to manage mouse events.</div></figure><h2 id="91338b40-8d2b-4c0c-bd14-d124555c6993" class="">Handling other events</h2><h3 id="c88ea397-ea52-473f-aae5-78413ecaecef" class="">Keyboard events other than the default ones</h3><p id="a1f905e4-d125-47a9-a166-e62feb5c87c7" class="">In Vue.js, to handle keyboard events for keys that don&#x27;t have a built-in alias (like <code>.enter</code>, <code>.esc</code>, etc.), or to handle combinations of keys, we can use the <code>keydown</code> event along with custom logic in your methods to check which keys are pressed.</p><p id="fc91064b-f0ac-4c94-b4fd-91142a631934" class="">Here&#x27;s how we can handle events for specific keys or combinations of keys:</p><ol type="1" id="3e36b9e1-3c9b-4be0-83b8-169e120a75a0" class="numbered-list" start="1"><li>Listen for the <code>keydown</code> or <code>keyup</code> event.</li></ol><ol type="1" id="75f1fe5c-5119-4f5c-9005-501d06d2f24c" class="numbered-list" start="2"><li>Within the event handler, check the <code>event.keyCode</code> or <code>event.key</code> to determine which key was pressed.</li></ol><ol type="1" id="5849af42-0c36-4a79-a01b-1b1fc351162a" class="numbered-list" start="3"><li>For combinations of keys, you can check if modifier keys like <code>event.ctrlKey</code>, <code>event.shiftKey</code>, <code>event.altKey</code>, or <code>event.metaKey</code> are <code>true</code> at the same time as another key is pressed.</li></ol><p id="a6f88828-d952-4a41-a337-8b6253df17de" class="">Here’s an example of handling a custom key (let&#x27;s say the &#x27;F2&#x27; key, which is often used for renaming):</p><pre id="18be9d00-cd38-4381-aa18-bf9fd4be22f4" class="code code-wrap"><code>&lt;template&gt;
+  &lt;input v-on:keydown=&quot;onKeydown&quot; placeholder=&quot;Press F2 to rename&quot; /&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onKeydown(event) {
+      // Check if &#x27;F2&#x27; was pressed
+      if (event.key === &#x27;F2&#x27; || event.keyCode === 113) {
+        alert(&#x27;F2 key pressed!&#x27;);
+      }
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><p id="798b3c88-79ca-4dba-ad9d-629aacf80dc6" class="">And here is an example of a combo (Ctrl + S, often used for saving):</p><pre id="242c3583-69df-4dde-8915-43ebe3e119a4" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div v-on:keydown=&quot;onKeydownCombo&quot;&gt;Edit me and press Ctrl+S to save&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onKeydownCombo(event) {
+      // Check if &#x27;S&#x27; was pressed along with the &#x27;Ctrl&#x27; key
+      if (event.ctrlKey &amp;&amp; (event.key === &#x27;s&#x27; || event.keyCode === 83)) {
+        event.preventDefault(); // Prevent the browser&#x27;s save dialog
+        alert(&#x27;Ctrl+S combo pressed!&#x27;);
+        // Handle your custom save logic here
+      }
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="27f559c3-05f9-4c73-bfe5-285421b32f69"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">In these examples, the <code>event.key</code> property is used to determine the character of the key that was pressed, and <code>event.keyCode</code> is a numerical value of the key (it&#x27;s a more traditional approach but now considered deprecated and not recommended for use in new code). The <code>event.preventDefault()</code> method is used to prevent the default behavior that the browser would normally perform for that key combination.</div></figure><h3 id="c97f55bc-fed0-4a13-99f4-a2d44d87be7e" class="">Double Click</h3><p id="2d0c6e8d-89ca-408e-a915-39e1b515de55" class="">Vue listens for a double click event with the <code>dblclick</code> event type.</p><pre id="946e3327-5325-451e-9e9d-96063b85b97c" class="code code-wrap"><code>&lt;template&gt;
+  &lt;button v-on:dblclick=&quot;onDoubleClick&quot;&gt;Double Click Me&lt;/button&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onDoubleClick() {
+      alert(&#x27;Button was double-clicked!&#x27;);
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><h3 id="02babd77-8ca2-4a98-a465-929497886342" class="">Tab Change</h3><p id="6f9d05a3-d881-4efe-9d37-5b8d1ba69d74" class="">Handling tab changes can be a bit more complex because it isn&#x27;t just about listening to an event on an element. We might need to listen to the window or document&#x27;s visibility change event if we want to detect when a user switches tabs.</p><pre id="254a8349-6ddb-4bff-9e38-283443810c8b" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div&gt;
+    Check the console to see when you switch tabs.
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  mounted() {
+    document.addEventListener(&#x27;visibilitychange&#x27;, this.onTabChange);
+  },
+  beforeDestroy() {
+    document.removeEventListener(&#x27;visibilitychange&#x27;, this.onTabChange);
+  },
+  methods: {
+    onTabChange() {
+      if (document.visibilityState === &#x27;visible&#x27;) {
+        console.log(&#x27;Tab is active&#x27;);
+      } else {
+        console.log(&#x27;Tab is inactive&#x27;);
+      }
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="edc3fec5-796e-4acc-9cb4-28b0d5fad52d"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">For other types of events that Vue doesn&#x27;t provide directives for, we can use the native JavaScript event listeners (<code>addEventListener</code>) and handle them in our Vue methods, as shown in the tab change example. Remember to clean up our event listeners in the <code>beforeDestroy</code> lifecycle hook to prevent memory leaks.</div></figure><h3 id="ef08ca85-1c52-4ff3-9d1f-e010e75368ec" class="">Scroll Events</h3><p id="42c84420-d273-4a19-a3ff-981cf548636c" class="">To handle scroll events in Vue.js, we can use the <code>v-on</code> directive to listen to the <code>scroll</code> event. Here&#x27;s how we might do it:</p><pre id="ce552efe-3c49-4853-ba6c-420791233ff3" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div v-on:scroll=&quot;onScroll&quot; style=&quot;overflow-y: scroll; height: 200px;&quot;&gt;
+    &lt;!-- Content that makes the div scrollable --&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onScroll(event) {
+      // Handle the scroll event
+      console.log(&#x27;Scrolled!&#x27;, event);
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><p id="a8b49ea1-21c2-4943-aa44-364702097495" class="">For more advanced scroll interactions, such as detecting the direction of scrolling or responding to specific scroll positions, we would need to write custom logic inside our event handler. This might involve checking properties like <code>event.deltaY</code> (for wheel events) or the scroll position of the element (<code>event.target.scrollTop</code>).</p><p id="1cd932b8-3338-432d-94d4-faaf7b7d1095" class="">Vue doesn&#x27;t have built-in directives for handling mouse wheel events specifically (like scrolling up or down), so we would use the standard JavaScript events (<code>wheel</code>, <code>scroll</code>) and handle them in our methods. If we need to detect mouse wheel movements specifically, we would listen to the <code>wheel</code> event:</p><pre id="2ce95cb0-24a5-4db2-a7f1-2c5e1de7c232" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div v-on:wheel=&quot;onWheel&quot; style=&quot;height: 200px; overflow-y: scroll;&quot;&gt;
+    &lt;!-- Scrollable content --&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  methods: {
+    onWheel(event) {
+      if (event.deltaY &gt; 0) {
+        console.log(&#x27;Scrolled down&#x27;);
+      } else {
+        console.log(&#x27;Scrolled up&#x27;);
+      }
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><h1 id="22fbe4b0-6356-4629-93b0-21566fcced89" class="">Forms Binding</h1><p id="1bb323dd-b0e0-4296-bf75-efae6f49d846" class="">In Vue.js, forms binding is a fundamental concept that allows us to create a seamless link between form inputs and our application&#x27;s state. The <code><strong>v-model</strong></code> directive is at the core of this feature, enabling two-way data binding. Let&#x27;s delve into what that means and how it works.</p><h2 id="79cb5ec2-0d6a-48ca-97e2-54a4dd90970b" class=""><code><strong>v-model</strong></code></h2><p id="faf06a68-abf1-4d77-a35a-79ef309a7129" class="">The <code><strong>v-model</strong></code> directive creates a two-way binding on <code><strong>form</strong></code> elements. When we use <code><strong>v-model</strong></code>, it:</p><ol type="1" id="172d8832-7521-4ce8-bad2-ad8c6a15ee17" class="numbered-list" start="1"><li>Binds an input, select, textarea, or custom component&#x27;s value to a data property in our component&#x27;s <code>data</code> object.</li></ol><ol type="1" id="eb66f430-5cfb-4c62-8336-08e465c78f28" class="numbered-list" start="2"><li>Updates the bound data property when the user interacts with the bound form element.</li></ol><p id="dfe4f9bf-87cb-46a1-b734-b1e0c1943bee" class="">This two-way data binding means that:</p><ul id="a057f392-00dd-40d1-97ae-c9a5df8cce45" class="bulleted-list"><li style="list-style-type:disc">Any changes to the input field will automatically update the associated data property.</li></ul><ul id="7cd4a033-5d69-48a1-996d-366e8ab7d68e" class="bulleted-list"><li style="list-style-type:disc">Any changes to the data property will automatically update the input field.</li></ul><h3 id="5db1c38d-193d-4b9d-824a-05da4e5212b9" class=""><strong>Syntax of </strong><code><strong>v-model</strong></code></h3><p id="bb2ce6aa-7cc4-4336-999a-6979d710a716" class="">Here&#x27;s a basic example of <code><strong>v-model</strong></code> in use:</p><pre id="15b5d01b-662b-4181-ad9a-b621315cca42" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;input v-model=&quot;message&quot; placeholder=&quot;Enter a message&quot;&gt;
+    &lt;p&gt;The message is: {{ message }}&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      message: &#x27;&#x27;
+    }
+  }
+}
+&lt;/script&gt;</code></pre><p id="375c1c90-2dee-4f7c-879c-9cc2c5e60f93" class="">In this example:</p><ul id="f31e3432-7e53-4c62-b5b2-9cfaec5b2233" class="bulleted-list"><li style="list-style-type:disc">We have an <code><strong>input</strong></code> element with <code><strong>v-model</strong></code> bound to the <code><strong>message</strong></code> property.</li></ul><ul id="38a727ca-f77b-4515-8933-27a0246a4a5e" class="bulleted-list"><li style="list-style-type:disc">As the user types into the input, the <code><strong>message</strong></code> property in the component&#x27;s data is updated in real time.</li></ul><ul id="deb671ca-cd3f-4e4d-a6ee-25c2746abd94" class="bulleted-list"><li style="list-style-type:disc">The paragraph <code><strong>&lt;p&gt;</strong></code> element displays the current value of the <code><strong>message</strong></code>, updating as the user types.</li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="a7d6d7a3-d0ec-4364-a5ca-3c98451ee58c"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><code><strong>v-model</strong></code> adapts to the context of the form element it&#x27;s used with, binding the appropriate type of value (string for select and radio, boolean for checkbox) to the Vue instance&#x27;s data.</div></figure><h2 id="ad73fc62-aeee-468e-90f4-bdb60835cbbe" class="">Checkboxes</h2><p id="3146588b-d89d-4a09-91e2-42795205eba0" class="">In Vue.js, checkboxes can be bound to a data property using <code>v-model</code>. This binding will be either a boolean (for single checkboxes) or an array (for multiple checkboxes).</p><h3 id="66f8d4e4-cbca-4b8d-9f36-b5b0b4c7211f" class="">Single Checkbox</h3><p id="e3c4f9ff-c5e1-49fc-9d23-5eeb8f143737" class="">A single checkbox can be used to toggle a boolean value in our data. When the checkbox is checked, the value will be <code>true</code>, and when unchecked, it will be <code>false</code>.</p><pre id="b259c02c-a74b-4d54-b7d6-ae060d81cb2f" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;input type=&quot;checkbox&quot; id=&quot;checkbox&quot; v-model=&quot;checked&quot;&gt;
+    &lt;label for=&quot;checkbox&quot;&gt;{{ checked ? &#x27;Checked&#x27; : &#x27;Unchecked&#x27; }}&lt;/label&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      checked: false
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><h3 id="fab69197-1056-437f-8f8a-7721f96c1648" class="">Multiple Checkboxes</h3><p id="2a13c0d1-cd08-4c0d-9000-8fc84e094c95" class="">When dealing with multiple checkboxes, we can bind them to the same array. Each checkbox&#x27;s value will be added to the array when checked and removed when unchecked.</p><pre id="63fbb5f0-6d78-4665-a928-fc97abc28e1d" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;label for=&quot;ricardo&quot;&gt;Ricardo&lt;/label&gt;
+    &lt;input type=&quot;checkbox&quot; id=&quot;ricardo&quot; value=&quot;Ricardo&quot; v-model=&quot;checkedNames&quot;&gt;
+
+    &lt;label for=&quot;maria&quot;&gt;Maria&lt;/label&gt;
+    &lt;input type=&quot;checkbox&quot; id=&quot;maria&quot; value=&quot;Maria&quot; v-model=&quot;checkedNames&quot;&gt;
+
+    &lt;label for=&quot;joao&quot;&gt;João&lt;/label&gt;
+    &lt;input type=&quot;checkbox&quot; id=&quot;joao&quot; value=&quot;João&quot; v-model=&quot;checkedNames&quot;&gt;
+
+    &lt;span&gt;Checked names: {{ checkedNames }}&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      checkedNames: []
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><ul id="7e5791b4-0010-4197-bb94-58f95202fadd" class="toggle"><li><details open=""><summary><strong>To achieve a human-readable list from the array of checked names</strong></summary><p id="ea26497f-4997-44ad-8173-46b23cd0949c" class="">We can use JavaScript&#x27;s array methods to construct a string in the format we want. Here&#x27;s how we could modify our component to display the names in a more natural language format:</p><pre id="f292511e-ca5d-4537-9d85-ed420e30b50c" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;label for=&quot;ricardo&quot;&gt;Ricardo&lt;/label&gt;
+    &lt;input type=&quot;checkbox&quot; id=&quot;ricardo&quot; value=&quot;Ricardo&quot; v-model=&quot;checkedNames&quot;&gt;
+
+    &lt;label for=&quot;maria&quot;&gt;Maria&lt;/label&gt;
+    &lt;input type=&quot;checkbox&quot; id=&quot;maria&quot; value=&quot;Maria&quot; v-model=&quot;checkedNames&quot;&gt;
+
+    &lt;label for=&quot;joao&quot;&gt;João&lt;/label&gt;
+    &lt;input type=&quot;checkbox&quot; id=&quot;joao&quot; value=&quot;João&quot; v-model=&quot;checkedNames&quot;&gt;
+
+    &lt;span&gt;The Checked Names are: {{ formattedCheckedNames }}&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      checkedNames: []
+    }
+  },
+  computed: {
+    formattedCheckedNames() {
+      // Check if the array is not empty
+      if (this.checkedNames.length) {
+        // If only one name is checked, return it as is
+        if (this.checkedNames.length === 1) {
+          return this.checkedNames[0];
+        }
+        // Join all names with commas, but replace the last comma with &#x27;and&#x27;
+        return this.checkedNames.slice(0, -1).join(&#x27;, &#x27;) + &#x27; and &#x27; + this.checkedNames.slice(-1);
+      }
+      return &#x27;No names checked&#x27;;
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><p id="b36486f7-753a-4203-9bce-fb253f25d81c" class="">In this updated example:</p><ul id="eca0addb-11fd-4d72-b2df-1f9651c03def" class="bulleted-list"><li style="list-style-type:disc">A computed property <code>formattedCheckedNames</code> is added, which formats the <code>checkedNames</code> array into a human-readable string.</li></ul><ul id="3ccf1995-b740-4d18-a076-209c097853af" class="bulleted-list"><li style="list-style-type:disc">If only one name is checked, it returns that name.</li></ul><ul id="643dbdfd-8022-4d7a-a1ca-0605a0a1d2fd" class="bulleted-list"><li style="list-style-type:disc">If multiple names are checked, it joins them with a comma and replaces the last comma with the word &quot;and&quot; for a proper list format.</li></ul><ul id="1e5c26b4-6fcc-48c3-a923-070653eb5b5c" class="bulleted-list"><li style="list-style-type:disc">If no names are checked, it returns a default message.</li></ul></details></li></ul><ul id="db74a077-1965-45f6-9ee2-41bf6abac821" class="toggle"><li><details open=""><summary><strong>Ordering the </strong><strong><code>checkedNames</code></strong><strong> according to the DOM rendering</strong></summary><p id="9163d07a-fd97-4bb4-97b5-b7e0c0bb9c34" class="">Regarding the order of names in the array, Vue will add them to the <code>checkedNames</code> array in the order they are checked. So if a user checks &quot;João&quot; first and then &quot;Ricardo&quot;, the array will be <code>[&quot;João&quot;, &quot;Ricardo&quot;]</code>. The order is determined by user interaction, not the DOM order.</p><p id="57fbea9c-b228-4618-9898-e6e9512ec8e4" class="">To ensure the names in the <code>checkedNames</code> array are ordered according to the DOM rendering order regardless of the order in which they were checked, we would need to sort the array based on a predefined sequence that matches our DOM order. Since we&#x27;re using hardcoded values for the checkboxes, we could create a reference array that defines the order.</p><p id="f8aaeb7d-33f6-42c7-a00e-bec58e93df58" class="">Here&#x27;s how we can update our component to sort the <code>checkedNames</code> array accordingly:</p><pre id="c224ff29-4ab3-47af-8b35-6ad37f765fe2" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;label for=&quot;ricardo&quot;&gt;Ricardo&lt;/label&gt;
+    &lt;input type=&quot;checkbox&quot; id=&quot;ricardo&quot; value=&quot;Ricardo&quot; v-model=&quot;checkedNames&quot;&gt;
+
+    &lt;label for=&quot;maria&quot;&gt;Maria&lt;/label&gt;
+    &lt;input type=&quot;checkbox&quot; id=&quot;maria&quot; value=&quot;Maria&quot; v-model=&quot;checkedNames&quot;&gt;
+
+    &lt;label for=&quot;joao&quot;&gt;João&lt;/label&gt;
+    &lt;input type=&quot;checkbox&quot; id=&quot;joao&quot; value=&quot;João&quot; v-model=&quot;checkedNames&quot;&gt;
+
+    &lt;span&gt;The Checked Names are: {{ orderedCheckedNames }}&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      checkedNames: [],
+      domOrder: [&#x27;Ricardo&#x27;, &#x27;Maria&#x27;, &#x27;João&#x27;] // Define the DOM order
+    }
+  },
+  computed: {
+    orderedCheckedNames() {
+      // Sort the checked names according to the DOM order
+      const sortedNames = this.checkedNames.slice().sort((a, b) =&gt; {
+        return this.domOrder.indexOf(a) - this.domOrder.indexOf(b);
+      });
+
+      // Format the sorted names into a human-readable string
+      if (sortedNames.length) {
+        if (sortedNames.length === 1) {
+          return sortedNames[0];
+        }
+        return sortedNames.slice(0, -1).join(&#x27;, &#x27;) + &#x27; and &#x27; + sortedNames.slice(-1);
+      }
+      return &#x27;No names checked&#x27;;
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><p id="07400779-2ce5-41bb-9a3e-07a137aaa7ef" class="">In this modified example:</p><ul id="e141da50-9835-48e1-a08c-483d9b245a60" class="bulleted-list"><li style="list-style-type:disc">We&#x27;ve added a <code>domOrder</code> array to <code>data</code> that reflects the order of the checkboxes in the DOM.</li></ul><ul id="c997f08f-dc58-4278-82a9-4db03d245b0c" class="bulleted-list"><li style="list-style-type:disc">The <code>orderedCheckedNames</code> computed property now sorts the <code>checkedNames</code> array based on the index of each name in the <code>domOrder</code> array.</li></ul><ul id="cb2d426a-fcd2-4158-805f-6a16848089ef" class="bulleted-list"><li style="list-style-type:disc">It then formats this sorted array into a human-readable string as before.</li></ul><p id="3f534850-38f1-4360-a51a-84070dda79e5" class="">This ensures that the <code>checkedNames</code> array is always sorted according to the DOM order, regardless of the order in which the user checks the boxes.</p></details></li></ul><h3 id="2ea274b9-a75c-4f3b-9f03-848074cd41f7" class="">Checkboxes with Dynamic Data</h3><p id="afa46c6a-984f-4e46-8ad9-203716c7ebad" class="">For checkboxes, <code><strong>v-model</strong></code> will bind to an array when we have multiple checkboxes that represent the same array data. Here&#x27;s how we can do it with dynamic data:</p><pre id="a34b42f1-578f-4221-bb75-180058efb0d3" class="code code-wrap"><code>vueCopy code
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;!-- Use v-for to iterate over an array of objects --&gt;
+    &lt;div v-for=&quot;item in items&quot; :key=&quot;item.id&quot;&gt;
+      &lt;!-- Bind the checkbox to the &#x27;selectedItems&#x27; array --&gt;
+      &lt;input type=&quot;checkbox&quot; v-model=&quot;selectedItems&quot; :value=&quot;item.value&quot;&gt;
+      {{ item.label }}
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      selectedItems: [], // This will hold the values of the checked items
+      items: [ // An array of objects, each with a &#x27;value&#x27; and &#x27;label&#x27;
+        { id: 1, label: &#x27;Option A&#x27;, value: &#x27;A&#x27; },
+        { id: 2, label: &#x27;Option B&#x27;, value: &#x27;B&#x27; },
+        { id: 3, label: &#x27;Option C&#x27;, value: &#x27;C&#x27; }
+      ]
+    }
+  }
+}
+&lt;/script&gt;
+
+</code></pre><p id="aab982f4-d9de-41bb-a9d8-ad7d55ab52e4" class="">In this example, each checkbox is bound to the <code><strong>selectedItems</strong></code> array. When a checkbox is checked, its value is added to the array, and when it&#x27;s unchecked, its value is removed.</p><h2 id="ec011058-270b-49a5-81b5-499e0dc4ca79" class="">Radio Buttons</h2><p id="38f2241c-2308-4ffa-9ada-0ce611df9cdf" class="">Radio buttons allow the user to select one option from a set. When using <code>v-model</code> on radio buttons, the value of the selected button is bound to a data property.</p><pre id="03c80eb9-df10-4b47-a321-2613f921131f" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;input type=&quot;radio&quot; id=&quot;one&quot; value=&quot;One&quot; v-model=&quot;picked&quot;&gt;
+    &lt;label for=&quot;one&quot;&gt;One&lt;/label&gt;
+
+    &lt;input type=&quot;radio&quot; id=&quot;two&quot; value=&quot;Two&quot; v-model=&quot;picked&quot;&gt;
+    &lt;label for=&quot;two&quot;&gt;Two&lt;/label&gt;
+
+    &lt;span&gt;Picked: {{ picked }}&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      picked: &quot;One&quot;
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><p id="3d131d84-50ee-41e3-a26d-73e3c75e0aeb" class="">In this radio buttons example, <code>picked</code> is a data property that holds the value of the selected radio button. Only one radio button can be selected at a time, and selecting a different button will update the <code>picked</code> value accordingly.</p><ul id="b9bd8222-8c93-4e45-8887-c730762ca2d3" class="toggle"><li><details open=""><summary><strong>How to make Radio Buttons toggle boolean values</strong></summary><p id="e0a96d79-24fe-4793-a1af-018695d8a509" class="">We can use a radio button to toggle a boolean value, but it requires a slightly different setup compared to checkboxes. Since radio buttons are typically used for choosing between multiple options, we would need to have two radio buttons to represent <code>true</code> and <code>false</code> states. Here&#x27;s an example of how we could set this up:</p><pre id="5cb45c0d-ec09-447c-9de4-b6e9697b8487" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;input type=&quot;radio&quot; id=&quot;true&quot; value=&quot;true&quot; v-model=&quot;picked&quot; :checked=&quot;picked === &#x27;true&#x27;&quot;&gt;
+    &lt;label for=&quot;true&quot;&gt;True&lt;/label&gt;
+
+    &lt;input type=&quot;radio&quot; id=&quot;false&quot; value=&quot;false&quot; v-model=&quot;picked&quot; :checked=&quot;picked === &#x27;false&#x27;&quot;&gt;
+    &lt;label for=&quot;false&quot;&gt;False&lt;/label&gt;
+
+    &lt;span&gt;Picked: {{ picked }}&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      picked: &#x27;false&#x27; // or &#x27;true&#x27; to default to true
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><p id="7ed22d42-375c-4f6d-b3d6-12372fa75f5d" class="">In this case, <code>picked</code> is still a string that holds either &#x27;true&#x27; or &#x27;false&#x27;, which are string representations of boolean values. If we want <code>picked</code> to be an actual boolean, we would have to convert it back and forth or use a computed property to get the boolean value:</p><pre id="8eb73e4a-502a-471c-8fb9-4fe3186ed504" class="code code-wrap"><code>&lt;script&gt;
+export default {
+  data() {
+    return {
+      picked: &#x27;false&#x27; // Store the selection as string
+    }
+  },
+  computed: {
+    pickedBoolean: {
+      // Convert the string value to boolean
+      get() {
+        return this.picked === &#x27;true&#x27;;
+      },
+      // Convert the boolean value back to string
+      set(value) {
+        this.picked = value ? &#x27;true&#x27; : &#x27;false&#x27;;
+      }
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><p id="685a3d31-ca06-420e-89f9-c2f77d2081bc" class="">Now, <code>pickedBoolean</code> is a computed property that reflects the boolean value of the radio button selection. When we use this in our template or methods, we’ll be working with a true boolean value, while the underlying <code>v-model</code> will still be using the string representation to match the radio button values.</p></details></li></ul><h3 id="bc540af9-222b-4e7a-8169-efdbbf29a758" class="">Radio Buttons with Dynamic Data</h3><p id="c9c14da1-0876-43c7-86d1-44aed591f036" class="">For radio buttons, <code><strong>v-model</strong></code> will bind to a single value. Here&#x27;s how we can bind dynamic values to radio buttons:</p><pre id="8e769ab5-d7b1-4f50-8aad-6225bb79b498" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;!-- Use v-for to iterate over an array of objects --&gt;
+    &lt;div v-for=&quot;item in items&quot; :key=&quot;item.id&quot;&gt;
+      &lt;!-- Bind the radio button to the &#x27;selectedItem&#x27; data property --&gt;
+      &lt;input type=&quot;radio&quot; v-model=&quot;selectedItem&quot; :value=&quot;item.value&quot;&gt;
+      {{ item.label }}
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      selectedItem: null, // This will hold the value of the selected item
+      items: [ // An array of objects, each with a &#x27;value&#x27; and &#x27;label&#x27;
+        { id: 1, label: &#x27;Option A&#x27;, value: &#x27;A&#x27; },
+        { id: 2, label: &#x27;Option B&#x27;, value: &#x27;B&#x27; },
+        { id: 3, label: &#x27;Option C&#x27;, value: &#x27;C&#x27; }
+      ]
+    }
+  }
+}
+&lt;/script&gt;</code></pre><p id="ebdb4528-bc34-427c-b778-07b600517112" class="">In this example, <code><strong>selectedItem</strong></code> will be set to the value of the selected radio button.</p><h2 id="c9e3fbb6-0e66-4655-9cb7-8627d79cb196" class="">Select</h2><p id="8c522835-487e-4b5a-a6b5-6cc6d911008a" class="">The <code>&lt;select&gt;</code> element is used to create a drop-down list in HTML. In Vue.js, we can bind the selected value of a <code>&lt;select&gt;</code> element to a data property using <code>v-model</code>. When an option is selected from the drop-down, Vue updates the bound data property, and conversely, when the bound data property changes, the selected option in the drop-down is updated.</p><p id="a3a53048-ccff-4e6c-8b2e-d5c306691414" class="">Here&#x27;s an example:</p><pre id="83f26a17-97cb-47cd-aa3f-bc9dad361d30" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;select v-model=&quot;selected&quot;&gt;
+      &lt;option disabled value=&quot;&quot;&gt;Please select one&lt;/option&gt;
+      &lt;option&gt;A&lt;/option&gt;
+      &lt;option&gt;B&lt;/option&gt;
+      &lt;option&gt;C&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;span&gt;Selected: {{ selected }}&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      selected: &quot;&quot; // The selected option is bound to this property
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><p id="941f7888-80f6-47e3-9b10-724f4218a371" class="">In this example:</p><ul id="3c5a0ea3-e856-41a5-9549-3c37916ede8b" class="bulleted-list"><li style="list-style-type:disc">The <code>v-model</code> directive binds the <code>selected</code> data property to the <code>&lt;select&gt;</code> element.</li></ul><ul id="43a46472-efd5-4174-98c0-85db03afc072" class="bulleted-list"><li style="list-style-type:disc">The <code>disabled</code> option is a placeholder and cannot be selected.</li></ul><ul id="960a7ac0-f829-4961-8d6b-6a9b6f8876ce" class="bulleted-list"><li style="list-style-type:disc">When the user selects an option, the <code>selected</code> property is updated to reflect the choice.</li></ul><ul id="53a2a7ff-edda-4085-bfb0-b90a233a5628" class="bulleted-list"><li style="list-style-type:disc">The span displays the current value of <code>selected</code>.</li></ul><h3 id="16e07ac9-4aa7-4107-bbaa-5a76d90b14f4" class="">Multi-select</h3><p id="639855db-2a8e-45f2-8be1-33ae434beac5" class="">The <code>&lt;select multiple&gt;</code> element allows users to select multiple options from the list. We can bind it to an array using <code>v-model</code>. Each selected option&#x27;s value is added to the array, and deselecting an option removes its value from the array.</p><p id="af4df17c-bcab-4ad9-a4a4-3ba2921f2bd2" class="">Here&#x27;s how we use it:</p><pre id="19e89980-7622-4473-bae8-0634f86fd579" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;select v-model=&quot;selected&quot; multiple&gt;
+      &lt;option&gt;A&lt;/option&gt;
+      &lt;option&gt;B&lt;/option&gt;
+      &lt;option&gt;C&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;span&gt;Selected: {{ selected }}&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      selected: [] // Multiple selected options are stored in this array
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><p id="64c61a1b-e9a7-4920-b620-818b2cd91b1f" class="">In this multi-select example:</p><ul id="d13d95c1-f362-4dc7-b4c8-ff6cb79175ff" class="bulleted-list"><li style="list-style-type:disc">The <code>multiple</code> attribute allows multiple options to be selected.</li></ul><ul id="8b749515-bedb-4436-b27f-82454955b5d8" class="bulleted-list"><li style="list-style-type:disc">The <code>v-model</code> directive binds the <code>selected</code> array to the <code>&lt;select&gt;</code> element.</li></ul><ul id="11506683-0169-419b-b0aa-8908da0e0877" class="bulleted-list"><li style="list-style-type:disc">The user can select multiple options by holding down the Ctrl key (Cmd on macOS) and clicking on the options.</li></ul><ul id="092b9f4b-e35b-49a1-bde9-c78ebdea697e" class="bulleted-list"><li style="list-style-type:disc">The span element displays the current array of selected options.</li></ul><p id="6fa8cd0f-ccae-43e9-92b6-976ab23086eb" class="">By using <code>v-model</code> with <code>&lt;select&gt;</code> and <code>&lt;select multiple&gt;</code>, we can easily implement single or multiple selections in Vue.js forms, with the selected data staying in sync with your Vue component&#x27;s state.</p><h3 id="33cb787c-6f89-4833-ac03-bd34eca086c9" class="">Select with Dynamic Data</h3><p id="0a6aed23-c09d-48e2-a45d-3b39a74f9914" class="">When working with dynamic data, options for a <code>&lt;select&gt;</code> element can be generated using the <code>v-for</code> directive. This is useful when we want to create a drop-down list based on an array of objects, where each object contains the text and value for each option.</p><p id="99f1e6d4-d68c-4ce0-bf9d-0cd3fa01b04c" class="">Here&#x27;s how we can implement it:</p><pre id="e14b71cf-4d5f-4487-a683-c915ceeb55d3" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;select v-model=&quot;selected&quot;&gt;
+      &lt;!-- Use v-for to dynamically generate options from the &#x27;options&#x27; array --&gt;
+      &lt;option v-for=&quot;option in options&quot; v-bind:key=&quot;option.value&quot; :value=&quot;option.value&quot;&gt;
+        {{ option.text }}
+      &lt;/option&gt;
+    &lt;/select&gt;
+    &lt;span&gt;Selected: {{ selected }}&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      selected: &#x27;&#x27;, // This will hold the selected value
+      // Define options as an array of objects with &#x27;text&#x27; and &#x27;value&#x27; properties
+      options: [
+        { text: &#x27;One&#x27;, value: &#x27;A&#x27; },
+        { text: &#x27;Two&#x27;, value: &#x27;B&#x27; },
+        { text: &#x27;Three&#x27;, value: &#x27;C&#x27; }
+      ]
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre><p id="b2e73f29-5b55-4a1e-bc69-d2da7de9e92b" class="">In this example:</p><ul id="fc884bf4-e529-478a-bd70-976bf2092235" class="bulleted-list"><li style="list-style-type:disc">The <code>options</code> array in the <code>data</code> function contains objects with <code>text</code> and <code>value</code> properties, which will be used to populate the <code>&lt;select&gt;</code> element.</li></ul><ul id="a9999489-84d6-4247-93d6-b4a28e35110a" class="bulleted-list"><li style="list-style-type:disc">The <code>v-for</code> directive on the <code>&lt;option&gt;</code> tag iterates over each item in the <code>options</code> array.</li></ul><ul id="e900d38e-e1f2-4632-9d1a-798f36910f01" class="bulleted-list"><li style="list-style-type:disc">The <code>v-bind:key</code> binds a unique key for each option, which is necessary for Vue to keep track of each node&#x27;s identity, improving performance during updates.</li></ul><ul id="fb80fd4b-d8de-492c-95bb-dcef97f5ea57" class="bulleted-list"><li style="list-style-type:disc">The <code>:value</code> is shorthand for <code>v-bind:value</code>, which sets the value attribute of the <code>&lt;option&gt;</code> element to the corresponding value in the <code>options</code> object. This is what will be assigned to the <code>selected</code> data property when an option is chosen.</li></ul><ul id="f8ba45f3-da83-4d36-a325-cdf17f61d2f7" class="bulleted-list"><li style="list-style-type:disc">The <code>{{ option.text }}</code> expression is used to display the text for each option.</li></ul><ul id="43f74db8-6c1c-4269-a641-8ec66b8b9344" class="bulleted-list"><li style="list-style-type:disc">The <code>&lt;span&gt;</code> displays the currently selected option&#x27;s value.</li></ul><p id="c79e2634-f11c-464b-ab5a-d77afe1f38c7" class="">By using <code>v-for</code>, we can easily generate a dynamic list of options for our <code>&lt;select&gt;</code> element based on our application&#x27;s data, making our forms more interactive and adaptable to changing data.</p><h2 id="496375f7-4a27-4065-8781-c67bdc6f4c7b" class="">Modifiers</h2><p id="f36f37a8-4fda-4a9f-a676-40e979c44d58" class="">Modifiers are special postfixes denoted by a dot, which indicate that Vue should apply special behavior to the binding. In the context of <code>v-model</code>, there are several modifiers, but let&#x27;s focus on these three: <code>lazy</code>, <code>number</code>, and <code>trim</code>.</p><h3 id="3b2b943f-5ace-4f3b-a277-15098e59f844" class=""><code>lazy</code></h3><ul id="1dde3572-7075-401b-a1fc-3b7ab7177b1f" class="bulleted-list"><li style="list-style-type:disc"><strong>Functionality</strong>: By default, <code>v-model</code> synchronizes the input with the data after each <code>input</code> event (with each keystroke). The <code>lazy</code> modifier changes this behavior and updates the data only on the <code>change</code> event, which typically occurs when the user leaves the input field.</li></ul><ul id="852f8cd8-1b06-4567-bb5f-1894ed7048e7" class="bulleted-list"><li style="list-style-type:disc"><strong>Example Usage</strong>:<pre id="b91c4a39-8dfb-4607-80e1-29a61cbad397" class="code code-wrap"><code>&lt;input v-model.lazy=&quot;message&quot; /&gt;
+</code></pre><p id="212efb83-dd46-4c9a-bc35-8d8bc7dc4084" class="">Here, the <code>message</code> data property will be updated only when the input loses focus.</p></li></ul><h3 id="96f4d835-4dde-4ec2-977a-1757531ff1b2" class=""><code>number</code></h3><ul id="0b96919a-9692-4467-85fa-bf5a2fb43516" class="bulleted-list"><li style="list-style-type:disc"><strong>Functionality</strong>: This modifier automatically converts the input value to a number. Without it, even if we type a number into an input, it&#x27;s treated as a string. This is particularly useful for numeric inputs.</li></ul><ul id="b09f8db6-364e-4909-8132-f46b8219d52b" class="bulleted-list"><li style="list-style-type:disc"><strong>Example Usage</strong>:<pre id="fbb79873-cb78-40e6-9cf1-e41ea2d7062e" class="code code-wrap"><code>&lt;input v-model.number=&quot;age&quot; type=&quot;number&quot; /&gt;
+</code></pre><p id="3249756b-c20f-4ee8-9616-56c9d25e532b" class="">In this case, <code>age</code> will always be a number when updated, not a string.</p></li></ul><h3 id="72c93b0a-37bb-4c12-a30b-a4548b788b03" class=""><code>trim</code></h3><ul id="6afecc7d-a176-412b-847e-6194c9a95fb3" class="bulleted-list"><li style="list-style-type:disc"><strong>Functionality</strong>: This modifier automatically trims whitespace from the beginning and end of the input&#x27;s value. It&#x27;s useful for text inputs where whitespace is not meaningful or desired.</li></ul><ul id="83de6463-ce48-41be-8a02-5123d656861a" class="bulleted-list"><li style="list-style-type:disc"><strong>Example Usage</strong>:<pre id="0dfdefe8-6d2e-4d3f-a4be-9d3f6905aac7" class="code code-wrap"><code>&lt;input v-model.trim=&quot;username&quot; /&gt;
+</code></pre><p id="e1b61a7f-bb51-4bfa-80cf-2f0886755908" class="">Here, any leading or trailing whitespace in <code>username</code> will be removed upon input.</p></li></ul><h3 id="679b7a7c-9265-403a-97b5-dd431f963bc1" class="">Combining Modifiers</h3><p id="66176f99-59da-4c1d-a1fc-5a25650a7eed" class="">Modifiers can also be combined. For example, if we have an input field where we want to enter a number and don&#x27;t want extra spaces:</p><pre id="4620ec3c-cf27-451e-b67a-befbe616534b" class="code code-wrap"><code>&lt;input v-model.number.trim=&quot;userAge&quot; type=&quot;number&quot; /&gt;
+</code></pre><p id="f74e9922-3af6-41b3-b790-eb8132aa7bb5" class="">This setup ensures that <code>userAge</code> will always be a number and without any extra whitespace.</p><h3 id="84da04cd-05f7-4127-9b39-ac79ae97f222" class="">Practical Applications</h3><p id="dbf97b93-7973-45ff-a61a-d3dfd5f6f8ee" class="">In practical scenarios, these modifiers provide enhanced control over user input, ensuring that the data bound to our Vue model is as clean and as specific as our application requires. For instance, in a form where a user&#x27;s age is required, using the <code>number</code> modifier ensures that the data type is consistent with what a backend might expect. Similarly, the <code>trim</code> modifier can be a time-saver in scenarios where user-generated content needs to be free of accidental whitespace, like usernames or search inputs.</p><h1 id="bddf4742-3d6c-4bfe-ac1f-e06a47c465d1" class="">Template refs</h1><p id="2c46f218-c50a-4b53-be2e-a05f80f68de8" class="">Template refs in Vue.js are a mechanism that allows us to access DOM elements directly within our Vue instances or components. They are particularly useful when we need to perform DOM operations that are not easily handled by Vue&#x27;s data-driven approach.</p><h3 id="a19ecf2b-4155-4e7f-a567-e24000e399ac" class="">Direct Access to DOM Elements</h3><ul id="8e4cd4d1-b289-4ccd-8e84-9e1bb822499e" class="bulleted-list"><li style="list-style-type:disc"><strong>Why?</strong>: Sometimes we need to directly interact with a DOM element—for example, to focus an input field, or to integrate with third-party libraries that require direct DOM manipulation.</li></ul><ul id="6bbd2cf2-e930-48c0-b3eb-3e91fa1f01c2" class="bulleted-list"><li style="list-style-type:disc"><strong>How?</strong>: Vue provides a special <code>ref</code> attribute that we can place on any element within a Vue template.<pre id="b2c0afd7-45b9-4331-8627-05e29833fde7" class="code code-wrap"><code>&lt;input ref=&quot;inputRef&quot; /&gt;</code></pre><p id="f9508e73-e1ea-41ff-8828-6da9dfc24c0b" class="">In this snippet, <code>inputRef</code> is a reference name for the input element.</p></li></ul><h3 id="77c68d6f-4a02-4bf0-a514-7c522246bae2" class="">Accessing the Refs</h3><ul id="57432361-16b8-4c0d-a7d3-1dfc560d6264" class="bulleted-list"><li style="list-style-type:disc"><strong>Accessing the ref</strong>: Once the component is mounted, we can access this ref in your component&#x27;s methods, computed properties, or lifecycle hooks via <code>this.$refs</code>, followed by the reference name.<pre id="db8964ea-23a7-492a-88f2-17e6754c875b" class="code code-wrap"><code>export default {
+  mounted() {
+    this.$refs.inputRef.focus();
+  }
+}</code></pre><p id="cd1ccb42-faf9-47df-bbee-ea8ec1315877" class="">Here, when the component is mounted, it automatically focuses on the input element.</p></li></ul><ul id="67ee7542-1487-4b39-85b1-2d20b243fff9" class="bulleted-list"><li style="list-style-type:disc"><strong>Timing</strong>: It&#x27;s important to remember that <code>ref</code> is not reactive and should only be accessed after the Vue component has been mounted, otherwise it will be <code>undefined</code>.</li></ul><h3 id="b192ff54-bb2a-4cd6-b1da-6191359253f6" class="">Refs inside v-for</h3><ul id="ef151272-332c-4df7-9d8e-58b496cf3c70" class="bulleted-list"><li style="list-style-type:disc"><strong>Collection of elements</strong>: When we use <code>ref</code> within a <code>v-for</code> loop, <code>this.$refs</code> returns an array of elements.<pre id="fbe5be7c-e66f-46c8-874e-b44a83744f86" class="code code-wrap"><code>&lt;ul&gt;
+  &lt;li v-for=&quot;item in list&quot; ref=&quot;items&quot;&gt;{{ item }}&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p id="89acb8b6-42cd-4b38-8441-cb50c4f37561" class="">In this example, <code>this.$refs.items</code> will be an array containing DOM nodes for each <code>li</code> element.</p></li></ul><ul id="6e67b8c4-e516-442e-b120-c0603e84265a" class="bulleted-list"><li style="list-style-type:disc"><strong>Order</strong>: The order of elements in the <code>this.$refs.items</code> array may not match the order of our source array due to Vue&#x27;s rendering process.</li></ul><p id="ab1003ed-fb1f-4c53-9f6e-84f5a37bfeef" class=""><span style="border-bottom:0.05em solid"><strong>Example with v-for</strong></span></p><p id="87fb5895-fcf9-412b-898d-277bdf1245f5" class="">First, let&#x27;s assume we have a simple list of names we want to render as list items:</p><pre id="cb355d67-0482-41e3-9893-85f3ed515ef6" class="code code-wrap"><code>export default {
+  data() {
+    return {
+      // Dummy data: a list of names
+      list: [&#x27;Alice&#x27;, &#x27;Bob&#x27;, &#x27;Charlie&#x27;, &#x27;Diana&#x27;]
+    };
+  },
+  mounted() {
+    // When the component is mounted, log the array of refs
+    console.log(this.$refs.items);
+  },
+  methods: {
+    // A method to focus the first list item
+    focusFirstItem() {
+      if (this.$refs.items &amp;&amp; this.$refs.items.length &gt; 0) {
+        this.$refs.items[0].focus(); // Focus the first element of the list
+      }
+    },
+    // A method to apply a class to all list items
+    highlightAllItems() {
+      if (this.$refs.items) {
+        this.$refs.items.forEach(item =&gt; {
+          item.classList.add(&#x27;highlight&#x27;); // Add &#x27;highlight&#x27; class to each item
+        });
+      }
+    }
+  }
+}</code></pre><pre id="6ad38ef9-ee89-4751-ae97-b1c7c8665e0d" class="code code-wrap"><code>&lt;template&gt;
+  &lt;ul&gt;
+    &lt;li v-for=&quot;item in list&quot; ref=&quot;items&quot; tabindex=&quot;0&quot;&gt;{{ item }}&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;button @click=&quot;focusFirstItem&quot;&gt;Focus First Item&lt;/button&gt;
+  &lt;button @click=&quot;highlightAllItems&quot;&gt;Highlight All Items&lt;/button&gt;
+&lt;/template&gt;
+</code></pre><p id="225371c7-a560-461f-80ee-e0ff81352c0e" class=""><strong>Explanation</strong></p><ul id="58d47b7b-d9a6-4eea-a5dc-a592b7bac932" class="bulleted-list"><li style="list-style-type:disc"><strong>Data</strong>: We have an array called <code><strong>list</strong></code> in our data function that contains four names.</li></ul><ul id="2ecb63db-34e2-429c-b11d-d3733d788aea" class="bulleted-list"><li style="list-style-type:disc"><strong>Rendering</strong>: We use <code><strong>v-for</strong></code> to render each item in the list as an <code><strong>li</strong></code> element.</li></ul><ul id="24dd89fb-1376-49e7-aaa0-525a48289a00" class="bulleted-list"><li style="list-style-type:disc"><strong>Refs</strong>: We assign a <code><strong>ref</strong></code> named &quot;items&quot; to each <code><strong>li</strong></code> element. Vue will collect these into an array.</li></ul><ul id="33d7b614-719d-4b9e-9663-13405db192a8" class="bulleted-list"><li style="list-style-type:disc"><strong>Mounting</strong>: In the <code><strong>mounted</strong></code> hook, we log the array of refs to the console. This array contains the actual DOM nodes.</li></ul><ul id="3ebefc96-916e-4b1b-8ab8-5b4924aef2b0" class="bulleted-list"><li style="list-style-type:disc"><strong>Methods</strong>:<ul id="41028661-0d01-448d-a22c-b6a037daa13a" class="bulleted-list"><li style="list-style-type:circle"><code><strong>focusFirstItem</strong></code> method checks if the <code><strong>items</strong></code> ref is present and focuses the first element of the array.</li></ul><ul id="f676e2da-e4f4-4bf6-8a52-45d97ce39116" class="bulleted-list"><li style="list-style-type:circle"><code><strong>highlightAllItems</strong></code> method iterates over each item in the <code><strong>refs</strong></code> array and adds a &#x27;highlight&#x27; class to each one.</li></ul></li></ul><h3 id="4b20f586-580a-4aad-b4ea-ebc1d73cb821" class="">Practical Use Case</h3><p id="289667fe-c0f9-4be5-9265-46f67b53face" class="">A practical use case for template refs is when we need to integrate a Vue application with a library that manipulates the DOM directly or registers its own event listeners. Vue&#x27;s reactivity system does not cover these cases, so a template ref provides the necessary bridge to the underlying DOM API.</p><p id="10c1d187-334b-451a-9a65-2406bb762903" class="">Template refs offer a concise and convenient way to reach into the DOM when necessary, while still encouraging a data-driven approach as the primary means of DOM manipulation. It&#x27;s a powerful feature that, when used judiciously, can enable advanced functionality in our Vue applications.</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

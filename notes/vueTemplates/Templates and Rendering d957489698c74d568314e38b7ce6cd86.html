@@ -1,0 +1,1291 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Templates and Rendering</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d9574896-98c7-4d56-8314-e38b7ce6cd86" class="page sans"><header><h1 class="page-title">Templates and Rendering</h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-created_time"><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesCreatedAt"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM4.54102 8.91211H7.99316C8.30078 8.91211 8.54004 8.67285 8.54004 8.37207V3.8877C8.54004 3.58691 8.30078 3.34766 7.99316 3.34766C7.69238 3.34766 7.45312 3.58691 7.45312 3.8877V7.83203H4.54102C4.2334 7.83203 4.00098 8.06445 4.00098 8.37207C4.00098 8.67285 4.2334 8.91211 4.54102 8.91211Z"></path></svg></span>Created</th><td><time>@December 9, 2023 7:03 PM</time></td></tr><tr class="property-row property-row-checkbox"><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesCheckbox"><path d="M3.85742 14.4561H12.1357C13.6123 14.4561 14.3779 13.6904 14.3779 12.2344V3.91504C14.3779 2.45215 13.6123 1.69336 12.1357 1.69336H3.85742C2.38086 1.69336 1.61523 2.45215 1.61523 3.91504V12.2344C1.61523 13.6973 2.38086 14.4561 3.85742 14.4561ZM3.93945 13.1162C3.30371 13.1162 2.95508 12.7812 2.95508 12.1182V4.02441C2.95508 3.36133 3.30371 3.0332 3.93945 3.0332H12.0537C12.6826 3.0332 13.0381 3.36133 13.0381 4.02441V12.1182C13.0381 12.7812 12.6826 13.1162 12.0537 13.1162H3.93945ZM7.26855 11.3115C7.51465 11.3115 7.72656 11.1885 7.87012 10.9697L10.9258 6.19141C11.0146 6.04785 11.0967 5.88379 11.0967 5.72656C11.0967 5.3916 10.7959 5.16602 10.4746 5.16602C10.2695 5.16602 10.085 5.27539 9.94141 5.50781L7.24121 9.8418L5.96973 8.22168C5.80566 8.00977 5.6416 7.93457 5.43652 7.93457C5.10156 7.93457 4.8418 8.20117 4.8418 8.54297C4.8418 8.70703 4.90332 8.85742 5.01953 9.00098L6.63281 10.9697C6.81738 11.209 7.01562 11.3115 7.26855 11.3115Z"></path></svg></span>Reviewed</th><td><div class="checkbox checkbox-off"></div></td></tr></tbody></table></header><div class="page-body"><ul id="8d461dc5-a58a-49ab-a9c6-8b97c0036272" class="toggle"><li><details open=""><summary><strong>Índice</strong></summary><nav id="6b79967c-0118-40ef-b083-bebab111bdf6" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5b259e4a-9916-4255-8c94-f649fba6d33a">Single File Components</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0cf4f806-1d8d-45eb-9d7f-d3dbc1c49cb5">Data in SFCs</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e49bc34e-d95c-4168-85de-9f51735bd382">Using Data in the Template</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#cfec1784-d2bd-4c4d-829f-47b0e1fd9b9c">Interpolation in Templates</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#19198cf2-53b5-4147-bbd5-23fb469f0a70">Component Options</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c14f7ec5-2938-44a2-bcb3-09fef2349a1d">Lifecycle of a Vue Component</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#b9b3fd44-dc79-4cf3-91ee-3908fd548986">Creation (Initialization)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#aab09b17-a3e6-4e91-a7eb-706beadf74a8">Mounting (DOM Insertion)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#b870ed71-06f5-45a0-abf7-a0f6917d452b">Update (Differentiate and Render Again)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#600d3bcd-75bc-462b-9c3c-94ffcf453c43">Teardown</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#514b36c6-3b84-4719-8205-e64cbe3088cc">Template Syntax</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9d42d50d-bbb5-4adf-8647-fe53ff4cc6a3">Interpolations</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#41a25716-126b-424b-b79b-b46cb697338d"><strong>Text</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#4891788b-bdf7-4e2c-b4c1-6c89809cb0de"><strong>HTML</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#b35c81f8-2d7f-45f5-8b60-e8a0ae58f427">Attributes</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#6c304f48-88c3-4c35-936a-00352d62a92d">JS Expressions</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3b648a8c-1e7e-46ee-8af8-087368844b6d">Directives</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c5f919d0-049c-4868-9035-4e59a0ada1f8">Methods Property</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#78c9ec9c-e27a-4f0d-8462-3d3f6a3aa5b3">Computed Property</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#587eeb4f-0fb4-4a3c-bd0e-b08f9b1d62ee">Computed Properties and Arguments</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c7e67c09-d198-4fdb-8c5d-e12c4f2d3ca3">Getter Function</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6795a122-7f39-4039-8864-34c6840366df">Setter Function</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#fa91afb8-480a-40e4-80cf-4277c0d4ebaa">When to Implement a Setter Function?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#159ccb79-98da-413e-9fd2-ca7bca1e2a1f">How is a Setter Function Implemented and Used?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#d1a880c2-d1e8-460d-a8e8-a880d095a87f">Example Scenario</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4af4b131-d7ed-4922-9caf-0cecc60e4b11"><strong>Reactivity and Caching</strong></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e1aede6e-5d90-4dcf-9ac2-aea801b2514a">Computed Properties vs. Methods</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e3d2099e-3a18-43cb-b3af-9cee55cf0e15">Methods</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2ddaa9b7-ce93-43c0-8394-3107e74c2b55">Computed Properties</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#10193433-fcdd-4390-9dd2-da732f3716cf">When to Use Which?</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9ff5961e-85f7-4a53-8cb6-43b2e51f7deb">Summary of Key Differences</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0cdfe53b-0f01-4df2-8cdf-e02f11ab475a">Watchers Property</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#15427d21-ff7b-4fae-870d-df576dff050f">Asynchronous Operations</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ed7ac6ed-8456-4c86-97d7-8950fd4bcff9">Complex Callbacks</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#db77ad9b-a41b-4821-8c57-e35c163bae14">Deeper Observation</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6b2b8e6f-5b1a-4845-8cea-83473fe5300a">Bindings</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#223c5b29-7a80-46eb-96c8-b6152d83df24">Class Bindings</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6bee9d2b-0b84-45c6-b105-97377aa6e265">Style Bindings</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#edf47412-f9f3-474e-a8db-27b03e7d071d">When to Use Them</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#871cb522-d9d1-4b2c-97f4-f3519e13f638"><strong>Best Practices</strong></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c236ba87-6105-480c-aef5-cd4c74a8a0f9">Conditional Rendering</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1a9372e5-9c9f-4084-a697-44254040b6cf">v-if</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d787f2bd-df99-4f9e-9a87-7d11427db21a">v-else</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2c326ecc-379f-4324-a59a-317e630b43e3">v-else-if</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9f0824c3-5d4a-431f-a1cc-ad74fe5e9011">v-show</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#894f912a-903e-4d9a-9c44-4fa49fa36665">Comparing v-if and v-show</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#4f69b969-26ea-4df1-9508-4d90009a1d0e">Practical Scenarios</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c96bf649-4d9e-4fbf-b9a3-5330046512c3">v-if Example:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e74854dc-3ae6-4b64-90ad-3ea89e802fe9">v-else Example:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#5afed9fc-2ec2-4bac-af5d-36c8094eaf86">v-else-if Example:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#8447a1f2-489a-4afa-9cce-e7a02ba6a334">v-show Example:</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0968459e-dfe9-4f34-95c7-aded7355f03a">List Rendering</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#13fda2bb-cf5d-4aca-a43e-2b89babb87c2">v-for with Arrays</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#da4ee690-f2a7-421e-bf10-71354269b22b">v-for with an Index</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#a2b61c61-53ed-4b99-a773-1398ad44a357">When to Use <code>v-for</code> Key</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9d2b3a57-dd92-4134-b6bd-bb30c4f3640b">v-for with Objects</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#92c978f8-d0e3-487c-8b4a-1cbbd6bbd3ff">v-for with Property Name and Index</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#57760137-3a21-4d96-ba2f-1cbd653a636b">v-for with ranges</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0e28e0a6-05c1-47d9-a3d1-b88d806bb9b2">v-for with Filtered or Sorted Arrays</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fc92b8d8-f5e9-4292-affc-1e5651472630">v-for with the <code>&lt;template&gt;</code> Element</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#80c8b062-d555-45fc-b35b-f5ff81a01bee">v-for with v-if</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#ceeba527-1ef5-4a92-a128-8e47f8e6c951">v-for with v-if on a Wrapper Element</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#ea4344dc-2f14-41e7-8554-07db2423e403">Practical Example</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e285e4d1-b30a-4551-aaf8-45a797035102">Summary</a></div></nav></details></li></ul><h1 id="5b259e4a-9916-4255-8c94-f649fba6d33a" class="">Single File Components</h1><p id="f3629a2f-6846-412e-9c3e-435e7c110509" class="">Vue.js utilizes a structure known as Single File Components (SFCs), which are files with a <code>.vue</code> extension. An SFC encapsulates three parts:</p><ol type="1" id="74dd1cc9-e11c-4ac2-81a8-94aa343dba95" class="numbered-list" start="1"><li><strong>Component’s Logic (JavaScript)</strong>: This is the script part where we define our component’s data, methods, lifecycle hooks, etc. </li></ol><ol type="1" id="8c594a6b-3990-4880-acbe-aa06027d0856" class="numbered-list" start="2"><li><strong>Template (HTML)</strong>: The markup for our component, where we define the structure of our HTML in relation to Vue’s reactive data.</li></ol><ol type="1" id="39dd0e7e-9ba4-496f-9b9f-9b7059916702" class="numbered-list" start="3"><li><strong>Styles (CSS)</strong>: The styling for our component, which can be scoped to affect only the current component or global.</li></ol><p id="d65baa06-ed18-455c-8e3c-4a67da6e84e3" class="">For example, an SFC for a simple counter might look like this:</p><pre id="cdcef130-01ce-40ac-8e89-90b802e95657" class="code"><code>&lt;template&gt;
+  &lt;div&gt;
+    {{ count }}
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      count: 0
+    };
+  }
+}
+&lt;/script&gt;
+
+&lt;style scoped&gt;
+div {
+  font-size: 24px;
+}
+&lt;/style&gt;</code></pre><h2 id="0cf4f806-1d8d-45eb-9d7f-d3dbc1c49cb5" class="">Data in SFCs</h2><ul id="85228754-2256-4a61-8f61-91c6657bb87b" class="bulleted-list"><li style="list-style-type:disc">The data for a Vue component should be defined as a function that returns an object. This encapsulates the component’s state. </li></ul><ul id="7fa6fe79-6195-4280-a89f-b875c5f06cf0" class="bulleted-list"><li style="list-style-type:disc">All properties defined in the <code>data</code> function become reactive. Vue’s reactivity system will update the DOM automatically when these properties change.</li></ul><ul id="a80816ba-08ec-44c1-a398-7483a8b82e19" class="bulleted-list"><li style="list-style-type:disc">For instance, if we have a <code>count</code> data property, whenever we update <code>count</code>, Vue will update any part of the DOM that depends on <code>count</code>.</li></ul><h3 id="e49bc34e-d95c-4168-85de-9f51735bd382" class="">Using Data in the Template</h3><ul id="ee173553-158a-487f-9b58-f8b4ec71426d" class="bulleted-list"><li style="list-style-type:disc">The data properties are interpolated into the template using mustache syntax(<code><strong>{{ }}</strong></code>). This binds the data to the DOM, creating a reactive connection.</li></ul><p id="b67c2c20-e4d3-4ed0-8365-c4d6cedfe56d" class="">An example of displaying the <code>count</code> in the template is simply as follows:<div class="indented"><pre id="f99f82e5-208c-42a4-8693-b73db296668e" class="code"><code>&lt;template&gt;
+  &lt;p&gt;{{ count }}&lt;/p&gt;
+&lt;/template&gt;</code></pre></div></p><h3 id="cfec1784-d2bd-4c4d-829f-47b0e1fd9b9c" class="">Interpolation in Templates</h3><ul id="300c6438-8dd3-43b8-88c8-098e753d8b88" class="bulleted-list"><li style="list-style-type:disc">The mustache syntax is used to display values from the component’s data within the template.</li></ul><ul id="a2217b36-0e2b-44cb-b872-510f6026a803" class="bulleted-list"><li style="list-style-type:disc">Continuing with the counter example, we can display the <code>count</code> in a paragraph tag using <code>{{ count }}</code>.</li></ul><h2 id="19198cf2-53b5-4147-bbd5-23fb469f0a70" class="">Component Options</h2><ul id="b5d27979-51ce-4fd0-aac5-ecb646d8b9e4" class="bulleted-list"><li style="list-style-type:disc">Vue components can also accept <code>props</code>, compute properties with <code>computed</code>, and contain other components.</li></ul><ul id="ee5d9689-931c-4c4d-9d89-8d5daf44d435" class="bulleted-list"><li style="list-style-type:disc">Built-in properties like <code>$attrs</code> and <code>$emit</code> are prefixed with <code>$</code> to avoid naming conflicts.</li></ul><h2 id="c14f7ec5-2938-44a2-bcb3-09fef2349a1d" class="">Lifecycle of a Vue Component</h2><ul id="545337fe-9b07-49ef-8073-06df65c5addf" class="bulleted-list"><li style="list-style-type:disc">Vue instances go through a lifecycle, from creation to mounting, updating, and finally unmounting.</li></ul><ul id="14b9bf1d-d54b-4958-84a2-e3584bff1df3" class="bulleted-list"><li style="list-style-type:disc">During these phases, Vue calls specific lifecycle hooks that give us the opportunity to execute code at precise times. </li></ul><ul id="3e5e2330-5ec5-477b-aecf-57addd1c6478" class="bulleted-list"><li style="list-style-type:disc">The lifecycle diagram illustrates the order of lifecycle hooks:<ol type="1" id="029048f2-490e-4367-b13f-cf1eb20e3fdd" class="numbered-list" start="1"><li><strong>Creation (Initialization)</strong>: <code>beforeCreate</code> and <code>created</code></li></ol><ol type="1" id="517b27a2-39ff-44d1-b2ed-323e8b7bdc6c" class="numbered-list" start="2"><li><strong>Mounting (DOM Insertion)</strong>: <code>beforeMount</code> and <code>mounted</code></li></ol><ol type="1" id="e765b3ad-dae6-4bc9-b7aa-92ce91747ac6" class="numbered-list" start="3"><li><strong>Updating (Re-render)</strong>: <code>beforeUpdate</code> and <code>updated</code></li></ol><ol type="1" id="655402a3-a05d-4626-9bd7-4f7ca4039cbf" class="numbered-list" start="4"><li><strong>Unmounting</strong>: <code>beforeUnmount</code> and <code>unmounted</code></li></ol></li></ul><ul id="37689804-bb47-461b-926d-ab8da4baf487" class="bulleted-list"><li style="list-style-type:disc">Each phase of the Vue lifecycle corresponds to two lifecycle functions, which allows us to hook into different parts of the component’s lifespan.</li></ul><h3 id="b9b3fd44-dc79-4cf3-91ee-3908fd548986" class="">Creation (Initialization)</h3><ul id="da617fb9-9161-4447-a00d-7acd5befffe9" class="bulleted-list"><li style="list-style-type:disc"><strong><code>beforeCreate</code></strong>: This lifecycle hook is fired before the Vue instance is initialized. At this stage, data observation and event/watcher setup have not yet occurred, meaning <code>data</code>, <code>computed</code>, and <code>methods</code> are not available.</li></ul><ul id="dd7a7170-990d-4f3f-a0ce-efbe5210d745" class="bulleted-list"><li style="list-style-type:disc"><code><strong>created</strong></code>: This hook is fired after the Vue instance has been initialized, meaning data observation, computed properties, and methods are now available. However, the instance has not yet been mounted, so there’s no access to the DOM or target mounting element (<code>$el</code>). It’s a good time to make API calls to fetch data that we want to be available immediately as the component renders.<p id="034c63bc-87fc-432f-97f6-e937cbf0be6d" class=""><span style="border-bottom:0.05em solid"><strong>Practical Example</strong></span></p><pre id="e9f36d08-6454-4973-a172-61ee5c9f1006" class="code"><code>export default {
+  name: &#x27;Counter&#x27;,
+  data() {
+    return {
+      count: 2,
+    };
+  },
+  created() {
+    console.log(this.count); // logs &#x27;2&#x27;
+  },
+  beforeCreate() {
+    console.log(this.count); // logs &#x27;undefined&#x27; because data is not set up yet
+  },
+};</code></pre><p id="c543947e-cf4e-4d95-a2f1-4d67ff1f0f38" class="">In the example above, the <code>created</code> hook logs the value of <code>count</code> which is defined in the <code>data</code> function. The <code>beforeCreate</code> hook, however, logs <code>undefined</code> for <code>count</code> because <code>data</code> has not been initialized at this stage.</p></li></ul><h3 id="aab09b17-a3e6-4e91-a7eb-706beadf74a8" class="">Mounting (DOM Insertion)</h3><ul id="046e37f8-ab03-4cfd-9ecf-a9707349d9e5" class="bulleted-list"><li style="list-style-type:disc"><strong><code>beforeMount</code></strong>: This is called right before the mounting begins: the <code>render</code> function is about to be called for the first time. This hook is not commonly used but can be useful for server-side rendering.<pre id="bd9bcdd0-dc84-4a1e-9c1f-200df4f7f658" class="code"><code>export default {
+  data() {
+    return {
+      message: &quot;Hello, Vue!&quot;
+    };
+  },
+  beforeMount() {
+    console.log(&quot;The component is about to be mounted to the DOM.&quot;);
+    this.message = &quot;Component will mount soon!&quot;;
+  },
+  mounted() {
+    console.log(&quot;Mounted! This is our message: &quot; + this.message);
+  },
+};</code></pre></li></ul><ul id="f58dd623-de41-479d-ace2-9836583811f9" class="bulleted-list"><li style="list-style-type:disc"><strong><code>mounted</code></strong>: Fired after the component has been mounted to the DOM. Now <code>$el</code> is available, and we can perform DOM-dependent operations. However, if we plan to interact with child components, they may not be mounted yet. <code>this.$nextTick</code> can be used to wait until the entire view has been rendered.<pre id="dac0684f-3263-4397-8aa8-1f7a5f9376c7" class="code"><code>export default {
+  mounted() {
+    this.$nextTick(() =&gt; {
+      console.log(&quot;The component has been mounted.&quot;);
+      // DOM-related operations go here
+      this.initializeThirdPartyLibrary();
+    });
+  },
+  methods: {
+    initializeThirdPartyLibrary() {
+      // Initialize a plugin, library, or set up event listeners
+      console.log(&quot;Third-party library initialized.&quot;);
+    }
+  },
+};</code></pre></li></ul><p id="f4224d77-7ce6-4a03-8aa3-077ae0e19f71" class="">
+</p><h3 id="b870ed71-06f5-45a0-abf7-a0f6917d452b" class="">Update (Differentiate and Render Again)</h3><ul id="8ae45595-7980-4916-8c0c-ad96542f29a1" class="bulleted-list"><li style="list-style-type:disc"><strong><code>beforeUpdate</code></strong>: Triggered when reactive data has changed, and the DOM is about to re-render. It allows us to get the new state of the data and perform operations before the DOM is patched and re-rendered.</li></ul><ul id="42a0dcb5-3587-475c-a9ce-2d08770f7662" class="bulleted-list"><li style="list-style-type:disc"><code><strong>updated</strong></code>: Called after the data changes caused the DOM to re-render. If we need to access the updated DOM, it’s best to use <code>this.$nextTick</code> within this hook.<pre id="df0a0f7b-8d5d-4d01-b101-b0daf0e4562e" class="code"><code>export default {
+  data() {
+    return {
+      counter: 0
+    };
+  },
+  beforeUpdate() {
+    console.log(&quot;The counter is about to update from: &quot; + this.counter);
+  },
+  updated() {
+    this.$nextTick(() =&gt; {
+      console.log(&quot;The counter has updated to: &quot; + this.counter);
+    });
+  },
+  methods: {
+    incrementCounter() {
+      this.counter++;
+    }
+  },
+};</code></pre></li></ul><h3 id="600d3bcd-75bc-462b-9c3c-94ffcf453c43" class="">Teardown</h3><ul id="179cb14a-4a49-42e3-99dd-19cf7c07c836" class="bulleted-list"><li style="list-style-type:disc"><code><strong>beforeUnmount</strong></code>: This hook runs when a component is about to be removed from the DOM, which is a good place to perform cleanup tasks like removing event listeners.<pre id="8fc505f5-4966-4080-961f-acb2cdd961ec" class="code"><code>export default {
+  beforeUnmount() {
+    console.log(&quot;The component is about to be unmounted.&quot;);
+    // Cleanup listeners, timers or cancel ongoing API calls
+    clearInterval(this.intervalId);
+  },
+};</code></pre></li></ul><ul id="d92fd2d0-3b38-419d-bce4-5a2b9e3a73c3" class="bulleted-list"><li style="list-style-type:disc"><code><strong>unmounted</strong></code>: Invoked after the component has been destroyed and unmounted from the DOM. At this point, component directives are unbound, and child component instances are also unmounted. It&#x27;s often used for final cleanup, similar to <code><strong>beforeUnmount</strong></code>, but when we need to know that the teardown is complete.<pre id="22d3278d-a6a9-40ac-b025-257da2ff5878" class="code"><code>export default {
+  unmounted() {
+    console.log(&quot;The component has been unmounted and destroyed.&quot;);
+  },
+};</code></pre></li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ce01785a-387b-4a70-ad6f-3f7b6bf49259"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">Understanding these lifecycle hooks is critical for managing a component&#x27;s behavior throughout its lifespan in a Vue application. Each hook provides a different scope of functionality, allowing us to execute code at precisely the right time.</div></figure><h1 id="514b36c6-3b84-4719-8205-e64cbe3088cc" class="">Template Syntax</h1><p id="8b82258c-da69-4504-a52c-b570a569f391" class="">Vue.js utilizes a declarative, HTML-based template syntax that enables us to seamlessly bind the rendered DOM to the Vue instance’s data. This approach simplified the process of connecting our application logic to the UI, promoting readability and maintainability.</p><h2 id="9d42d50d-bbb5-4adf-8647-fe53ff4cc6a3" class="">Interpolations</h2><p id="9ea839ec-9d6b-479b-b4a0-c2997c6af13b" class="">This is the inclusion of dynamic content in our HTML templates. Vue.js supports a variety of interpolation methods to output text, raw HTML, JavaScript expressions, and bind data to attributes. </p><h3 id="41a25716-126b-424b-b79b-b46cb697338d" class=""><strong>Text</strong></h3><p id="4e809a4e-82c7-4923-b2c9-48afba3f7031" class="">The double curly braces <code>{{ }}</code> are used for text interpolation. The content within the braces is treated as a JavaScript expression, and Vue.js will keep the DOM updated with the latest values of the expression. We can also perform one-time interpolations that do not update on data change by using the <code>v-once</code> directive: <code>&lt;span v-once&gt;This will never change: {{ msg }}&lt;/span</code>.</p><h3 id="4891788b-bdf7-4e2c-b4c1-6c89809cb0de" class=""><strong>HTML</strong></h3><p id="b4bcfe74-48b6-4473-ade1-b884c78942bf" class="">To render raw HTML, Vue.js provides the <code>v-html</code> directive. This should be used judiciously to prevent XSS vulnerabilities. To produce real HTML, we must use the <code>v-html</code> directive: <code>&lt;p v-html=&quot;rawHtml&quot;&gt;&lt;/p&gt;</code></p><pre id="d6fa74d7-3cd1-478a-b255-0859e9322ba1" class="code"><code>&lt;div&gt;
+  &lt;p&gt;Using mustaches: {{ rawHtml }}&lt;/p&gt;
+  &lt;p&gt;Using v-html directive: &lt;span v-html=&quot;rawHtml&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+export default {
+  name: &quot;Example&quot;,
+  data() {
+    return {
+      rawHtml: &quot;&lt;b&gt;Hello World!&lt;/b&gt;&quot;,
+    };
+  },
+};
+&lt;/script&gt;</code></pre><ul id="6086e2ef-73e9-49c8-977e-c4dcd4d1b901" class="bulleted-list"><li style="list-style-type:disc">Using mustaches: <code><strong>&lt;b&gt;Hello World!&lt;/b&gt;</strong></code></li></ul><ul id="4cc18f09-5372-49b0-8aca-52cd48d470d2" class="bulleted-list"><li style="list-style-type:disc">Using v-html directive: <strong>Hello World!</strong></li></ul><p id="54a6ff24-29d6-484c-be2a-eb3e08120d67" class="">In this example, the mustache syntax <code>{{ rawHtml }}</code> is used to output text, and Vue treats the value of <code>rawHtml</code> as a string of plain text. However, when using the <code>v-html</code> directive, Vue treats the value of <code>rawHtml</code> as actual HTML, rendering it as bold text in the DOM. This distinction is crucial for injecting HTML into the template, but one must be cautious to avoid XSS vulnerabilities when using <code>v-html</code> with user-generated content.</p><ul id="baf2c7d4-d117-43f7-90d4-09b024363ffd" class="toggle"><li><details open=""><summary><strong>Security Consideration (XSS)</strong></summary><p id="00c59bfd-7431-45e9-95c8-c3977a13ed45" class="">XSS stands for Cross-Site Scripting, which is a security vulnerability that allows attackers to inject malicious scripts into webpages viewed by other users. When we use <code><strong>v-html</strong></code> to inject HTML, we&#x27;re also trusting that HTML to be safe. If this HTML content comes from user input, it could potentially contain a script that can be executed in the context of your application, leading to various security risks, such as stealing user data.</p><p id="728507d7-6ebf-468e-adca-790042818bc9" class="">To prevent this, we should always sanitize any user-generated content before displaying it with <code><strong>v-html</strong></code>, ensuring it doesn&#x27;t contain any potentially harmful scripts or elements.</p><p id="e71c23b9-9f57-4714-9e2e-1ba9f38a7569" class="">
+</p></details></li></ul><ul id="3540a249-8a5a-42a5-9418-c8c8da7a681a" class="toggle"><li><details open=""><summary><strong><strong>Use Cases for Direct HTML Insertion</strong></strong></summary><p id="0001ef8b-87ef-4d27-a381-e74551be7521" class="">There are scenarios where we might want to insert HTML directly into a Vue template:</p><ol type="1" id="95bf540e-3dd4-47f1-81f8-9aa1f4cf8ae4" class="numbered-list" start="1"><li><strong>Rich Text</strong>: When we&#x27;re working with a content management system where users input formatted text, such as with a WYSIWYG editor, you might receive HTML that needs to be rendered as-is.</li></ol><ol type="1" id="c49b7c5f-c690-44c8-b65b-20c245b2f8b3" class="numbered-list" start="2"><li><strong>Markup Generation</strong>: Sometimes, our application might need to generate HTML markup dynamically based on complex conditions that aren&#x27;t easily replicated with standard Vue template features.</li></ol><ol type="1" id="3a866b46-7968-48dd-996d-e30d1a29c495" class="numbered-list" start="3"><li><strong>Third-Party Libraries</strong>: We may be integrating with third-party libraries that provide HTML content dynamically, and we need to insert this into our Vue templates.</li></ol><p id="c4e0565c-1f10-45e8-8fec-a971995886d7" class=""><strong>Why Not Always Use CSS?</strong></p><p id="e21d2d71-b507-4c61-ac3f-13e555307cc5" class="">In many cases, the presentation should be handled by CSS. For example, rather than wrapping text in <code>&lt;b&gt;</code> tags for boldness, we could use CSS to apply <code>font-weight</code>. This keeps our content separate from our presentation, which is a best practice for web development. However, sometimes we need to insert structural HTML, not just presentation - and that&#x27;s where <code>v-html</code> comes in handy.</p><p id="9cdf8e8e-8898-42ca-8f6f-f0a479002515" class="">In general, it&#x27;s best to use Vue&#x27;s data-binding and component system to handle dynamic content and reserve <code>v-html</code> for those specific cases where we have safe, trusted HTML content that needs to be rendered directly into the template.</p></details></li></ul><h3 id="b35c81f8-2d7f-45f5-8b60-e8a0ae58f427" class="">Attributes</h3><p id="c65b6cad-3a28-4960-818b-3b4f3e59c6ee" class="">In Vue.js, while we can use mustache syntax <code>{{ }}</code> for text interpolation within the template, we cannot use it inside HTML attributes. Instead, Vue provides the <code>v-bind</code> directive to dynamically bind attributes to the data on our Vue instance.</p><p id="6c0ddd87-ba25-4f89-95f0-b36637242c53" class=""><span style="border-bottom:0.05em solid"><strong>Binding Image Source Example</strong></span></p><p id="1641985a-a3d9-48f8-a459-81d30ce201a8" class="">Consider the following example, where we want to dynamically bind an image&#x27;s source attribute to a data property:</p><pre id="7a6c2aeb-d4e1-4c17-912d-f0c9e553582e" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;img v-bind:src=&quot;require(&#x27;../assets/imgs/&#x27; + imgsrc)&quot; /&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  name: &#x27;Example&#x27;,
+  data() {
+    return {
+      imgsrc: &#x27;dog.png&#x27;,
+    };
+  },
+};
+&lt;/script&gt;
+</code></pre><p id="9b83df27-7d40-44e8-9f58-c21589d39ff5" class="">In this example:</p><ul id="261f0261-d15d-413d-862b-18e36fd88205" class="bulleted-list"><li style="list-style-type:disc"><code>v-bind:src</code> tells Vue to bind the <code>src</code> attribute of the <code>img</code> element to a JavaScript expression.</li></ul><ul id="00a63da4-27c2-44db-ae7c-8705c9630d9a" class="bulleted-list"><li style="list-style-type:disc">The <code>require</code> function combined with the path to the image and the <code>imgsrc</code> data property dynamically resolves the path to the image file.</li></ul><ul id="06105bf5-7cf5-471a-8aeb-e537b4fbecd2" class="bulleted-list"><li style="list-style-type:disc">The image file <code>dog.png</code> located in <code>../assets/imgs/</code> will be used as the source for the <code>img</code> tag when the component is rendered.</li></ul><p id="94124a6e-cf98-4310-a489-11762cdddc30" class=""><span style="border-bottom:0.05em solid"><strong>Boolean Attributes Example</strong></span></p><p id="33af6885-2f46-4d7e-b5b3-2a8d1f7c19c6" class="">Vue.js handles boolean attributes like <code>disabled</code>, <code>checked</code>, or <code>selected</code> in a special way. A boolean attribute added with <code>v-bind</code> will only be included in the rendered element if its value is truthy.</p><pre id="739cea42-7d54-40fa-ba98-7c632ad3e8fe" class="code code-wrap"><code>&lt;button v-bind:disabled=&quot;isButtonDisabled&quot;&gt;Button&lt;/button&gt;
+</code></pre><p id="7475b6ce-e7ca-432e-8b2b-52f0bbf99b99" class="">In this snippet:</p><ul id="1e74768c-5d40-44e9-89f9-f10f81dfd237" class="bulleted-list"><li style="list-style-type:disc"><code>v-bind:disabled</code> conditionally binds the <code>disabled</code> attribute to the <code>isButtonDisabled</code> data property.</li></ul><ul id="fc026200-b42a-41fe-8361-276a0c31d8e3" class="bulleted-list"><li style="list-style-type:disc">If <code>isButtonDisabled</code> evaluates to a truthy value (anything that&#x27;s not <code>false</code>, <code>null</code>, <code>undefined</code>, <code>0</code>, <code>NaN</code>, or an empty string <code>&#x27;&#x27;</code>), the <code>disabled</code> attribute will be included and rendered on the <code>button</code> element.</li></ul><ul id="1c8388b3-3c2a-44d0-8834-bbecda917b97" class="bulleted-list"><li style="list-style-type:disc">If <code>isButtonDisabled</code> is falsy, the <code>disabled</code> attribute will not be rendered, allowing the button to be interactive.</li></ul><p id="4e5d24dd-f60b-428c-bd69-729646bfe20b" class="">Using <code>v-bind</code> for dynamic attributes allows for powerful, data-driven interactions within Vue components. For instance, by changing <code>isButtonDisabled</code> in our JavaScript, we can enable or disable a button based on the state of our application, without the need for additional DOM manipulation. This streamlines the development process and keeps our code reactive and concise.</p><h3 id="6c304f48-88c3-4c35-936a-00352d62a92d" class="">JS Expressions</h3><p id="3cbeed19-cb85-4f87-9e77-4b68e7c29aba" class="">Vue.js templates are very flexible and allow us to write actual JavaScript expressions inside them. These expressions will be evaluated against the data of the Vue instance.</p><p id="4481315e-d055-42c7-a6b7-c57b2a60621a" class=""><span style="border-bottom:0.05em solid"><strong>Examples of JavaScript Expressions in Vue.js</strong></span></p><ol type="1" id="37abcbdd-68a5-4898-a71b-642af6726d15" class="numbered-list" start="1"><li><strong>Simple Arithmetic</strong>:</li></ol><pre id="12641906-53c7-4851-89df-e822451e66fa" class="code code-wrap"><code>&lt;!-- This will add 1 to the number and render it --&gt;
+&lt;p&gt;{{ number + 1 }}&lt;/p&gt;
+</code></pre><ol type="1" id="13a98720-33df-471a-ba1b-ab15f7e28299" class="numbered-list" start="1"><li><strong>Ternary Operator</strong>:</li></ol><pre id="55690821-3698-4b02-9dce-1fb49325c546" class="code code-wrap"><code>&lt;!-- This will check the condition and render &#x27;YES&#x27; or &#x27;NO&#x27; accordingly --&gt;
+&lt;p&gt;{{ ok ? &#x27;YES&#x27; : &#x27;NO&#x27; }}&lt;/p&gt;
+</code></pre><ol type="1" id="bf422d68-1abc-413c-82f2-5acffa5fbdf3" class="numbered-list" start="1"><li><strong>String Manipulation</strong>:</li></ol><pre id="6c993ffe-14c2-472a-a9af-5d9d49ceb49f" class="code code-wrap"><code>&lt;!-- This will reverse the message string and render it --&gt;
+&lt;p&gt;{{ message.split(&#x27;&#x27;).reverse().join(&#x27;&#x27;) }}&lt;/p&gt;
+</code></pre><ol type="1" id="eaaffc03-1ff3-40b9-ae78-0d5a754ea6d5" class="numbered-list" start="1"><li><strong>Dynamic IDs</strong>:</li></ol><pre id="9b75066a-ee5e-44ea-8677-b882aa3e6d39" class="code code-wrap"><code>&lt;!-- This will create a dynamic id for a div based on the data property &#x27;id&#x27; --&gt;
+&lt;div :id=&quot;&#x27;list-&#x27; + id&quot;&gt;&lt;/div&gt;
+</code></pre><p id="5098cbbf-0e28-4117-9ac6-6d68431357bf" class="">In these examples, each mustache <code>{{ }}</code> contains an expression that Vue will evaluate and replace with its result in the DOM. It&#x27;s important to note that these are JavaScript expressions, not statements, which means we can&#x27;t put any complex logic like loops or conditionals inside the mustache tags.</p><p id="f435c898-de1d-449d-9796-2f4e0c75377d" class=""><span style="border-bottom:0.05em solid"><strong>Restrictions</strong></span></p><p id="7e056c1f-7403-484c-8b1f-6a585e1584bb" class="">Vue imposes a restriction on what can be placed inside mustaches; only single JavaScript expressions are permitted. This means we cannot use statements or declarations. For example:</p><ul id="aacf0e50-114c-4125-a590-b91fb5ff7be1" class="bulleted-list"><li style="list-style-type:disc"><strong>Variable Declaration</strong>:</li></ul><pre id="2e3ff6aa-8228-4919-9ffc-fd9a26198606" class="code code-wrap"><code>&lt;!-- This will NOT work --&gt;
+{{ const a = 1 }}
+</code></pre><ul id="0ff08efa-61ac-4774-8f53-c6748226646e" class="bulleted-list"><li style="list-style-type:disc"><strong>Conditional Statements</strong>:</li></ul><pre id="21ee50be-c52d-498e-8304-503bfeb4e0b9" class="code code-wrap"><code>&lt;!-- This will NOT work --&gt;
+{{ if(ok) { return message } }}
+</code></pre><p id="ba499480-5e45-45ac-af3c-7c5a4e9f6bb0" class="">Instead, we should use ternary operators or move complex logic into methods or computed properties.</p><p id="cfe0c87b-23b3-4e04-a01f-4c62a78c534a" class="">For instance, to achieve conditional rendering, we could use a method:</p><pre id="d6e1c7aa-b59b-4f8e-836f-628697d067ef" class="code code-wrap"><code>&lt;p&gt;{{ getMessage() }}&lt;/p&gt;
+</code></pre><p id="926e6428-6ef4-4fc5-bbcd-961517307cc9" class="">And in your component:</p><pre id="17139a60-495d-4cd8-9eac-6cb6f609ef7c" class="code code-wrap"><code>methods: {
+  getMessage() {
+    if(this.ok) {
+      return this.message;
+    } else {
+      return &#x27;Not OK&#x27;;
+    }
+  }
+}
+</code></pre><p id="5114b1c7-1c12-42db-8e47-641884a74dcb" class="">Using JavaScript expressions in this way allows for a declarative approach to building our UI. The expressions are reactive, meaning any changes to the data properties they depend on will automatically update the DOM with the new values. This is one of the core features that makes Vue.js a powerful and efficient tool for developing dynamic web interfaces.</p><h3 id="3b648a8c-1e7e-46ee-8af8-087368844b6d" class="">Directives</h3><ul id="ad414449-088e-411e-88ba-d31f01ce6311" class="bulleted-list"><li style="list-style-type:disc"><strong>What are Directives?</strong><p id="f6015eaf-5236-4199-8aeb-b4382fc69658" class="">Directives are special tokens in the markup that tell the library to do something to a DOM element. In Vue.js, directives are prefixed with <code><strong>v-</strong></code> to indicate that they are special attributes provided by Vue.</p></li></ul><ul id="08028479-ea55-437a-bf37-d67eba59f180" class="bulleted-list"><li style="list-style-type:disc"><strong>How do Directives Work?</strong><p id="a84a9c23-fd50-466e-8d18-617e0c6d2a2d" class="">Directives apply side-effects to the DOM when the value of its expression changes. For example, the <code><strong>v-if</strong></code> directive toggles the presence of an element based on the truthiness of its expression.</p></li></ul><pre id="d96b1856-554f-409d-a5d5-0acdbd992fb1" class="code"><code>&lt;p v-if=&quot;seen&quot;&gt;Now you see me&lt;/p&gt;</code></pre><ul id="31b69803-ece5-40c1-9aec-7daf14032fff" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax Components</strong>:<ul id="267e2788-ea3c-4475-8109-d23387587db8" class="bulleted-list"><li style="list-style-type:circle"><strong>Name</strong>: It&#x27;s the directive&#x27;s name without the <code><strong>v-</strong></code> prefix.</li></ul><ul id="58f7c8d1-591c-48f6-9547-1252a5685936" class="bulleted-list"><li style="list-style-type:circle"><strong>Argument</strong>: Denoted by a colon after the directive name.</li></ul><ul id="b001dc33-4852-48ad-952e-393e85d2b860" class="bulleted-list"><li style="list-style-type:circle"><strong>Modifiers</strong>: Postfixes denoted by a dot that indicate the directive should bind in a special way.</li></ul><ul id="269e127b-7f88-4e45-bc87-a031c8d3ef81" class="bulleted-list"><li style="list-style-type:circle"><strong>Value</strong>: The value given to the directive, usually an expression or a method name.<pre id="3e7eb6f6-ca56-4187-b0c8-994ba798d2b9" class="code"><code>&lt;form v-on:submit.prevent=&quot;onSubmit&quot;&gt;
+  &lt;!-- form content --&gt;
+&lt;/form&gt;</code></pre><p id="dc99179f-5e16-4c82-ae56-09b6a340a66a" class="">In this example:</p><ul id="898e282a-db05-485b-8d1b-6083c2d38aa7" class="bulleted-list"><li style="list-style-type:square"><code><strong>on</strong></code> is the name of the directive.</li></ul><ul id="b1c784dd-1ed4-4b03-98b3-14f90dbdbdeb" class="bulleted-list"><li style="list-style-type:square"><code><strong>submit</strong></code> is the argument which specifies the event to listen for.</li></ul><ul id="334df813-43ff-45fb-a43c-8b9857a858de" class="bulleted-list"><li style="list-style-type:square"><code><strong>prevent</strong></code> is a modifier that tells Vue to call <code><strong>event.preventDefault()</strong></code> when the submit event is triggered.</li></ul><ul id="520b72df-57b9-4c9b-a494-f715c5c3b7f1" class="bulleted-list"><li style="list-style-type:square"><code><strong>onSubmit</strong></code> is the value, which should be a method defined on the Vue instance.</li></ul></li></ul></li></ul><p id="92891e6e-dc44-49d3-96d0-13885c0478f1" class=""><span style="border-bottom:0.05em solid"><strong>Directives with Arguments</strong></span></p><ul id="01f3699c-edbc-491d-866e-96412a6976be" class="bulleted-list"><li style="list-style-type:disc">Example of <code>v-bind</code> Directive:<pre id="0f0e7476-fbdb-4f4d-a8d2-c31c3b7aa6d8" class="code"><code>&lt;a v-bind:href=&quot;url&quot;&gt;Link&lt;/a&gt;</code></pre></li></ul><ul id="4118e84a-7d12-445e-9c6c-62c116b72f48" class="bulleted-list"><li style="list-style-type:disc">Example of <code>v-on</code> Directive:</li></ul><pre id="cd8c9ada-134c-445b-8d35-cf28f838bb23" class="code code-wrap"><code>&lt;a v-on:click=&quot;doSomething&quot;&gt;Click me&lt;/a&gt;</code></pre><p id="8b793e68-c2df-4be8-88f4-e8d2464c7866" class=""><span style="border-bottom:0.05em solid"><strong>Directives with Dynamic Arguments</strong></span></p><p id="a7e52795-eebb-45df-9b1c-6e3054630525" class="">Vue.js allows for dynamic arguments in directives, which can be evaluated at runtime:</p><pre id="b82a0608-25c2-4fd1-a793-bfc84003b47f" class="code code-wrap"><code>&lt;a v-bind:[attributeName]=&quot;url&quot;&gt;Link&lt;/a&gt;
+&lt;!-- shorthand --&gt;
+&lt;a :[attributeName]=&quot;url&quot;&gt;...&lt;/a&gt;
+
+&lt;a v-on:[eventName]=&quot;doSomething&quot;&gt;Click me&lt;/a&gt;
+&lt;!-- shorthand --&gt;
+&lt;a @[eventName]=&quot;doSomething&quot;&gt;...&lt;/a&gt;</code></pre><ul id="6610d4fc-8aaa-4f99-8f2f-93afdf91d64f" class="toggle"><li><details open=""><summary><strong>Here is a more detailed example of how dynamic arguments can be used</strong></summary><p id="18656266-679c-4530-989a-6acebe464411" class=""><span style="border-bottom:0.05em solid"><strong>Example without Dynamic Arguments</strong></span></p><pre id="3f88760a-7d53-4ce4-9569-cbdf2c3b743f" class="code code-wrap"><code>&lt;!-- Fixed attribute name --&gt;
+&lt;a v-bind:href=&quot;url&quot;&gt;Link&lt;/a&gt;
+&lt;!-- Fixed event name --&gt;
+&lt;button v-on:click=&quot;sayHello&quot;&gt;Say Hello&lt;/button&gt;
+</code></pre><p id="5f1384d3-90f7-4c28-b842-9131b43ab403" class="">In this traditional use case, <code>href</code> and <code>click</code> are fixed arguments. The <code>href</code> attribute will be bound to the value of <code>url</code>, and clicking the button will call the <code>sayHello</code> method.</p><p id="ca13021c-d4c6-4997-94de-9c34b366a38b" class=""><span style="border-bottom:0.05em solid"><strong>Example with Dynamic Arguments</strong></span></p><pre id="31b64158-0598-4f2a-abef-924fc8917462" class="code code-wrap"><code>&lt;!-- Dynamic attribute name --&gt;
+&lt;a v-bind:[dynamicAttr]=&quot;url&quot;&gt;Link&lt;/a&gt;
+&lt;!-- Dynamic event name --&gt;
+&lt;button v-on:[dynamicEvent]=&quot;doSomething&quot;&gt;Act&lt;/button&gt;
+</code></pre><p id="6b556f32-72b6-4bcf-b1ef-8bfce301cfd1" class="">Here, <code>dynamicAttr</code> and <code>dynamicEvent</code> are JavaScript expressions that are evaluated to determine the actual name of the attribute and event.</p><p id="77fe0d94-cdfc-4e44-979b-828082602121" class=""><span style="border-bottom:0.05em solid"><strong>Practical Use Case</strong></span></p><p id="b762de39-2d69-45a0-bb35-aa5e3f0b160b" class="">Imagine we have a component that should bind a variable attribute name or listen to a variable event name based on some condition. Here&#x27;s how dynamic arguments can be used:</p><p id="78c601af-bd8a-4088-a2c3-67eb48be6517" class=""><span style="border-bottom:0.05em solid"><strong>Component Data</strong></span></p><pre id="83580b43-8b0a-4ee9-b05b-8c5eb84d1bf2" class="code code-wrap"><code>export default {
+  data() {
+    return {
+      url: &#x27;&lt;https://example.com&gt;&#x27;,
+      attributeName: &#x27;href&#x27;,
+      eventName: &#x27;click&#x27;,
+      buttonAction: &#x27;sayHello&#x27;
+    };
+  },
+  methods: {
+    sayHello() {
+      alert(&#x27;Hello!&#x27;);
+    },
+    doSomethingElse() {
+      console.log(&#x27;Doing something else...&#x27;);
+    }
+  }
+};
+</code></pre><p id="043bd87b-ae6f-4124-9ddd-fbc453f60c1d" class=""><span style="border-bottom:0.05em solid"><strong>Component Template with Dynamic Arguments</strong></span></p><pre id="4cade45c-d6f2-47a2-b7f0-969e9549a6b6" class="code code-wrap"><code>&lt;template&gt;
+  &lt;!-- Dynamic href attribute --&gt;
+  &lt;a v-bind:[attributeName]=&quot;url&quot;&gt;Dynamic Link&lt;/a&gt;
+
+  &lt;!-- Dynamic event listener --&gt;
+  &lt;button v-on:[eventName]=&quot;buttonAction&quot;&gt;Dynamic Event Button&lt;/button&gt;
+&lt;/template&gt;
+</code></pre><p id="b3270d87-f9d9-4ac5-9c0f-5048f2eb4653" class="">In the above Vue component:</p><ul id="65f018c4-5852-44f1-8b1b-3e7446cc4cd5" class="bulleted-list"><li style="list-style-type:disc">The <code>attributeName</code> property in the component&#x27;s <code>data</code> is evaluated to <code>href</code>. Therefore, <code>v-bind:[attributeName]</code> is equivalent to <code>v-bind:href</code>.</li></ul><ul id="26e12cb2-3014-4ce8-b559-452cac1a5736" class="bulleted-list"><li style="list-style-type:disc">The <code>eventName</code> property in the component&#x27;s <code>data</code> is evaluated to <code>click</code>. So, <code>v-on:[eventName]</code> is equivalent to <code>v-on:click</code>.</li></ul><p id="f50e83e4-fce7-4e59-a7a9-15a117f42d3a" class="">If the component&#x27;s data changes, and <code>attributeName</code> becomes, for example, <code>title</code>, the binding will automatically update to <code>v-bind:title</code>. Similarly, if <code>eventName</code> changes to <code>mouseover</code>, the event listener will update to listen to <code>mouseover</code> events.</p><p id="06beb97a-02b4-4288-9298-a06daa34d506" class="">With dynamic arguments, we can create more abstract and reusable components that adapt to different situations based on their data or computed properties.</p></details></li></ul><p id="459b6fb9-eab4-436c-9107-f78fa6c90d39" class=""><span style="border-bottom:0.05em solid"><strong>Directives with modifiers</strong></span></p><p id="853f838f-e2a8-49e3-9600-8cb499458ffa" class="">Modifiers are special postfixes that change the way a directive is applied:</p><pre id="33338424-82b0-45a4-8612-6883f821f916" class="code code-wrap"><code>&lt;form v-on:submit.prevent=&quot;onSubmit&quot;&gt;
+  &lt;!-- form content --&gt;
+&lt;/form&gt;</code></pre><p id="c7f4dd04-1ad3-4c50-8dc6-59db87c91dc0" class=""><span style="border-bottom:0.05em solid"><strong>Shorthands for Directives</strong></span></p><p id="e71e279a-8e48-46bb-a0e5-e7bc36ad72fd" class="">Vue.js provides shorthands for commonly used directives to make the templates less verbose:</p><ul id="773d7e01-bae2-41d5-90a5-a2a74357af2c" class="bulleted-list"><li style="list-style-type:disc"><code><strong>v-bind</strong></code> shorthand:</li></ul><pre id="39d110ee-f6e1-46bc-9d6a-dc8c7a0d5a31" class="code code-wrap"><code>&lt;!-- Full syntax --&gt;
+&lt;a v-bind:href=&quot;url&quot;&gt;Link&lt;/a&gt;
+&lt;!-- Shorthand --&gt;
+&lt;a :href=&quot;url&quot;&gt;Link&lt;/a&gt;</code></pre><ul id="4e7e1408-87b2-42d6-8028-964f3cdc59a3" class="bulleted-list"><li style="list-style-type:disc"><code><strong>v-on</strong></code> shorthand:</li></ul><pre id="e33b46ea-722d-4b74-ae5e-8d886835c9aa" class="code code-wrap"><code>&lt;!-- Full syntax --&gt;
+&lt;a v-on:click=&quot;doSomething&quot;&gt;Click me&lt;/a&gt;
+&lt;!-- Shorthand --&gt;
+&lt;a @click=&quot;doSomething&quot;&gt;Click me&lt;/a&gt;</code></pre><p id="aaaffbf2-2618-412b-9f54-83b08e9f9e4f" class="">By using these shorthands, we can write more concise and readable templates while retaining all the reactivity and power that Vue directives offer.</p><h1 id="c5f919d0-049c-4868-9035-4e59a0ada1f8" class="">Methods Property</h1><p id="056401d2-4cb0-41ec-aeb4-9aba09657c59" class="">Methods are added to the component through the <code>methods</code> property in the JavaScript section of the SFC. These methods can be invoked from within the template, and they have access to the data properties. Methods are used to define functions that can be executed in response to events or can be used to perform actions within a component. Here is a detailed explanation:</p><ul id="66ef7d47-9927-4e85-b95c-e63fc4fcf442" class="bulleted-list"><li style="list-style-type:disc"><strong>Defining Methods</strong>: Methods are defined inside the <code>methods</code> object in a Vue component. Each method is a function that can be called from the component&#x27;s template or lifecycle hooks.<pre id="6413cfe6-9280-495f-bdc6-428aa8baa55e" class="code code-wrap"><code>export default {
+  data() {
+    return {
+      count: 0
+    };
+  },
+  methods: {
+    increment() {
+      this.count++;
+    }
+  }
+};</code></pre></li></ul><ul id="de87339d-d20b-4a73-a069-17d987383da0" class="bulleted-list"><li style="list-style-type:disc"><strong>Using Methods in Templates</strong>: We can use methods as event handlers within our template. For example, we might have a button in our template that calls the <code>increment</code> method when clicked:<pre id="5c83b424-3309-449d-a6aa-c465f309a46d" class="code code-wrap"><code>&lt;button @click=&quot;increment&quot;&gt;Increment&lt;/button&gt;</code></pre><p id="81f3dcdd-34dd-4a1f-90d7-b05e8e38912f" class="">This button will call the <code>increment</code> method defined in the component, increasing the <code>count</code> data property by one each time it is clicked.</p></li></ul><ul id="5a78d9e6-8697-40ba-a62a-4b63e6edbb25" class="bulleted-list"><li style="list-style-type:disc"><strong>Avoiding Arrow Functions</strong>: When defining methods, it&#x27;s important to use regular function declarations or expressions instead of arrow functions. This is because arrow functions bind the context (<code>this</code>) lexically and do not have their own <code>this</code> context. As a result, <code>this</code> inside an arrow function will not refer to the Vue instance, and we won&#x27;t be able to access component data or methods using <code>this</code>.</li></ul><ul id="3bf0ffec-4441-42cb-9195-cc8ef65aa304" class="bulleted-list"><li style="list-style-type:disc"><strong>Lifecycle Hooks</strong>: Methods can be called from within Vue lifecycle hooks, such as <code>mounted</code>, to perform actions when the component is added to the DOM.<pre id="c1effe09-ed3b-4af4-ad01-25971e50a2f1" class="code code-wrap"><code>mounted() {
+  // Methods can be called in lifecycle hooks, or other methods!
+  this.increment();
+}
+</code></pre><p id="f0fac99d-9395-4f74-bdaa-1bcf27dc9988" class="">In the <code>mounted</code> hook, the <code>increment</code> method is called to potentially update the state immediately after the component is mounted.</p></li></ul><h1 id="78c9ec9c-e27a-4f0d-8462-3d3f6a3aa5b3" class="">Computed Property</h1><p id="d717e668-3570-4f11-819a-8fb81bd55512" class="">Computed properties are functions defined within the <code>computed</code> option of a Vue component. They compute and return a value based on reactive dependencies. Vue automatically tracks the dependencies used during computation to re-evaluate when a dependency has changed.</p><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Computed Properties and Arguments</summary><div class="indented"><p id="b601e6d9-c62e-413e-b1dc-69fa2d893cdb" class="">By design, computed properties in Vue are meant to work as a special type of property that automatically calculates a value based on reactive data sources (dependencies). This means they:</p><ul id="9e4af608-9ae4-4f1a-831b-b2bd45d1d42a" class="bulleted-list"><li style="list-style-type:disc">Are accessed like any regular property (e.g., <code>this.computedProp</code>).</li></ul><ul id="4377aee0-c95a-4d0c-94e6-cd8d0c34ef7d" class="bulleted-list"><li style="list-style-type:disc">Do not accept arguments when accessed (unlike methods).</li></ul><p id="9e3ef84a-fab4-46fc-a5b6-75b7cba9d0f6" class="">So, in a typical scenario, we cannot do something like this:</p><pre id="ffad108e-35c9-4694-98a9-5531d9644ddc" class="code code-wrap"><code>computed: {
+  calculatedResult() {
+    // This will not work because computed properties do not take arguments
+    return (arg1, arg2) =&gt; arg1 + arg2;
+  }
+}
+</code></pre><p id="4c6081e3-ddbb-4904-96b2-5417d4d6a2f8" class=""><span style="border-bottom:0.05em solid"><strong>Returning a Function from Computed Properties</strong></span></p><p id="9a5cc5c0-5b80-4038-8500-500dbe95aa83" class="">However, there is a pattern that allows computed properties to produce values that seemingly accept arguments. This is done by having the computed property return a function. Here is an example:</p><pre id="d663bf5c-443e-4d16-9525-5688d6286ea3" class="code code-wrap"><code>computed: {
+  // This computed property returns a function
+  calculatedResult() {
+    // The returned function can accept arguments
+    return (arg1, arg2) =&gt; arg1 + arg2;
+  }
+}
+</code></pre><p id="d44c503b-9304-4aa1-ae04-cd952ccdb12b" class="">In the template or other parts of our Vue instance, we can then use this computed property like so:</p><pre id="2ae453e0-bfeb-4cdd-be04-e21e3bd605f9" class="code code-wrap"><code>methods: {
+  someMethod() {
+    // Use the computed property as a function
+    const result = this.calculatedResult(10, 5);
+    console.log(result); // Output: 15
+  }
+}
+</code></pre><p id="ece754e9-173c-4f70-8b18-a4a568abfda1" class="">In this example, <code>calculatedResult</code> is a computed property that returns a function. The function itself takes arguments and can be called like any other function in our methods or template expressions.</p><p id="a15f7a6d-f97a-4be3-b559-a124736d87e2" class=""><span style="border-bottom:0.05em solid"><strong>When to Use This Pattern</strong></span></p><p id="a001e73d-f81e-4e52-aed6-f56e192b2ceb" class="">This pattern can be useful when we want to achieve reactivity based on certain inputs, but those inputs come from non-reactive sources, such as arguments passed to a function call from a template or method.</p><p id="4a7062c9-4d12-4fe2-bdae-9d84d41a4ae6" class="">However, it&#x27;s worth noting that the returned function won&#x27;t be cached by Vue&#x27;s reactivity system. Only the process of creating the function is cached. Every time we call the function returned by the computed property, it will run the calculation again with the provided arguments.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f083f2f9-c6b9-43b3-9884-492e49ff5bc7"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">To sum up, while computed properties themselves cannot accept arguments, they can return functions that do. This allows us to create computed properties that can handle dynamic inputs while still leveraging Vue&#x27;s reactivity system for the creation of the function itself.</div></figure></div></details><h2 id="c7e67c09-d198-4fdb-8c5d-e12c4f2d3ca3" class="">Getter Function</h2><ul id="ee3cf617-3edf-4745-9a53-523bc444c968" class="bulleted-list"><li style="list-style-type:disc">By default, the function we define in the <code>computed</code> option acts as a getter.</li></ul><ul id="d2581af1-e86f-4c0c-b1d7-a660ffec7033" class="bulleted-list"><li style="list-style-type:disc">Whenever we reference a computed property in our template, Vue invokes its getter function.</li></ul><ul id="e9a652c8-970f-47da-a8f3-a2bdcc72341f" class="bulleted-list"><li style="list-style-type:disc">In our example, <code>reversedMessage</code> is a computed property that returns a reversed version of the <code>message</code> data property.<pre id="39bfbc42-7783-49b0-88f1-2bd91c08b2fa" class="code"><code>computed: {
+  reversedMessage() {
+    return this.message.split(&quot;&quot;).reverse().join(&quot;&quot;);
+  }
+}</code></pre></li></ul><h2 id="6795a122-7f39-4039-8864-34c6840366df" class="">Setter Function</h2><ul id="a143140e-dd19-4a0b-87a3-5fea7ad96f1e" class="bulleted-list"><li style="list-style-type:disc">Computed properties are, by default, getter-only, but we can also provide a setter function.</li></ul><ul id="6c5c0c03-64bd-4fa6-a122-38809b2d8693" class="bulleted-list"><li style="list-style-type:disc">The setter function allows us to perform actions or computations when setting the value of the computed property.</li></ul><ul id="4501dc81-8573-463d-9b58-1c06a1392cc4" class="bulleted-list"><li style="list-style-type:disc">In our example, if we had a computed property for a <code>fullName</code>, we could split it into <code>firstName</code> and <code>lastName</code> when setting it.<pre id="ed03e132-f273-4dc9-94d2-41fb6cc98314" class="code"><code>computed: {
+  fullName: {
+    get() {
+      return this.firstName + &#x27; &#x27; + this.lastName;
+    },
+    set(newValue) {
+      const names = newValue.split(&#x27; &#x27;);
+      this.firstName = names[0];
+      this.lastName = names[names.length - 1];
+    }
+  }
+}</code></pre></li></ul><p id="4776ada6-c559-4590-8d3a-e08bcbe4c332" class="">A setter function in a computed property is useful when you want to change the component&#x27;s state in a particular way when assigning a new value to a computed property. It allows you to control how the value should be stored and manipulate related data accordingly.</p><h3 id="fa91afb8-480a-40e4-80cf-4277c0d4ebaa" class="">When to Implement a Setter Function?</h3><p id="56c19796-1180-4607-bd40-5140f11f5f47" class="">We should consider implementing a setter function when:</p><ul id="b69037c7-9c6c-4a2c-9a00-5731c702cee7" class="bulleted-list"><li style="list-style-type:disc">We have a computed property that represents a combined state of multiple data properties. For instance, <code>fullName</code> could be a combination of <code>firstName</code> and <code>lastName</code>.</li></ul><ul id="90202e4d-84bb-49d9-b78f-5136cc56be34" class="bulleted-list"><li style="list-style-type:disc">We want to perform additional logic or data transformation when a computed property&#x27;s value is being set. For example, if we set <code>fullName</code>, we might want to automatically update <code>firstName</code> and <code>lastName</code>.</li></ul><ul id="85614fbb-a7a0-4d8d-8ce6-43da3c439d59" class="bulleted-list"><li style="list-style-type:disc">We want to maintain synchronization between multiple variables or states when one of them changes.</li></ul><h3 id="159ccb79-98da-413e-9fd2-ca7bca1e2a1f" class="">How is a Setter Function Implemented and Used?</h3><p id="831f5d5e-1ead-432e-a860-ac9e53eeee36" class="">When we define a computed property with both a getter and a setter, Vue will use the getter for reading the property&#x27;s value and the setter for assigning a new value to it. Here&#x27;s how it works:</p><ul id="46149650-3d86-4c34-ba42-fdbadea511e9" class="bulleted-list"><li style="list-style-type:disc"><strong>Getter Function</strong>: It is called whenever we access the computed property, like <code>this.fullName</code> in a template. The getter function computes and returns the value based on the component&#x27;s data.</li></ul><ul id="96b6b09a-1de2-4f4c-a494-cfa0740ac702" class="bulleted-list"><li style="list-style-type:disc"><strong>Setter Function</strong>: It is called whenever we assign a new value to the computed property, like <code>this.fullName = &#x27;John Doe&#x27;</code>. Inside the setter, we define how the assignment should be handled, which may involve setting other data properties or performing additional logic.</li></ul><h3 id="d1a880c2-d1e8-460d-a8e8-a880d095a87f" class="">Example Scenario</h3><p id="89538d48-22d6-4411-b7b5-17d53b7e7e7c" class="">Let&#x27;s say we have a form where a user can input their full name in one input field instead of two separate fields for first and last names. When the form is submitted, we want to update both <code>firstName</code> and <code>lastName</code> properties in our component&#x27;s data. Here&#x27;s where a setter comes in handy:</p><pre id="b232c65e-1b90-4833-b136-7a09d6773ed5" class="code code-wrap"><code>computed: {
+  fullName: {
+    // Getter combines the two data properties into one string.
+    get() {
+      return this.firstName + &#x27; &#x27; + this.lastName;
+    },
+    // Setter splits the full name and updates the two data properties.
+    set(newValue) {
+      const names = newValue.split(&#x27; &#x27;);
+      this.firstName = names[0];
+      this.lastName = names[names.length - 1];
+    }
+  }
+}
+</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e01c935a-2b2d-4b29-8d97-1b887b25f236"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">In summary, the setter function within a computed property allows for an elegant handling of complex state changes triggered by assigning new values to that computed property, without the need for additional methods or watchers.</div></figure><h2 id="4af4b131-d7ed-4922-9caf-0cecc60e4b11" class=""><strong>Reactivity and Caching</strong></h2><ul id="e01f46bc-bbf1-4ab4-b107-42cb4c31e163" class="bulleted-list"><li style="list-style-type:disc">Computed properties are cached based on their reactive dependencies.</li></ul><ul id="47802fb5-815e-4234-ba6e-a08bc92dc8c5" class="bulleted-list"><li style="list-style-type:disc">Vue only re-evaluates a computed property when one of its dependencies has changed.</li></ul><ul id="03910083-3fab-44a0-a160-002126bf385c" class="bulleted-list"><li style="list-style-type:disc">This means if <code>message</code> doesn’t change, multiple accesses to <code>reversedMessage</code> will immediately return the previously calculated value without having to run the function again.</li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="335703cb-310f-42e7-a421-526d54248c34"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">In summary, computed properties are like formulas in spreadsheets: they recalculate only when the input data changes, making them efficient. They should be used when you have a piece of state that depends on other states.</div></figure><h1 id="e1aede6e-5d90-4dcf-9ac2-aea801b2514a" class="">Computed Properties vs. Methods</h1><h3 id="e3d2099e-3a18-43cb-b3af-9cee55cf0e15" class="">Methods</h3><ul id="82b3a258-653f-41d1-8f21-be8465d41de9" class="bulleted-list"><li style="list-style-type:disc">Executing logic in response to events (e.g., <code>click</code> events)</li></ul><ul id="7307df4b-d7c4-4bab-8f31-11db7308ee57" class="bulleted-list"><li style="list-style-type:disc">Defining functionality that can change the state of the component</li></ul><ul id="692c3fb6-d405-4dcf-a314-9381a5c91da5" class="bulleted-list"><li style="list-style-type:disc">Being called from within the template to perform an action</li></ul><ul id="b27c5ab8-9af9-45d6-a973-3c27ef031d98" class="bulleted-list"><li style="list-style-type:disc">Complex calculations that don&#x27;t need to be cached or re-evaluated only when needed</li></ul><p id="eea56999-2588-4660-965c-348d3a060b0c" class="">Methods are not cached, which means they will re-run every time we call them. This is beneficial when we need to execute logic that produces a different result on each invocation or relies on changing data.</p><p id="a30e2327-c8f6-4abd-965a-bd4481767b47" class=""><strong>Example Usage of a Method:</strong></p><pre id="257f447e-40c9-424e-b5cf-d468a8953070" class="code code-wrap"><code>export default {
+  data() {
+    return {
+      count: 0
+    };
+  },
+  methods: {
+    increment() {
+      this.count++;
+    }
+  },
+  // Method can also be used within other options like lifecycle hooks
+  mounted() {
+    this.increment();
+  }
+}
+</code></pre><h3 id="2ddaa9b7-ce93-43c0-8394-3107e74c2b55" class="">Computed Properties</h3><ul id="19ba57b5-39c2-42c5-bcf3-d1a01f7b4dc0" class="bulleted-list"><li style="list-style-type:disc">They are cached based on their reactive dependencies.</li></ul><ul id="5cba52ab-455d-4472-b37e-fdf5f006abc1" class="bulleted-list"><li style="list-style-type:disc">They only re-compute when one of their dependencies has changed, making them more efficient for expensive operations.</li></ul><ul id="4694a738-e407-4ab4-9aca-b04f08efbbe1" class="bulleted-list"><li style="list-style-type:disc">They are typically used for formatting or transforming data that needs to be displayed on the template.</li></ul><ul id="0137382a-2dd6-41cb-bb13-4464fc7fadb6" class="bulleted-list"><li style="list-style-type:disc">They can have setters if you want to perform an action when the computed property is set.</li></ul><p id="1d9c41d6-6d40-4c0b-8f20-60c96a22c6e7" class="">Computed properties should be used when we need to perform a calculation on existing reactive data, and we want the result to be cached until the dependencies change.</p><p id="688e0786-2484-4a58-955c-4cd96bb03188" class=""><strong>Example Usage of a Computed Property:</strong></p><pre id="83a5e3f3-61db-4fb3-a22e-dfcf53b2cb3e" class="code code-wrap"><code>export default {
+  data() {
+    return {
+      message: &#x27;Hello&#x27;
+    };
+  },
+  computed: {
+    reversedMessage() {
+      return this.message.split(&#x27;&#x27;).reverse().join(&#x27;&#x27;);
+    }
+  }
+}
+</code></pre><h3 id="10193433-fcdd-4390-9dd2-da732f3716cf" class="">When to Use Which?</h3><ul id="0a37c5a9-e9e3-4b7b-9538-2847f612f4ed" class="bulleted-list"><li style="list-style-type:disc">Use <strong>methods</strong> when we need to execute logic in response to an event or call a function that does not need to be cached.</li></ul><ul id="59d6cfc3-aaec-4462-bb69-59d571e01f7f" class="bulleted-list"><li style="list-style-type:disc">Use <strong>computed properties</strong> when we are transforming data in a way that is dependent on certain reactive data, and we want to avoid recomputing that transformation unless the underlying data changes.</li></ul><h3 id="9ff5961e-85f7-4a53-8cb6-43b2e51f7deb" class="">Summary of Key Differences</h3><ul id="90dd9513-dc35-4693-9ce9-f55ce6dfd476" class="bulleted-list"><li style="list-style-type:disc"><strong>Methods</strong> execute each time we call them, and they can accept arguments.</li></ul><ul id="667202bd-bf09-4aa8-99f0-403fdd360148" class="bulleted-list"><li style="list-style-type:disc"><strong>Computed properties</strong> are cached and only re-execute when their dependencies change. They do not accept arguments, but we can return a function from a computed property if we need to pass arguments.</li></ul><ul id="b91132f7-95a0-4a1d-997b-970129eae733" class="bulleted-list"><li style="list-style-type:disc"><strong>Data properties</strong> are raw values; they are not computed and do not cache any values.</li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e5446565-414a-41e6-8267-3f3600ef83a2"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">Choose <strong>methods</strong> for operations that need to run on-demand and are not dependent on reactive data, and <strong>computed properties</strong> for more complex, dependent calculations that benefit from caching. The choice between them is about performance optimization and ensuring that Vue&#x27;s reactivity system can efficiently update the DOM.</div></figure><h1 id="0cdfe53b-0f01-4df2-8cdf-e02f11ab475a" class="">Watchers Property</h1><p id="4bb2903a-da14-489f-9055-c504e06cc125" class="">The Watchers property in Vue.js is a feature that provides a way to perform custom logic in response to data changes. It is particularly useful for scenarios where computed properties aren&#x27;t a good fit, such as when we need to perform asynchronous operations or complex logic. Here&#x27;s a detailed explanation:</p><h3 id="15427d21-ff7b-4fae-870d-df576dff050f" class="">Asynchronous Operations</h3><p id="5675e645-8889-4cd9-ba4b-a427ef7e38e3" class="">If we have an operation that needs to wait for something to complete, like an API call, we can&#x27;t use a computed property because computed properties are synchronous and only depend on reactive data. They are intended for calculations that can be performed immediately.</p><p id="fad3b38b-0fcd-4151-8dae-bba01e7004c6" class="">A <span style="border-bottom:0.05em solid">watcher</span>, however, is perfect for this use case. We can watch a data property and when it changes, perform an async operation, then handle the result when it&#x27;s ready.</p><p id="925c45ce-ada8-455a-a9e2-2184cdaa9e64" class="">For example:</p><pre id="8010c020-c0ac-4e69-9a97-f54cd279e854" class="code code-wrap"><code>watch: {
+  searchQuery(newQuery) {
+    // Perform an API call which is asynchronous
+    fetchData(newQuery).then(data =&gt; {
+      this.results = data;
+    });
+  }
+}
+</code></pre><h3 id="ed7ac6ed-8456-4c86-97d7-8950fd4bcff9" class="">Complex Callbacks</h3><p id="3264ca8e-25a2-49d3-acd4-846f4f7fed44" class="">Sometimes, the logic we want to perform in response to a change is too complex or does not directly result in a new computed value. In these cases, using a watcher allows us to perform any logic we want without affecting the component&#x27;s state.</p><p id="1dc4f039-afb5-4f84-a5e4-e03914d27ade" class="">For example:</p><pre id="2f991fef-529b-4519-b5d5-2267e2767f57" class="code code-wrap"><code>watch: {
+  settings(newValue) {
+    // A complex series of if-else conditions
+    if (newValue.optionA) {
+      this.performActionA();
+    } else if (newValue.optionB) {
+      this.performActionB();
+    }
+    // More complex logic here...
+  }
+}
+</code></pre><h3 id="db77ad9b-a41b-4821-8c57-e35c163bae14" class="">Deeper Observation</h3><p id="6c2f3aca-1562-4242-8861-90523cc643cf" class="">Vue&#x27;s reactivity system can automatically track dependencies during the evaluation of computed properties, but this tracking doesn&#x27;t work for nested objects in an array or attributes of an object. Here, the <code>deep</code> option comes into play.</p><p id="2f234178-4f9b-413b-8b9e-77d7351d3a5c" class="">Using <code>deep: true</code> in a watcher tells Vue to watch for changes in nested data structures. This is useful when we have an object or array as a reactive data property, and we need to know when some nested value within it changes.</p><p id="ea017dc3-66cf-4ae9-859a-3cdc7741ce8d" class="">For example:</p><pre id="d53fcda7-4f1c-4b35-9c01-942ebd35a2bf" class="code code-wrap"><code>watch: {
+  someObject: {
+    handler(newValue, oldValue) {
+      console.log(&#x27;Some nested property changed within someObject&#x27;);
+    },
+    deep: true // This is necessary to detect changes in nested properties
+  }
+}
+</code></pre><ul id="f81ac161-5400-4f2f-b27b-3c6d05d58d95" class="bulleted-list"><li style="list-style-type:disc"><strong><span style="border-bottom:0.05em solid">Watchers can also observe changes in object properties</span></strong>:</li></ul><pre id="739afd73-1bdc-4d0c-8061-2ebf6dced7f3" class="code"><code>data: {
+	person: { name: &#x27;Ricardo&#x27; }
+},
+watch: {
+	&#x27;person.name&#x27;() {
+		//this.person.name changed!
+	}
+}</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="152b57ae-60e1-49a8-8b58-5aa8ecbabdd3"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">To sum up, watchers are versatile and can handle complex logic, asynchronous operations, and deep observations. They complement computed properties, which are more suitable for synchronous and direct calculations based on reactive data.<p id="3aa4df9b-26a0-4779-b9e8-b9e117666532" class=""><span style="border-bottom:0.05em solid"><strong>Use watchers when</strong></span>:</p><ul id="e1fb0a76-03b2-4cd7-ab49-cc2b8fd1ab63" class="bulleted-list"><li style="list-style-type:disc">Computed properties are not suitable due to the need for asynchronous operations.</li></ul><ul id="7d7c299a-97d6-4bdc-81f8-37683c1aa728" class="bulleted-list"><li style="list-style-type:disc">The logic in response to data changes is too complex for a computed property.</li></ul><ul id="b2236a3f-632b-43df-831d-914a11e342c4" class="bulleted-list"><li style="list-style-type:disc">We need to observe nested data within objects or arrays and respond to deep changes.</li></ul></div></figure><h1 id="6b2b8e6f-5b1a-4845-8cea-83473fe5300a" class="">Bindings</h1><h2 id="223c5b29-7a80-46eb-96c8-b6152d83df24" class="">Class Bindings</h2><p id="61334a82-5ca0-4678-b54d-9ea472e6a88a" class="">In Vue.js, class bindings allow us to dynamically toggle classes on elements. We can do this by binding an object to the <code>class</code> attribute using the <code>v-bind:class</code> directive (or <code>:class</code> as a shorthand). Here’s how it works:</p><ul id="0e51d6d5-ff6c-47d5-a903-67ddaf3a5260" class="bulleted-list"><li style="list-style-type:disc"><strong>Object Syntax</strong>: We can pass an object to <code>v-bind:class</code> where the keys are class names and the values are boolean expressions. When the expression evaluates to <code>true</code>, the class is included; if <code>false</code>, it is excluded. For example:
+<pre id="47d87f96-2941-4eb2-8e1f-43fc78428199" class="code"><code>&lt;div class=&#x27;static&#x27; :class=&quot;{ active: isActive, &#x27;text-danger&#x27;: hasError }&quot;&gt;&lt;/div&gt;
+
+data: {
+	isActive: true,
+	hasError: false
+}
+
+// Final result after rendering
+&lt;div class=&#x27;static active&#x27;&gt;&lt;/div&gt;
+
+// The Binding object do not need to be inline
+&lt;div :class=&#x27;classObject&#x27;&gt;...&lt;/div&gt;
+
+data: {
+	classObject: {
+				active: true,
+				&#x27;text-danger&#x27;:false
+	}
+}</code></pre></li></ul><ul id="4253d46c-dda7-4836-a04f-ead03e1d9b36" class="bulleted-list"><li style="list-style-type:disc"><strong>Array Syntax</strong>: We can also use an array to pass multiple classes to an element. This is useful when we want to apply several classes and some of them are dynamic:<pre id="800af177-35b7-4d85-b9d4-a3b2d85d5ebb" class="code code-wrap"><code>&lt;div :class=&quot;[activeClass, errorClass]&quot;&gt;&lt;/div&gt;
+
+data: {
+	activeClass: &#x27;active&#x27;
+	errorClass: &#x27;text-danger&#x27;
+}
+
+// Final result after rending
+&lt;div class=&#x27;active text-danger&#x27;&gt;&lt;/div&gt;</code></pre><ul id="1f7d0587-1b6e-41a1-8d06-bded85c1d4b1" class="bulleted-list"><li style="list-style-type:circle"><strong>Class Bindings Example with Object Syntax within Array Syntax</strong></li></ul><p id="2c2080ca-13cb-4088-8dd7-744a7e3faa7a" class="">In Vue.js, we can combine object syntax and array syntax for class bindings to apply multiple classes where some classes depend on a condition. Here&#x27;s a practical example:</p><pre id="8953fafa-178c-4ba5-90ff-8cd9253c82d1" class="code code-wrap"><code>&lt;template&gt;
+  &lt;div :class=&quot;[{&#x27;active&#x27;: isActive}, errorClass]&quot;&gt;Content goes here&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      isActive: true,      // This could be reactive based on some condition
+      errorClass: &#x27;error&#x27;  // This is a static class that will always be applied
+    }
+  }
+}
+&lt;/script&gt;</code></pre><p id="b5f9eb43-8eca-4a2e-85c3-4de41a015d44" class="">Here&#x27;s what happens in the example:</p><ul id="2016d929-829a-4f30-8c71-6b123d83130f" class="bulleted-list"><li style="list-style-type:circle">The <code><strong>active</strong></code> class will be applied to the <code><strong>div</strong></code> if <code><strong>isActive</strong></code> is <code><strong>true</strong></code>.</li></ul><ul id="903f3362-2bb0-474e-94e8-021f63e43fe8" class="bulleted-list"><li style="list-style-type:circle">The <code><strong>error</strong></code> class is always applied because it&#x27;s a static string within the array.</li></ul><ul id="22303722-e77f-47bb-9da5-3fb96194e046" class="bulleted-list"><li style="list-style-type:circle">If <code><strong>isActive</strong></code> is <code><strong>true</strong></code>, the rendered HTML would look like this:<pre id="675fef71-e710-4fa3-b578-866ce6915a2d" class="code code-wrap"><code>&lt;div class=&quot;active error&quot;&gt;Content goes here&lt;/div&gt;</code></pre></li></ul><p id="7ecaa56c-3c3b-49ab-b12c-d732234edd1c" class="">This approach is handy when we want to apply certain classes conditionally while others are always applied.</p></li></ul><h2 id="6bee9d2b-0b84-45c6-b105-97377aa6e265" class="">Style Bindings</h2><p id="210c4a55-b57d-4578-a7d5-87732232e1a7" class="">Style bindings in Vue.js work similarly to class bindings but target the inline <code>style</code> attribute of an alement.</p><ul id="7a27a1ba-7d89-4e77-9afb-5b86674343c8" class="bulleted-list"><li style="list-style-type:disc"><strong>Object Syntax</strong>: We can bind a style object directly to an element to apply multiple styles at once. The syntax is similar to CSS, except it uses a JavaScript object where keys are CSS property names and values are the corresponding values. For example:<pre id="890cee1b-6f13-4640-b291-355d53f50973" class="code"><code>&lt;div :style=&quot;{ color: activeColor, fontSize: fontSize + &#x27;px&#x27; }&quot;&gt;&lt;/div&gt;
+
+data: {
+	activeColor: &#x27;red&#x27;,
+	fontSize: 30
+}
+
+//Or bind to a style object directly to make the template cleaner
+&lt;div :style=&quot;styleObject&quot;&gt;&lt;/div&gt;
+
+data: {
+	styleObject: {
+		color: &#x27;red&#x27;
+		fontSize: &#x27;13px&#x27;
+	}
+}</code></pre></li></ul><ul id="832c6fac-31dc-47a5-b58d-dd99200373b1" class="bulleted-list"><li style="list-style-type:disc"><strong>Array Syntax</strong>: We can apply multiple style objects to the same element by passing an array to <code><strong>v-bind:style</strong></code>. This allows us to have a base style object and override it with another style object. The first object could contain base styles, while the second one may contain styles that should override the base styles if certain conditions are met. Suppose we only want to apply the <code>overridingStyles</code> when a boolean data property <code>isHighlighted</code> is <code>true</code>. Here&#x27;s an example:<pre id="14f2f2ac-dcc9-4de9-9a43-8039c6836a07" class="code"><code>&lt;template&gt;
+  &lt;div :style=&quot;[baseStyles, isHighlighted ? overridingStyles : {}]&quot;&gt;Content goes here&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      isHighlighted: false, // Condition for applying overriding styles
+      baseStyles: {
+        color: &#x27;blue&#x27;,
+        fontSize: &#x27;12px&#x27;
+      },
+      overridingStyles: {
+        color: &#x27;red&#x27;,
+        fontWeight: &#x27;bold&#x27;
+      }
+    }
+  }
+}
+&lt;/script&gt;</code></pre><p id="b57aad3c-161a-4a60-89a9-9dcec7f0eac5" class="">In this example:</p><ul id="d5a39187-02be-4642-903c-7fd25c9ce25c" class="bulleted-list"><li style="list-style-type:circle"><code>isHighlighted</code> controls whether the <code>overridingStyles</code> are applied.</li></ul><ul id="5a16dd77-2951-4c4b-8108-b8fc7518b9cd" class="bulleted-list"><li style="list-style-type:circle">When <code>isHighlighted</code> is <code>true</code>, <code>overridingStyles</code> will be applied, and the text will be red and bold.</li></ul><ul id="ebb73eca-7527-4c8d-a87d-70e89acdb3f3" class="bulleted-list"><li style="list-style-type:circle">When <code>isHighlighted</code> is <code>false</code>, the empty object <code>{}</code> has no styles to apply, so the base styles remain unchanged.</li></ul></li></ul><h2 id="edf47412-f9f3-474e-a8db-27b03e7d071d" class="">When to Use Them</h2><p id="c6b37066-c906-4e11-a4b5-c223cbb53203" class="">We should use class and style bindings when we want to dynamically control the presentation of our components based on the state of our Vue instance. This is particularly useful when:</p><ul id="57495418-494b-452b-b305-c11002fb98f8" class="bulleted-list"><li style="list-style-type:disc">We want to apply visual feedback based on user interaction or other conditions (like form validation).</li></ul><ul id="c54575ee-ffda-4fdb-9362-366dc5a6ef36" class="bulleted-list"><li style="list-style-type:disc">We need to adjust the styling of a component when its state changes, such as toggling a <code>disabled</code> state on a button.</li></ul><ul id="74449d09-9c0a-42d4-9648-00ee86982621" class="bulleted-list"><li style="list-style-type:disc">We want to maintain a cleaner template without too many conditional statements directly in your HTML.</li></ul><h2 id="871cb522-d9d1-4b2c-97f4-f3519e13f638" class=""><strong>Best Practices</strong></h2><ul id="b9a40aaf-49f3-4e1d-9a96-e750a30d0dda" class="bulleted-list"><li style="list-style-type:disc"><strong>Keep It Simple</strong>: Although dynamic class and style bindings are powerful, try to keep them simple to maintain readability and avoid complex expressions directly in our template.</li></ul><ul id="a97fbae3-beb8-4391-aab3-4c77500edf4d" class="bulleted-list"><li style="list-style-type:disc"><strong>Leverage Computed Properties</strong>: For complex logic, consider using computed properties to calculate the class or style bindings, keeping our template cleaner.</li></ul><ul id="c8e7b6a7-0633-4179-b638-9fc0bb6907f9" class="bulleted-list"><li style="list-style-type:disc"><strong>Consistency</strong>: Ensure that our class and style names are consistently used across our application for easier maintenance and understanding of the codebase.</li></ul><h1 id="c236ba87-6105-480c-aef5-cd4c74a8a0f9" class="">Conditional Rendering</h1><p id="6aaba718-3f86-4d1d-bfce-c6ef4dba1100" class="">The output is generated only when a condition is evaluated as truthy. Focusing on the directives <code><strong>v-if</strong></code>, <code><strong>v-else</strong></code>, <code><strong>v-else-if</strong></code>, and <code><strong>v-show</strong></code>. These directives allow us to conditionally render elements based on the truthiness of an expression.</p><h2 id="1a9372e5-9c9f-4084-a697-44254040b6cf" class="">v-if</h2><ul id="1e913484-db29-4363-889f-8d948e5a7a67" class="bulleted-list"><li style="list-style-type:disc">The <code><strong>v-if</strong></code> directive is used to conditionally render a block of HTML.</li></ul><ul id="46c7c54d-43b0-4f99-9d70-786cda58b8cd" class="bulleted-list"><li style="list-style-type:disc">It will only render the element and its children if the expression evaluates to a truthy value.</li></ul><ul id="05e38309-3342-4943-9b10-a59f7bc0a950" class="bulleted-list"><li style="list-style-type:disc">If the expression is falsy (e.g., <code><strong>false</strong></code>, <code><strong>0</strong></code>, <code><strong>null</strong></code>, <code><strong>undefined</strong></code>, <code><strong>NaN</strong></code>), the element will not be rendered.</li></ul><h2 id="d787f2bd-df99-4f9e-9a87-7d11427db21a" class="">v-else</h2><ul id="d48f42f6-328c-44c8-957c-d5df96f652b3" class="bulleted-list"><li style="list-style-type:disc">The <code><strong>v-else</strong></code> directive is used to indicate an &quot;else block&quot; for <code><strong>v-if</strong></code>.</li></ul><ul id="0aa406b8-1288-4bf1-b302-cf24538a134d" class="bulleted-list"><li style="list-style-type:disc">It must be placed immediately after a <code><strong>v-if</strong></code> or a <code><strong>v-else-if</strong></code> block and will render if the <code><strong>v-if</strong></code> expression is falsy.</li></ul><h2 id="2c326ecc-379f-4324-a59a-317e630b43e3" class="">v-else-if</h2><ul id="4a9ad521-a3a4-4ff1-a470-1fd3407a8aa7" class="bulleted-list"><li style="list-style-type:disc">The <code><strong>v-else-if</strong></code>, as the name implies, serves as an &quot;else if block&quot; for <code><strong>v-if</strong></code>.</li></ul><ul id="8f96a31d-c0f4-4f61-af65-0d2d4487bf37" class="bulleted-list"><li style="list-style-type:disc">It allows us to chain conditions.</li></ul><ul id="70b35f52-e27e-4ddd-8376-d5439ed549d4" class="bulleted-list"><li style="list-style-type:disc">A <code><strong>v-else-if</strong></code> element must also follow a <code><strong>v-if</strong></code> or another <code><strong>v-else-if</strong></code> element.</li></ul><h2 id="9f0824c3-5d4a-431f-a1cc-ad74fe5e9011" class="">v-show</h2><ul id="505a8d6b-bf48-4d4a-85f8-2a166e57777a" class="bulleted-list"><li style="list-style-type:disc">The <code><strong>v-show</strong></code> directive is similar to <code><strong>v-if</strong></code>, but with a key difference: it always renders the element into the DOM.</li></ul><ul id="d72737c9-0dfc-40b3-bc08-9231f733f5e7" class="bulleted-list"><li style="list-style-type:disc">The directive simply toggles the visibility of the element via the CSS <code><strong>display</strong></code> property.</li></ul><ul id="cec08f76-f5b6-425d-a651-468d3f17bf9e" class="bulleted-list"><li style="list-style-type:disc">Unlike <code><strong>v-if</strong></code>, <code><strong>v-show</strong></code> doesn&#x27;t support the <code><strong>&lt;template&gt;</strong></code> element or work with <code><strong>v-else</strong></code>.<ul id="a9d986a9-ac3f-435e-b78a-c9bd0b8e7e21" class="toggle"><li><details open=""><summary><strong>More on v-show</strong></summary><p id="f350c924-1bf3-4c2b-93b5-7e10af0e21eb" class="">The <code>&lt;template&gt;</code> tag in Vue.js is a special element that serves as an invisible wrapper. It&#x27;s used to group multiple elements together without adding an extra parent element to the DOM. This is particularly useful when we want to conditionally render a group of elements.</p><p id="821ed20d-0f58-40dd-88e6-14101bd5b99f" class="">When we use the <code>v-if</code> directive on a <code>&lt;template&gt;</code>, Vue will render the inner elements of the <code>&lt;template&gt;</code> if the condition is true, but the <code>&lt;template&gt;</code> tag itself won&#x27;t be rendered to the DOM. It&#x27;s like saying, &quot;If this condition is true, then render all these elements as siblings without wrapping them in a parent element.&quot;</p><p id="0f917ee0-e1a7-496c-9177-12c1bfa2d862" class="">Here&#x27;s an example of using <code>v-if</code> with <code>&lt;template&gt;</code>:</p><pre id="885d274c-b1c9-452d-a7fe-95ad18bbef0b" class="code code-wrap"><code>&lt;template v-if=&quot;ok&quot;&gt;
+  &lt;h1&gt;Title&lt;/h1&gt;
+  &lt;p&gt;Paragraph 1&lt;/p&gt;
+  &lt;p&gt;Paragraph 2&lt;/p&gt;
+&lt;/template&gt;</code></pre><p id="923f5d3d-17b2-4473-b405-86f8ed53686a" class="">In this case, if <code>ok</code> is truthy, both paragraphs and the heading would be rendered directly under the parent of the <code>&lt;template&gt;</code>, without any additional HTML element surrounding them.</p><p id="51b96534-95fa-47e9-83da-b95787f6e76f" class="">Now, the <code>v-show</code> directive doesn&#x27;t work with <code>&lt;template&gt;</code> because <code>v-show</code> toggles the CSS display property of an element to control its visibility. Since <code>&lt;template&gt;</code> is not an actual element that gets rendered, there&#x27;s no way to change its display property – it doesn&#x27;t exist in the rendered output. This means that <code>v-show</code> can only be used on elements that are actually present in the DOM.</p><p id="5edf328f-597c-477b-b26b-90a0cfcad827" class="">So when we want to toggle visibility and not conditionally render from scratch, we need to apply <code>v-show</code> to each element individually rather than to a <code>&lt;template&gt;</code>:</p><pre id="886f1750-f18a-4cae-9513-f34b63bcd34e" class="code code-wrap"><code>&lt;h1 v-show=&quot;ok&quot;&gt;Title&lt;/h1&gt;
+&lt;p v-show=&quot;ok&quot;&gt;Paragraph 1&lt;/p&gt;
+&lt;p v-show=&quot;ok&quot;&gt;Paragraph 2&lt;/p&gt;</code></pre><p id="6b122b10-c37e-4db2-997c-ddaf76fbafd3" class="">Each element&#x27;s visibility is controlled individually with <code>v-show</code>, which is not as clean as using a <code>&lt;template&gt;</code> with <code>v-if</code> for conditional rendering of multiple elements.</p></details></li></ul></li></ul><h2 id="894f912a-903e-4d9a-9c44-4fa49fa36665" class="">Comparing v-if and v-show</h2><ul id="c72c8806-d8d6-4139-ab93-602d169643df" class="bulleted-list"><li style="list-style-type:disc"><code><strong>v-if</strong></code> is &quot;real&quot; conditional rendering because it ensures that event listeners and child components inside the conditional block are properly destroyed and re-created during toggles.</li></ul><ul id="ff06658e-9940-4af1-80d2-19449d48395b" class="bulleted-list"><li style="list-style-type:disc"><code><strong>v-show</strong></code>, on the other hand, is simply toggling the display CSS property of the element.</li></ul><ul id="3cd3c432-af7b-4558-9f88-4cd90b05d68e" class="bulleted-list"><li style="list-style-type:disc">Use <code><strong>v-if</strong></code> when:<ul id="c3d21519-dc6d-43a6-ac92-490ac63c9a6c" class="bulleted-list"><li style="list-style-type:circle">The condition doesn&#x27;t change often.</li></ul><ul id="62bbfe39-4a8a-43c0-b36d-166d06c0ba2f" class="bulleted-list"><li style="list-style-type:circle">We want to avoid rendering the element altogether when the condition is false.</li></ul></li></ul><ul id="6a9c7e40-1b0f-436c-89d7-33add646dee7" class="bulleted-list"><li style="list-style-type:disc">Use <code><strong>v-show</strong></code> when:<ul id="803eb97a-ccd9-40bc-8212-b2e31ed9e856" class="bulleted-list"><li style="list-style-type:circle">You need to toggle the visibility of an element often.</li></ul><ul id="a902fc84-8912-412b-8bfa-8c48b251fced" class="bulleted-list"><li style="list-style-type:circle">The condition changes frequently.</li></ul></li></ul><ul id="e99d1a3a-1b7e-4203-add6-ef90d74dd962" class="bulleted-list"><li style="list-style-type:disc"><code><strong>v-if</strong></code> has higher toggle costs because the element is added and removed from the DOM, whereas <code><strong>v-show</strong></code> has a higher initial render cost as the element is always rendered but hidden.</li></ul><h3 id="4f69b969-26ea-4df1-9508-4d90009a1d0e" class="">Practical Scenarios</h3><ul id="de16fa96-3bfb-4388-a621-9bc76eb8eaec" class="bulleted-list"><li style="list-style-type:disc">Use <code>v-if</code> for conditions that rarely change. For example, showing user information post-login.</li></ul><ul id="5fcb4233-6d1c-4c16-a5d4-0e477ca3d8b8" class="bulleted-list"><li style="list-style-type:disc">Use <code>v-show</code> when you have tabs that get toggled often, as the contents are just shown or hidden without the overhead of re-inserting elements into the DOM.</li></ul><p id="a7abda0a-76ad-407d-8fa6-1891827c9488" class="">Let&#x27;s look at the code examples below to understand the use of these directives in context.</p><h3 id="c96bf649-4d9e-4fbf-b9a3-5330046512c3" class="">v-if Example:</h3><pre id="a0442f83-dfc9-46da-ba19-16688f7cd9ad" class="code code-wrap"><code>&lt;h1 v-if=&quot;ok&quot;&gt;Yes&lt;/h1&gt;</code></pre><ul id="7d934720-6f37-409e-941b-2f9d7ae307de" class="bulleted-list"><li style="list-style-type:disc">Here, <code>&lt;h1&gt;</code> will only appear if <code>ok</code> is truthy.</li></ul><h3 id="e74854dc-3ae6-4b64-90ad-3ea89e802fe9" class="">v-else Example:</h3><pre id="fbe49356-bd86-4c27-a380-9c507195146e" class="code code-wrap"><code>&lt;div v-if=&quot;Math.random() &gt; 0.5&quot;&gt;
+  Now you see me
+&lt;/div&gt;
+&lt;div v-else&gt;
+  Now you don&#x27;t
+&lt;/div&gt;</code></pre><ul id="21b34d9d-369c-470a-9332-aa3dd91f94b1" class="bulleted-list"><li style="list-style-type:disc">In this case, the first <code>div</code> shows up if the condition is true; otherwise, the second <code>div</code> does.</li></ul><h3 id="5afed9fc-2ec2-4bac-af5d-36c8094eaf86" class="">v-else-if Example:</h3><pre id="11699b6e-8dad-4e63-8e55-d618bd409136" class="code code-wrap"><code>&lt;div v-if=&quot;type === &#x27;A&#x27;&quot;&gt;
+  A
+&lt;/div&gt;
+&lt;div v-else-if=&quot;type === &#x27;B&#x27;&quot;&gt;
+  B
+&lt;/div&gt;
+&lt;div v-else-if=&quot;type === &#x27;C&#x27;&quot;&gt;
+  C
+&lt;/div&gt;
+&lt;div v-else&gt;
+  Not A/B/C
+&lt;/div&gt;
+</code></pre><ul id="b0656b08-1c56-49b0-afbe-1e1aff4801de" class="bulleted-list"><li style="list-style-type:disc">This block will render the first element that has a truthy condition, going from A to C, and if none are true, the default block.</li></ul><h3 id="8447a1f2-489a-4afa-9cce-e7a02ba6a334" class="">v-show Example:</h3><pre id="356e65e8-2e45-4e89-8f6c-625efed6afcf" class="code code-wrap"><code>&lt;h1 v-show=&quot;ok&quot;&gt;Yes&lt;/h1&gt;</code></pre><ul id="c907d32f-50c9-4fa7-8553-8013d53a28bf" class="bulleted-list"><li style="list-style-type:disc">This <code>&lt;h1&gt;</code> is always rendered but will only be visible if <code>ok</code> is truthy.</li></ul><p id="ef1c0b90-586c-43e3-8a9e-998e58ae2ee1" class="">Remember, the choice between <code>v-if</code> and <code>v-show</code> should be made based on how often the condition changes and the performance implications of each directive.</p><h1 id="0968459e-dfe9-4f34-95c7-aded7355f03a" class="">List Rendering</h1><h2 id="13fda2bb-cf5d-4aca-a43e-2b89babb87c2" class="">v-for with Arrays</h2><p id="b74ea1fa-d576-432e-a74b-f5ffc8f85f46" class="">The <code>v-for</code> directive allows us to loop through an array and render a list of elements. The syntax <code>item in items</code> is used, where <code>items</code> is the source array from Vue instance’s data, and item is an alias representing the array element currently being iterated over.</p><p id="1d58803f-05ad-447e-8ee5-f052f1eb608b" class="">Here’s an example using <code>v-for</code> to render a list:</p><pre id="22723488-965c-4b1b-8a35-bd0aa62cd2bc" class="code"><code>&lt;ul&gt;
+  &lt;li v-for=&quot;item in items&quot; :key=&quot;item.message&quot;&gt;
+    {{ item.message }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+// Here&#x27;s the data we&#x27;re iterating over
+data() {
+  return {
+    items: [
+      { message: &quot;Foo&quot; },
+      { message: &quot;Bar&quot; }
+    ]
+  };
+}
+
+// This will render the following HTML
+&lt;ul&gt;
+  &lt;li&gt;Foo&lt;/li&gt;
+  &lt;li&gt;Bar&lt;/li&gt;
+&lt;/ul&gt;</code></pre><h3 id="da4ee690-f2a7-421e-bf10-71354269b22b" class="">v-for with an Index</h3><p id="bb97b339-bb73-4814-95bf-462c9531bd25" class="">The <code>v-for</code> directive can also provide a second optional argument for the index of the current item in the array.</p><p id="a1d4d09a-f42c-4dd0-a560-4d8ea1d29fb4" class="">Here’s an example using both the item and index:</p><pre id="04725df3-97ad-4e5e-8438-faa0351505fa" class="code"><code>&lt;ul id=&quot;intro&quot;&gt;
+  &lt;li v-for=&quot;(item, index) in items&quot;&gt;
+    {{ parentMessage }} - {{ index }} - {{ item.message }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+// And the corresponding data
+data() {
+  return {
+    parentMessage: &#x27;Parent&#x27;,
+    items: [
+      { message: &#x27;Foo&#x27; },
+      { message: &#x27;Bar&#x27; }
+    ]
+  };
+}
+
+//This will produce the following output
+&lt;ul id=&quot;intro&quot;&gt;
+  &lt;li&gt;Parent - 0 - Foo&lt;/li&gt;
+  &lt;li&gt;Parent - 1 - Bar&lt;/li&gt;
+&lt;/ul&gt;</code></pre><h3 id="a2b61c61-53ed-4b99-a773-1398ad44a357" class="">When to Use <code>v-for</code> Key</h3><p id="e1b22ea9-2b3a-4b00-92cc-eb57d8bafeba" class="">Using <code><strong>:key</strong></code> with <code><strong>v-for</strong></code> is important for maintaining the state and identity of each component and element in the list. Without <code><strong>:key</strong></code>, Vue might reuse elements in the DOM for efficiency, leading to unexpected behavior such as improper form data binding or lifecycle hook triggering.</p><p id="b3826187-9c4e-4bc2-8bdf-0ba726e1563c" class="">Remember, <code><strong>:key</strong></code> should have unique and stable values like IDs from a database, and it&#x27;s not recommended to use the index as the key if the list can be reordered, as it can lead to performance issues and errors in state management.</p><h2 id="9d2b3a57-dd92-4134-b6bd-bb30c4f3640b" class="">v-for with Objects</h2><p id="5238bc0d-bd00-4ea1-9d00-e96d6bd00710" class="">The <code>v-for</code> directive can be used on objects to iterate over their properties. When using <code>v-for</code> on an object, we can access the property value, but we can also get the property name (key), and the index(if needed). </p><p id="281d58b2-0b45-4454-b584-b01251b6c43d" class="">Here&#x27;s a basic example of using <code><strong>v-for</strong></code> with an object:</p><pre id="1798c074-82b5-4098-8ad6-5d5688a68f47" class="code"><code>&lt;ul id=&quot;intro&quot;&gt;
+  &lt;li v-for=&quot;value in object&quot;&gt;
+    {{ value }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+// For the object
+data() {
+  return {
+    object: {
+      firstName: &#x27;John&#x27;,
+      lastName: &#x27;Doe&#x27;,
+      age: 30
+    }
+  };
+}
+
+//This will render a list item for each property in the object
+&lt;ul id=&quot;intro&quot;&gt;
+  &lt;li&gt;John&lt;/li&gt;
+  &lt;li&gt;Doe&lt;/li&gt;
+  &lt;li&gt;30&lt;/li&gt;
+&lt;/ul&gt;</code></pre><h3 id="92c978f8-d0e3-487c-8b4a-1cbbd6bbd3ff" class="">v-for with Property Name and Index</h3><p id="353f3e9a-f80f-4b42-b829-14bf5cc64ddb" class="">If we need more than just the value, we can modify the <code>v-for</code> to include both the property name and the index:</p><pre id="a41c5d26-226e-4e98-87c4-0a09ae69629f" class="code"><code>&lt;ul id=&quot;intro&quot;&gt;
+  &lt;li v-for=&quot;(value, key, index) in object&quot;&gt;
+    {{ index }}. {{ key }}: {{ value }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+// This will render
+&lt;ul id=&quot;intro&quot;&gt;
+  &lt;li&gt;0. firstName: John&lt;/li&gt;
+  &lt;li&gt;1. lastName: Doe&lt;/li&gt;
+  &lt;li&gt;2. age: 30&lt;/li&gt;
+&lt;/ul&gt;</code></pre><p id="59eac96f-5c3f-472d-9729-5d482fcac9dd" class="">Here&#x27;s how it works:</p><ul id="fb27ec42-a16a-4245-b9f2-b2a0537d7918" class="bulleted-list"><li style="list-style-type:disc"><code><strong>(value, key, index)</strong></code> is the syntax that allows us to access the property&#x27;s value, the property name, and the index of the property, respectively.</li></ul><ul id="21a7766f-deb3-40c8-b085-7211ed37fe6c" class="bulleted-list"><li style="list-style-type:disc"><code><strong>value</strong></code> represents the value of the current property.</li></ul><ul id="48125418-9f68-45ec-ae00-fbee17b939ea" class="bulleted-list"><li style="list-style-type:disc"><code><strong>key</strong></code> is the name of the current property (like &#x27;firstName&#x27;, &#x27;lastName&#x27;, or &#x27;age&#x27;).</li></ul><ul id="094e23bb-9f4e-49b7-8d2c-28ad981b1699" class="bulleted-list"><li style="list-style-type:disc"><code><strong>index</strong></code> is the index of the current property (0, 1, 2, ...), which Vue provides when iterating over objects.</li></ul><ul id="223fb5df-f933-4036-91fc-ae3232462f0c" class="toggle"><li><details open=""><summary><strong>How could we transform the keys?</strong></summary><p id="e3a0f0df-cfa2-4e06-8b61-081b751f3f1f" class="">To transform the keys like <code>firstName</code> to <code>First Name</code> or <code>lastName</code> to <code>Last Name</code> before presenting them, we would typically use a method or computed property that reformats the key strings into a more human-readable format. This process is often referred to as converting from camelCase to Title Case (or human-readable strings).</p><p id="897c2acb-d948-418d-b1b2-998e27b67037" class="">Here&#x27;s an example of how we might do that within a Vue component:</p><p id="4597bbc4-e7dd-425e-8e49-2110d526f1bc" class=""><span style="border-bottom:0.05em solid"><strong>Using a Method:</strong></span></p><p id="3f28cc16-4165-48ac-b91d-ca21b5358d99" class="">We could define a method in our Vue component that takes the key as an argument and returns a formatted string:</p><pre id="9025af19-ac09-472d-8e8a-1b09db5b2190" class="code code-wrap"><code>methods: {
+  formatKey(key) {
+    // Split the string at each uppercase letter
+    const words = key.replace(/([A-Z])/g, &#x27; $1&#x27;);
+    // Capitalize the first letter of each word and return the result
+    return words.charAt(0).toUpperCase() + words.slice(1);
+  }
+}
+</code></pre><p id="b55430e4-1b77-4227-b26f-959de973ee3e" class="">Then in our template, we can use this method:</p><pre id="1e054199-75e4-4b3e-9b64-3c2f644d2020" class="code code-wrap"><code>&lt;ul id=&quot;intro&quot;&gt;
+  &lt;li v-for=&quot;(value, key, index) in object&quot;&gt;
+    {{ index }}. {{ formatKey(key) }}: {{ value }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p id="664e786f-72a4-4976-9399-3f7591bd28a3" class=""><span style="border-bottom:0.05em solid"><strong>Using a Computed Property:</strong></span></p><p id="b59caa73-f877-4599-b28f-c31b2aad3727" class="">Alternatively, if we need this formatted key in several places, we might want to use a computed property that returns a new object with the keys formatted:</p><pre id="b4b44cb4-e057-4273-b1ed-52a9bac1bf0a" class="code code-wrap"><code>computed: {
+  formattedObject() {
+    const result = {};
+    for (const key in this.object) {
+      const formattedKey = key
+        .replace(/([A-Z])/g, &#x27; $1&#x27;)
+        .charAt(0)
+        .toUpperCase() + key.replace(/([A-Z])/g, &#x27; $1&#x27;).slice(1);
+      result[formattedKey] = this.object[key];
+    }
+    return result;
+  }
+}
+</code></pre><p id="16ca3ef4-2fc1-4613-b40d-ffa7400812ef" class="">Then iterate over <code>formattedObject</code> in our template:</p><pre id="3bb35c6e-0ff5-48e9-b21f-76f36729e832" class="code code-wrap"><code>&lt;ul id=&quot;intro&quot;&gt;
+  &lt;li v-for=&quot;(value, key, index) in formattedObject&quot;&gt;
+    {{ index }}. {{ key }}: {{ value }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p id="77cc4687-3043-41ed-afd4-a213f3c0eb56" class="">Both methods will output keys in the desired format. The choice between using a method or a computed property depends on the specific needs of our application, such as whether we need to apply the formatting logic in multiple places or just once. Computed properties are cached based on their dependencies, so they are only re-evaluated when their dependencies change, making them more efficient if the operation is costly or if it&#x27;s used in multiple places. Methods, on the other hand, will run every time a re-render happens, which can be ideal for formatting that depends on changing variables.</p></details></li></ul><p id="b6d8c17e-d42f-47ed-a9a8-6a6cc33375b0" class="">This kind of iteration is particularly useful when we want to list all the properties of an object with their values, or when we need to perform operations on each property.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="b1c6849d-9ae0-4ca2-85e0-5edb46251487"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">Remember, while iterating over objects, the order of iteration is based on the key enumeration order of <code><strong>Object.keys()</strong></code>, which is not guaranteed to be consistent across JavaScript engine implementations until ES2015. However, Vue.js tries to keep the properties in the order they were defined, but it&#x27;s something to keep in mind if we rely on the properties&#x27; order.</div></figure><h2 id="57760137-3a21-4d96-ba2f-1cbd653a636b" class="">v-for with ranges</h2><p id="e3f1ac33-e0c6-4607-8151-eff87890d10f" class="">In Vue.js, we can use the <code>v-for</code> directive to iterate through a specified range of numbers. This is useful when we want to repeat a template fragment a known number of times without having an array of data to iterate over.</p><p id="e8693124-6b9d-499e-9bdd-42367c47125c" class="">Here&#x27;s an example from the slide:</p><pre id="3909fb7d-36ea-45f4-9af0-07f0bc618b03" class="code code-wrap"><code>&lt;div&gt;
+  &lt;span v-for=&quot;n in 10&quot;&gt;{{ n }}&lt;/span&gt;
+&lt;/div&gt;
+</code></pre><p id="5be240ab-fb9e-4a61-90f5-ce81e742dcfa" class="">This will render a series of <code>&lt;span&gt;</code> elements, one for each number in the range from 1 to 10:</p><pre id="67cf0d53-e473-4400-ac28-8917fd3c3abb" class="code code-wrap"><code>&lt;div&gt;
+  &lt;span&gt;1&lt;/span&gt;
+  &lt;span&gt;2&lt;/span&gt;
+  &lt;span&gt;3&lt;/span&gt;
+  &lt;span&gt;4&lt;/span&gt;
+  &lt;span&gt;5&lt;/span&gt;
+  &lt;span&gt;6&lt;/span&gt;
+  &lt;span&gt;7&lt;/span&gt;
+  &lt;span&gt;8&lt;/span&gt;
+  &lt;span&gt;9&lt;/span&gt;
+  &lt;span&gt;10&lt;/span&gt;
+&lt;/div&gt;
+</code></pre><p id="9c040734-5939-4826-9dc5-7b8b55720510" class="">Each <code>span</code> will display the current number in the iteration.</p><h3 id="0e28e0a6-05c1-47d9-a3d1-b88d806bb9b2" class="">v-for with Filtered or Sorted Arrays</h3><p id="e7554828-9fbd-455f-9d69-f4e8d3ec27e2" class="">When we have an array and we want to display only a filtered or sorted version of it, we should use a computed property. This way, we avoid changing the original data and create a derived state that Vue will automatically keep updated.</p><p id="669d5e92-5e68-42c1-80a7-17193b73cb90" class="">Here&#x27;s an example of filtering an array to only show even numbers:</p><pre id="f2bec656-e1d6-4a8b-bbf4-983ae02c36a1" class="code code-wrap"><code>data() {
+  return {
+    numbers: [1, 2, 3, 4, 5]
+  };
+},
+computed: {
+  evenNumbers() {
+    return this.numbers.filter(number =&gt; number % 2 === 0);
+  }
+}
+</code></pre><p id="3fa2b54f-aa3e-4364-9693-4d8825c64eca" class="">And in our template, we&#x27;d use <code>v-for</code> to iterate over the <code>evenNumbers</code> computed property:</p><pre id="22ff4d6a-8e19-49e3-b50f-0b426a184e33" class="code code-wrap"><code>&lt;ul&gt;
+  &lt;li v-for=&quot;n in evenNumbers&quot;&gt;{{ n }}&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p id="9b3f4df7-d767-4829-8955-75af55c0ece9" class="">This will only render list items for the even numbers:</p><pre id="59f0c5a5-250e-493a-a2ae-dcf276752c69" class="code code-wrap"><code>&lt;ul&gt;
+  &lt;li&gt;2&lt;/li&gt;
+  &lt;li&gt;4&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><h2 id="fc92b8d8-f5e9-4292-affc-1e5651472630" class="">v-for with the <code>&lt;template&gt;</code> Element</h2><p id="f195761a-ec41-4352-905f-c1e77355193f" class="">The <code>&lt;template&gt;</code> element can be used with <code>v-for</code> to render a block of multiple elements. Like with <code>v-if</code>, <code>&lt;template&gt;</code> serves as an invisible wrapper that won&#x27;t be rendered into the DOM. This is useful when we want to iterate over an array and generate multiple elements per item.</p><p id="26e6eae9-dc53-4950-b0c7-3b2f6ec49d91" class="">Here&#x27;s the example from the slide:</p><pre id="573aec2b-efba-4213-9260-7bd674693c74" class="code code-wrap"><code>&lt;ul&gt;
+  &lt;template v-for=&quot;item in items&quot;&gt;
+    &lt;li&gt;{{ item.msg }}&lt;/li&gt;
+  &lt;/template&gt;
+&lt;/ul&gt;
+</code></pre><p id="6d44642b-4032-4115-9d27-246edfa33366" class="">For the given array:</p><pre id="6968d3a9-2451-4f5b-b229-c7eb4f1c0983" class="code code-wrap"><code>data() {
+  return {
+    items: [
+      { msg: &#x27;Hello&#x27; },
+      { msg: &#x27;World&#x27; }
+      // ... other items
+    ]
+  };
+}
+</code></pre><p id="9d97cd23-9fa9-4ea1-ba9b-60df5a44e64f" class="">This will produce:</p><pre id="6f4a43ca-691c-408d-8705-451940913cf1" class="code code-wrap"><code>&lt;ul&gt;
+  &lt;li&gt;Hello&lt;/li&gt;
+  &lt;li&gt;World&lt;/li&gt;
+  &lt;!-- ... other items --&gt;
+&lt;/ul&gt;
+</code></pre><p id="ca5765d0-1625-4587-8061-87ddfd31ad08" class="">Each <code>item</code> in <code>items</code> gets its own <code>li</code> element, but there&#x27;s no extra wrapper around each <code>li</code>, thanks to the <code>&lt;template&gt;</code>.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="eac4f257-8062-45b7-b1d7-e44044557136"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%"><strong>We should:</strong><ul id="93e05cac-caaa-4bd2-bacb-14ba8e79625b" class="bulleted-list"><li style="list-style-type:disc">Use <code>v-for=&quot;n in 10&quot;</code> to repeat a template a fixed number of times.</li></ul><ul id="566edc61-4c8d-4f2b-bcb2-0afdb2064d1e" class="bulleted-list"><li style="list-style-type:disc">Use computed properties for filtered or sorted arrays to avoid altering the original data.</li></ul><ul id="7e4543d3-8f73-4f58-827f-e836824702af" class="bulleted-list"><li style="list-style-type:disc">Use <code>&lt;template&gt;</code> with <code>v-for</code> for list rendering when we don&#x27;t want an extra wrapper element in the DOM.</li></ul></div></figure><h2 id="80c8b062-d555-45fc-b35b-f5ff81a01bee" class="">v-for with v-if</h2><p id="712d4379-37b8-47ee-9700-7d2ed926f180" class="">When we have a list of items, and we only want to render certain ones based on a condition, we can combine <code>v-for</code> with <code>v-if</code>. Here&#x27;s how it works:</p><ul id="4a636803-a5fc-4729-b30f-7c391d5f153d" class="bulleted-list"><li style="list-style-type:disc"><code>v-for</code> has a higher priority than <code>v-if</code>. This means that Vue will loop through each item in the array first.</li></ul><ul id="9fea6085-3f0f-4881-a292-71fee2501068" class="bulleted-list"><li style="list-style-type:disc"><code>v-if</code> is then evaluated for each item. If the condition is true, Vue will render the element; if false, Vue will not render the element.</li></ul><p id="06fae38e-b7eb-4c8c-8fc0-539d14a8ec83" class="">Here&#x27;s an example:</p><pre id="fe32b800-5a15-4f28-92ac-017209a63763" class="code code-wrap"><code>&lt;li v-for=&quot;todo in todos&quot; v-if=&quot;!todo.isComplete&quot;&gt;
+  {{ todo }}
+&lt;/li&gt;
+</code></pre><p id="a329eb6f-6e94-4b69-bed4-a84f5392bf87" class="">In this example:</p><ul id="ac9a54b2-3cf8-47c5-8aef-b7770629f180" class="bulleted-list"><li style="list-style-type:disc"><code>todos</code> is an array containing todo items.</li></ul><ul id="5f5e85b7-0529-4001-98ab-be01bca11333" class="bulleted-list"><li style="list-style-type:disc"><code>v-for</code> iterates over each <code>todo</code> in the <code>todos</code> array.</li></ul><ul id="0aae3a5d-3801-48ba-bd67-2caaaf70168f" class="bulleted-list"><li style="list-style-type:disc"><code>v-if</code> checks if <code>todo.isComplete</code> is false (<code>!todo.isComplete</code>).</li></ul><ul id="98d4b28c-ca32-420c-a63f-5eca20c4d40f" class="bulleted-list"><li style="list-style-type:disc">Only todos that are not complete (<code>isComplete</code> is false) will be rendered in the list.</li></ul><p id="ebde4f94-f083-490e-aa7b-515b4d271a43" class="">This approach is useful when we want to show only a subset of items from an array based on some criteria.</p><h3 id="ceeba527-1ef5-4a92-a128-8e47f8e6c951" class="">v-for with v-if on a Wrapper Element</h3><p id="e7f05ff2-a293-4173-8d69-8dd355ea030d" class="">Sometimes, we might want to conditionally skip the entire loop rather than conditionally rendering individual items. In this case, we can place the <code>v-if</code> on a wrapper element or a <code>&lt;template&gt;</code>. Here&#x27;s how we can do it:</p><pre id="fc1fe920-cd2d-4fed-ab13-3d47706773f4" class="code code-wrap"><code>&lt;ul v-if=&quot;todos.length&quot;&gt;
+  &lt;li v-for=&quot;todo in todos&quot;&gt;
+    {{ todo }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p v-else&gt;No todos left!&lt;/p&gt;
+</code></pre><p id="afc0e3a8-9418-4a4f-a36f-d4d1a5b87c31" class="">In this example:</p><ul id="820d4927-0cbf-4252-9ae8-a8f851c40433" class="bulleted-list"><li style="list-style-type:disc">The <code>v-if</code> directive checks if there are any todos left by evaluating <code>todos.length</code>.</li></ul><ul id="60894404-789c-462b-8ca4-e3d8fc61e2ac" class="bulleted-list"><li style="list-style-type:disc">If there are todos (<code>todos.length</code> is true), Vue will render the <code>ul</code> element and iterate over the todos with <code>v-for</code>.</li></ul><ul id="760db19b-b2b8-405a-9811-7fcfe5fbdb30" class="bulleted-list"><li style="list-style-type:disc">If there are no todos (<code>todos.length</code> is 0 or false), Vue will render the <code>p</code> element, which contains the text &quot;No todos left!&quot;.</li></ul><h3 id="ea4344dc-2f14-41e7-8554-07db2423e403" class="">Practical Example</h3><p id="43d8b310-d510-4a10-b5a7-0624e2eb556c" class="">Suppose we have the following data for our todos:</p><pre id="1f8b8b7d-c0e9-43c5-8d85-65f742fb7f19" class="code code-wrap"><code>data() {
+  return {
+    todos: [
+      { text: &#x27;Learn Vue.js&#x27;, isComplete: false },
+      { text: &#x27;Read Vue documentation&#x27;, isComplete: true },
+      { text: &#x27;Build a Vue project&#x27;, isComplete: false }
+    ]
+  };
+}
+</code></pre><p id="f026ea5a-9c86-40e0-93fe-7b5f672f17ed" class="">Using the first example with <code>v-for</code> and <code>v-if</code>, our rendered HTML would look like this:</p><pre id="a34ca3f6-d9b2-4ca5-b809-c9d9abe73095" class="code code-wrap"><code>&lt;ul&gt;
+  &lt;li&gt;Learn Vue.js&lt;/li&gt;
+  &lt;li&gt;Build a Vue project&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p id="cfdd8aff-6f8f-4fc9-9894-d7eb33305064" class="">It only includes the todos that are not complete, omitting the one that is already complete.</p><p id="b1e018f7-e09c-4e63-ae9a-fdfd85af881e" class="">Here’s how we might refactor the example above to use a computed property and use the v-if first on a wrapper element:</p><pre id="7cc1db3c-a2f2-4e82-8653-3ba6a1556a8f" class="code"><code>data() {
+  return {
+    todos: [
+      { text: &#x27;Learn Vue.js&#x27;, isComplete: false },
+      { text: &#x27;Read Vue documentation&#x27;, isComplete: true },
+      { text: &#x27;Build a Vue project&#x27;, isComplete: false }
+    ]
+  };
+},
+computed: {
+  incompleteTodos() {
+    return this.todos.filter(todo =&gt; !todo.isComplete);
+  }
+}</code></pre><p id="889dfbf2-83ae-4d79-92c4-cd789a72e8d9" class="">And then in our template:</p><pre id="d6a4598b-afcf-442e-9154-3407a5604256" class="code"><code>&lt;ul v-if=&quot;incompleteTodos.length&quot;&gt;
+  &lt;li v-for=&quot;todo in incompleteTodos&quot; :key=&quot;todo.text&quot;&gt;
+    {{ todo.text }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p v-else&gt;No todos left!&lt;/p&gt;</code></pre><h3 id="e285e4d1-b30a-4551-aaf8-45a797035102" class="">Summary</h3><ul id="e3036436-1c31-4178-b23b-cb740f0d3eeb" class="bulleted-list"><li style="list-style-type:disc">Use <code>v-for</code> with <code>v-if</code> to render items in a list conditionally.</li></ul><ul id="0cbf1d4f-f0a9-431d-93e8-ad90b6efdfbd" class="bulleted-list"><li style="list-style-type:disc">If you want to conditionally skip the entire loop, use <code>v-if</code> on a wrapper element or <code>&lt;template&gt;</code>.</li></ul><ul id="eefeebbc-2cd8-4e73-b340-d296a49c6740" class="bulleted-list"><li style="list-style-type:disc"><code>v-for</code> and <code>v-if</code> can be used together on the same element, but Vue recommends avoiding this for better performance and readability. Instead, consider using a computed property to prepare our data for rendering.</li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

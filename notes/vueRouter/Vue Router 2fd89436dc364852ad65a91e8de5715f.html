@@ -1,0 +1,935 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Vue Router</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2fd89436-dc36-4852-ad65-a91e8de5715f" class="page sans"><header><h1 class="page-title">Vue Router</h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-created_time"><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesCreatedAt"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM4.54102 8.91211H7.99316C8.30078 8.91211 8.54004 8.67285 8.54004 8.37207V3.8877C8.54004 3.58691 8.30078 3.34766 7.99316 3.34766C7.69238 3.34766 7.45312 3.58691 7.45312 3.8877V7.83203H4.54102C4.2334 7.83203 4.00098 8.06445 4.00098 8.37207C4.00098 8.67285 4.2334 8.91211 4.54102 8.91211Z"></path></svg></span>Created</th><td><time>@December 8, 2023 6:58 PM</time></td></tr><tr class="property-row property-row-checkbox"><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesCheckbox"><path d="M3.85742 14.4561H12.1357C13.6123 14.4561 14.3779 13.6904 14.3779 12.2344V3.91504C14.3779 2.45215 13.6123 1.69336 12.1357 1.69336H3.85742C2.38086 1.69336 1.61523 2.45215 1.61523 3.91504V12.2344C1.61523 13.6973 2.38086 14.4561 3.85742 14.4561ZM3.93945 13.1162C3.30371 13.1162 2.95508 12.7812 2.95508 12.1182V4.02441C2.95508 3.36133 3.30371 3.0332 3.93945 3.0332H12.0537C12.6826 3.0332 13.0381 3.36133 13.0381 4.02441V12.1182C13.0381 12.7812 12.6826 13.1162 12.0537 13.1162H3.93945ZM7.26855 11.3115C7.51465 11.3115 7.72656 11.1885 7.87012 10.9697L10.9258 6.19141C11.0146 6.04785 11.0967 5.88379 11.0967 5.72656C11.0967 5.3916 10.7959 5.16602 10.4746 5.16602C10.2695 5.16602 10.085 5.27539 9.94141 5.50781L7.24121 9.8418L5.96973 8.22168C5.80566 8.00977 5.6416 7.93457 5.43652 7.93457C5.10156 7.93457 4.8418 8.20117 4.8418 8.54297C4.8418 8.70703 4.90332 8.85742 5.01953 9.00098L6.63281 10.9697C6.81738 11.209 7.01562 11.3115 7.26855 11.3115Z"></path></svg></span>Reviewed</th><td><div class="checkbox checkbox-off"></div></td></tr></tbody></table></header><div class="page-body"><ul id="b0f9b990-0355-44b8-9042-7bbb03774fe3" class="toggle"><li><details open=""><summary>Índice</summary><nav id="14c8c9a7-4107-47c0-9a53-8ba769438083" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#875cb0b2-a406-4e20-839e-53f097f46fc4"><mark class="highlight-teal">Vue Router</mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ec72d5c3-e768-493e-a3df-8ac2ea9852f5"><mark class="highlight-teal">An Introduction</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7717e61b-694d-4097-a976-1c7bef772bb0"><mark class="highlight-teal_background">1. Project Creation</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c46d0f6c-ad38-4185-8444-506b8ee307e7"><mark class="highlight-teal_background">2. Directory Structure</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7084a1c3-08c5-47b2-bfff-0ebb5c253216"><mark class="highlight-teal_background">3. Vue Router Setup</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#542429a3-4e0f-43db-b591-3d9852522dcb"><mark class="highlight-teal_background">4. Routing in Action</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#17758836-601d-4f5a-845a-4e1ca928f07e"><mark class="highlight-gray">main.js Setup</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#51069361-333c-4b7e-840f-93626382e13a"><mark class="highlight-gray">App.vue Setup</mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#bc4ec229-f68e-40a6-a32c-cdcf1eeba378"><mark class="highlight-teal">Dynamic Routing</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#258a4556-8ec0-4909-8ea9-237d1c2d2418"><mark class="highlight-gray">What is Dynamic Routing?</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3424a77b-e697-4a0a-ae29-6ee73e684d67"><mark class="highlight-teal_background">Basic Dynamic Routing</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#73051de3-500d-4083-8bc3-061c47fbf59b"><mark class="highlight-teal_background">Dynamic Routing with Parameters</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#cfc4fc37-32f3-425b-8324-74ac5dec44a8"><mark class="highlight-teal_background">Multiple Dynamic Segments</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#afa8ed6f-7533-47a1-8cbd-1e4f100004df"><mark class="highlight-teal_background"><strong>Understanding </strong></mark><mark class="highlight-teal_background"><code><strong>$route.params</strong></code></mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#25aeb2e0-9adf-487b-8654-c4461efe015c"><mark class="highlight-teal_background">Reacting to Params Changes</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#a258ea1f-c41d-4f07-a52e-dadd87783d5e"><mark class="highlight-teal_background">Advanced Dynamic Routing Patterns</mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f3ba8c33-1026-457e-a47d-d93ff6305759"><mark class="highlight-teal">Nested Routes</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#494a78ad-6428-49a2-8c24-300fd3f9e77a"><mark class="highlight-gray">What are Nested Routes?</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#7700ef18-9d03-4899-b35a-b6bd763a5c1a"><mark class="highlight-teal_background">Example of Nested Routes</mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b3456f7a-48ce-4e2b-ba29-af8760ad02c4"><mark class="highlight-teal">Programmatic Navigation</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2cd15137-ad86-41a4-8019-e451e602a1d5"><mark class="highlight-gray">Programmatic Navigation Methods</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#4beb273b-16ec-4700-9480-672f4f6ad26e"><mark class="highlight-teal_background">router.push</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#20c5c1d3-89b4-4ab0-a09d-a8dca09a120e"><mark class="highlight-teal_background">router.replace</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0c149c7f-114c-4086-9eaa-b2d6fc5f22e4"><mark class="highlight-teal_background">router.go</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9fad00d3-4576-4a71-98ee-97a591f89907"><mark class="highlight-gray">Practical Application</mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1a2e930f-1b12-4c9f-9376-61d82349c715"><mark class="highlight-teal">Named Routes</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bdc899c7-846b-4a67-bd9a-39bc72917c18"><mark class="highlight-gray">What are Named Routes?</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#6ff0499a-f6a0-4167-85a3-88b330d32b3c"><mark class="highlight-teal_background">Example of Named Routes</mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#40793bba-0cbc-435c-a171-128349396a24"><mark class="highlight-teal">Named Views</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#afb371c3-9a96-454e-96bb-69bb02372a77"><mark class="highlight-gray">What are Named Views?</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#aac713de-c5a0-4e41-88b9-2a0286acc75c"><mark class="highlight-gray">How to Define Named Views</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#de7da0a1-ddb2-49f2-ad84-ee631c5789e9"><mark class="highlight-gray">Usage in Templates</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#13c7de37-3cca-4668-ac76-1d0d2097413d"><mark class="highlight-gray">Named Views with Nested Views</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fe536e0a-6df1-4fbe-800b-7f769dbc7877"><mark class="highlight-gray">Benefits of Named Views</mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7b09f3fd-6f28-4837-ae73-ceac432c02df"><mark class="highlight-teal">Redirect and Alias</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4030c8de-3550-440b-ae28-a42d1a338a63"><mark class="highlight-gray">Redirect</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#8109cc23-e7df-42b6-8372-fc147e328e96"><mark class="highlight-teal_background">Example of Redirect</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b4ec473b-92a8-42fe-9642-3396b57c5593"><mark class="highlight-gray">Alias</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e1235084-0bbe-4a03-9ccf-8e3810b61c83"><mark class="highlight-teal_background">Example of Alias</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2293ec1f-7c24-49e8-94b5-2c9c7f31bfef"><mark class="highlight-gray">Usage in Vue Router</mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e4f8de3d-fb88-4e63-8fa3-d5b2055b8ebc"><mark class="highlight-teal">Wild Paths</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a1b83684-cc6a-46d3-a9b4-f167afaaf01a"><mark class="highlight-teal_background">Syntax</mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#fa4a62b5-51a6-42a3-b4e6-729391d1ed6b"><mark class="highlight-teal">Navigation Guards</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#65986942-6588-41f2-ae55-e9c496876d60"><mark class="highlight-gray">Types of Navigation Guards</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#07c31f2c-9fae-4fbb-b3e2-4477ecf6a48e"><mark class="highlight-teal_background">Global Guards</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#10066740-2e10-4150-942f-8c4939210a9e"><mark class="highlight-teal_background">Per-Route Guards</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#31124114-054d-40f2-80f2-1defbcd8a3ba"><mark class="highlight-teal_background">In-Component Guards</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c39208d8-8afc-4740-a5f2-04ee96d00bdd"><mark class="highlight-gray">How They Work</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bc6fc084-2048-4fe6-91dd-997c70233f7d"><mark class="highlight-gray">Common Uses</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#463bcd13-cf37-4e65-ba02-b2086dc93af4"><mark class="highlight-gray">Navigation Resolution Flow</mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a48beee5-b7d7-4a34-80be-6517f0b56d94">Important Concepts</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#beb94ad9-0441-40f9-91c3-d06de9a0e811">Key Takeaways</a></div></nav></details></li></ul><h1 id="875cb0b2-a406-4e20-839e-53f097f46fc4" class=""><mark class="highlight-teal">Vue Router</mark></h1><figure id="2539b1c3-3da9-46be-845d-9de8abd8e207" class="image"><a href="Vue%20Router%202fd89436dc364852ad65a91e8de5715f/Untitled.png"><img style="width:354px" src="Vue%20Router%202fd89436dc364852ad65a91e8de5715f/Untitled.png"/></a></figure><p id="da4ce421-1aa7-4ba1-a4f9-6137f7bb0d14" class="">
+</p><p id="fafa4d26-6fff-4dfc-a69a-4ce27afa1d7f" class=""><span style="border-bottom:0.05em solid"><strong>Traditional Page Lifecycle</strong></span></p><ul id="76fc6199-d7f2-472e-93dc-edd70c947234" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal_background">Initial Page Request</mark>: When we visit a traditional website, the browser sends a request to the web server, which then responds with an HTML page.</li></ul><ul id="37cb3abc-51d6-4c3b-a7f3-166a2c5add49" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal_background">New Page Request</mark>: Each time we navigate to a new page (e.g., by clicking a link), the browser sends a new request to the server for that page. The server sends back the new HTML page, and the browser reloads the entire page, which includes re-downloading CSS, JavaScript, and other assets. This process sends a physical page view to analytics platforms like Google Analytics (GA) each time.</li></ul><p id="5018d04b-9f45-4789-8365-e75a2b1cca6e" class=""><span style="border-bottom:0.05em solid"><strong>SPA Page Lifecycle</strong></span></p><ul id="e31f2f19-e19e-4533-978f-872ba1dd6535" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal_background">Initial Request</mark>: As with a traditional application, the initial visit to an SPA involves the browser requesting the page from the server, which sends back HTML, along with JavaScript and CSS required to run the application.</li></ul><ul id="d2ddcd81-2d34-4271-ba94-6fbf7beb42f9" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal_background">AJAX Request</mark>: Unlike traditional applications, navigation in a SPA doesn’t involve reloading the entire page. Instead, the browser updates the content dynamically through AJAX (Asynchronous JavaScript and XML) requests. These requests fetch data (usually in JSON format) without a full page reload. JavaScript then re-renders the UI with the new data. This process does not send physical page views to analytics platforms with each navigation, necessitating a different approach to tracking user interactions.</li></ul><p id="750230b7-09cc-4429-aafb-23e6cd918786" class=""><span style="border-bottom:0.05em solid"><strong>Key Points of SPAs</strong></span></p><ul id="200798d5-0ad6-4463-8418-7adc2121e772" class="bulleted-list"><li style="list-style-type:disc">SPAs provide a more fluid and app-like user experience by reducing the number of full-page reloads.</li></ul><ul id="57d593a1-4e2b-49f3-9149-78313c225497" class="bulleted-list"><li style="list-style-type:disc">SPAs are generally faster after the initial load since only data, not the whole page, is fetched during navigation.</li></ul><ul id="69576897-dcff-4f58-84e3-ac00210ce4f9" class="bulleted-list"><li style="list-style-type:disc">SPAs can be more complex to develop and might require additional tolls for SEO and analytics tracking due to the lack of full-page reloads.</li></ul><h1 id="ec72d5c3-e768-493e-a3df-8ac2ea9852f5" class=""><mark class="highlight-teal">An Introduction</mark></h1><p id="09deed60-cf6d-4a7d-a4fc-462a79276a6a" class="">When we begin working with Vue.js to build a single-page application (SPA), one of the first steps is to set up the Vue Router, which is the official router for Vue.js. The Vue Router allows us to create navigable components within our application, enabling the user to move between different “views” or “pages” without the need for a full page reload.</p><h3 id="7717e61b-694d-4097-a976-1c7bef772bb0" class=""><mark class="highlight-teal_background">1. Project Creation</mark></h3><ul id="b8f3aa18-6b0f-4892-8f8c-4bd70253710e" class="bulleted-list"><li style="list-style-type:disc">Start by creating a new Vue.js project, often using the Vue CLI (Command Line Interface). During the setup process, we’ll have the option to include Vue Router in the project. Select this option to have Vue Router integrated from the start.</li></ul><h3 id="c46d0f6c-ad38-4185-8444-506b8ee307e7" class=""><mark class="highlight-teal_background">2. Directory Structure</mark></h3><ul id="1115c07e-7f24-4d06-93d7-1e6b957ff4e8" class="bulleted-list"><li style="list-style-type:disc">Within the <code>src</code> directory of the Vue.js project, we will typically find several important sub-directories and files:<ul id="78299917-58ca-45d8-9702-c06a70a1b2f2" class="bulleted-list"><li style="list-style-type:circle"><code>assets</code>: This directory is meant for static assets like images, stylesheets, and global scripts that may be used across the app.</li></ul><ul id="7557d02d-73d9-4ef9-b867-afab3aff23c2" class="bulleted-list"><li style="list-style-type:circle"><code>components</code>: Components are reusable Vue instances that encapsulate template, logic, and styling for a part of the UI.</li></ul><ul id="79e7a59e-0221-4350-969d-c92842bea455" class="bulleted-list"><li style="list-style-type:circle"><code>router</code>: Here lies <span style="border-bottom:0.05em solid">the heart of navigation</span> for the SPA. The <code>index.js</code> file within the <code>router</code> directory defines all the routes for the application, mapping URLs to our components.</li></ul><ul id="606ab828-6fa9-4d3e-af4f-aefc3b5cd36d" class="bulleted-list"><li style="list-style-type:circle"><code>views</code>: This directory holds the different “pages” or “views” of the app. In a Vue Router setup, <span style="border-bottom:0.05em solid">each view is associated with a route</span>.</li></ul><ul id="294be215-83e2-45bc-bc8c-204c03d6c080" class="bulleted-list"><li style="list-style-type:circle"><code>App.vue</code>: The main component that acts as <span style="border-bottom:0.05em solid">the entry point</span> for our application. It’s where we define the <code>&lt;router-view&gt; </code>component that will dynamically display the content based on the current route.</li></ul><ul id="8c676189-a4dc-4752-a452-ff48daf196fd" class="bulleted-list"><li style="list-style-type:circle"><code>main.js</code>: The main JavaScript file where we create the Vue instance, import and use the Vue Router, and mount the Vue app to the DOM.</li></ul></li></ul><h3 id="7084a1c3-08c5-47b2-bfff-0ebb5c253216" class=""><mark class="highlight-teal_background">3. Vue Router Setup</mark></h3><ul id="774412c1-0646-4972-b3c2-e54319c72d99" class="bulleted-list"><li style="list-style-type:disc">The Vue Router setup is initialized in the <code>main.js</code> file where we’ll import the router from the router directory. By passing the router instance to the Vue application, we allow Vue to handle the routing within the app, enabling navigation between different views defined in the <code>views</code> directory without reloading the page.</li></ul><h3 id="542429a3-4e0f-43db-b591-3d9852522dcb" class=""><mark class="highlight-teal_background">4. Routing in Action</mark></h3><ul id="70bb415e-15be-4e9e-b3ce-f836e7e60f57" class="bulleted-list"><li style="list-style-type:disc">Once the Vue Router is set up, navigating to a URL within the app will not request a new HTML page from the server. Instead, Vue Router will match the URL to a route defined in <code>router/index.js</code> and render the corresponding view within the <code>&lt;router-view&gt;</code> component of the <code>App.vue</code>.</li></ul><pre id="d266bd33-2b88-41ed-a693-6b4b1b1c69cf" class="code"><code>// Imports the necessary functions from the vue-router package
+import { createRouter, createWebHistory } from &#x27;vue-router&#x27;
+// Imports the HomeView component from the views directory
+import HomeView from &#x27;../views/HomeView.vue&#x27;
+
+// Creates a new router instance
+const router = createRouter({
+  // Uses the createWebHistory function to enable HTML5 history mode
+  history: createWebHistory(import.meta.env.BASE_URL),
+  // Defines the routes for the application
+  routes: [
+    {
+      // The path for the home page
+      path: &#x27;/&#x27;,
+      // The name for the route, which can be used for navigation
+      name: &#x27;home&#x27;,
+      // The component that will be rendered when the user navigates to this path
+      component: HomeView
+    },
+    {
+      // The path for the about page
+      path: &#x27;/about&#x27;,
+      // The name for the route
+      name: &#x27;about&#x27;,
+      // This route level code-splitting
+      // which generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () =&gt; import(&#x27;../views/AboutView.vue&#x27;)
+    }
+  ]
+})
+
+// Exports the router instance for use in the application
+export default router</code></pre><ul id="3a9e97fe-feae-416e-a1db-25e7626c7f09" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Explanation of Concepts</strong></span></summary><ul id="064d77d1-ccae-44d8-9388-f3111d9952a2" class="bulleted-list"><li style="list-style-type:disc"><strong>Module Imports</strong>: The <code>createRouter</code> and <code>createWebHistory</code> functions are imported from the ‘vue-router’ package, which is essential for creating and configuring the router.</li></ul><ul id="6be544e1-461d-4d86-a8f9-c20a7ccc4475" class="bulleted-list"><li style="list-style-type:disc"><strong>Component Imports</strong>: The <code>HomeView</code> component is imported, which will be used as a view for one of the routes.</li></ul><ul id="fc887d94-54fd-4ecb-a609-10892e72e9b0" class="bulleted-list"><li style="list-style-type:disc"><strong>Router Creation</strong>: <code>createRouter</code> is called to create a new router instance, which is essential for enabling routing in the Vue application.</li></ul><ul id="953b9342-051d-4b6f-81bc-03405504baae" class="bulleted-list"><li style="list-style-type:disc"><strong>History Mode</strong>: <code>createWebHistory</code> is used to create a history object that uses the browser’s history stack. This allows for pretty URLs that don’t include hashes(<code>#</code>).</li></ul><ul id="f3865d3e-80fb-484b-8464-633652fd09e8" class="bulleted-list"><li style="list-style-type:disc"><strong>Routes Definition</strong>: An array of route objects is defined, where each route is mapped to a component. In the example above, there are two routes:<ul id="b753403b-a1a8-4289-b4fe-ad13bdce6701" class="bulleted-list"><li style="list-style-type:circle">The root path(<code>’/’</code>) is mapped to <code>HomeView</code>, which will be displayed when the user navigates to the home page.</li></ul><ul id="7894b914-5877-4056-b37e-cf1e9d49f9d0" class="bulleted-list"><li style="list-style-type:circle">The <code>/about</code> path is mapped to a lazy-loaded <code>AboutView</code>, which means the component for this route will only be loaded when the user navigates to the <code>/about</code> path, optimizing the initial load time.</li></ul></li></ul><ul id="02c3a945-a8d7-4390-9804-aceb9ed0464a" class="bulleted-list"><li style="list-style-type:disc"><strong>Lazy Loading</strong>: The <code>AboutView</code> component is not imported at the top with the other imports. Instead, it’s imported inside a function that will only be executed when the <code>/about</code> path is visited. This is an example of code-splitting and lazy loading, which can improve the performance of a Vue application by reducing the size of the initial JavaScript bundle that needs to be loaded when the app starts.</li></ul><ul id="93eaa76e-394f-49d6-adac-4a214d3c1a06" class="bulleted-list"><li style="list-style-type:disc"><strong>Exporting the Router</strong>: Finally, the router instance is exported, which allows it to be imported and used in other parts of the application, like the main app initialization file. </li></ul></details></li></ul><h2 id="17758836-601d-4f5a-845a-4e1ca928f07e" class=""><mark class="highlight-gray">main.js Setup</mark></h2><p id="427e38e7-eccd-4452-ba28-286125ed4bba" class="">This section explains how to integrate the Vue Router into the main entry file of a Vue.js application, typically <code>main.js</code>.</p><pre id="e523f524-8daa-459f-a664-d77af5c756ff" class="code"><code>// Importing the required modules from Vue and the App component
+import { createApp } from &#x27;vue&#x27;
+import App from &#x27;./App.vue&#x27;
+// Importing the router configuration from the router directory
+import router from &#x27;./router&#x27;
+
+// Importing the main stylesheet
+import &#x27;./assets/main.css&#x27;
+
+// Creating a Vue application instance with the App component
+const app = createApp(App)
+
+// Associating the Vue Router with the Vue application instance
+app.use(router)
+
+// Mounting the Vue application to the DOM element with the id of &#x27;app&#x27;
+app.mount(&#x27;#app&#x27;)</code></pre><ul id="2ddbd7db-f43b-4372-ac56-b031357218d9" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Explanation of Concepts</strong></span></summary><ul id="aed73d18-4089-44f6-89e1-1c66cbd099e2" class="bulleted-list"><li style="list-style-type:disc"><strong>Module Imports</strong>: The <code>createApp</code> function from Vue is imported along with the <code>App</code> component and the <code>router</code> setup.</li></ul><ul id="2ce9f4f4-4bf2-40de-80d7-31397b2bf5bd" class="bulleted-list"><li style="list-style-type:disc"><strong>Router Setup Import</strong>: The router configuration that was exported from the <code>router/index.js</code> file is imported into the main application file. </li></ul><ul id="876bbbcb-85d1-4097-b413-cb27e2c72d77" class="bulleted-list"><li style="list-style-type:disc"><strong>Application Instance</strong>: The <code>createApp</code> function is invoked with the <code>App</code> component to create a new Vue application instance.</li></ul><ul id="c4c51d96-6add-48b2-b0e0-b2c0d604630a" class="bulleted-list"><li style="list-style-type:disc"><strong>Router Association</strong>: The <code>app.use(router)</code> call associates the imported router configuration with the application, enabling Vue Router in the app.</li></ul><ul id="fb42f217-1373-47f7-93b6-bc84db14313f" class="bulleted-list"><li style="list-style-type:disc"><strong>Mounting</strong>: Finally, <code>app.mount(’#app’)</code> mounts the application instance to the DOM, activating Vue’s reactivity and rendering system.</li></ul></details></li></ul><h2 id="51069361-333c-4b7e-840f-93626382e13a" class=""><mark class="highlight-gray">App.vue Setup</mark></h2><p id="750058f7-f3b5-4ac6-a6ba-985c3a09e325" class="">This section focuses on how to use Vue Router within the <code>App.vue</code> component to define navigation links and display the current route’s component.</p><pre id="8285123f-97b7-461c-a7c6-2845464cae7f" class="code"><code>&lt;template&gt;
+  &lt;header&gt;
+    &lt;!-- Static assets like images can be included directly in templates --&gt;
+    &lt;img alt=&quot;Vue logo&quot; class=&quot;logo&quot; src=&quot;@/assets/logo.png&quot;&gt;
+    &lt;div class=&quot;wrapper&quot;&gt;
+      &lt;!-- The HelloWorld component with a message prop --&gt;
+      &lt;HelloWorld msg=&quot;You did it!&quot; /&gt;
+    &lt;/div&gt;
+    &lt;nav&gt;
+      &lt;!-- Using RouterLink components to create navigational links --&gt;
+      &lt;RouterLink to=&quot;/&quot;&gt;Home&lt;/RouterLink&gt;
+      &lt;RouterLink to=&quot;/about&quot;&gt;About&lt;/RouterLink&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+  &lt;!-- The RouterView component where the matched route&#x27;s component will render --&gt;
+  &lt;RouterView /&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+// Importing RouterLink and RouterView components from vue-router
+import { RouterLink, RouterView } from &#x27;vue-router&#x27;
+
+export default {
+  name: &#x27;App&#x27;,
+  components: {
+    RouterLink,
+    RouterView
+  }
+}
+&lt;/script&gt;</code></pre><ul id="95ee24d5-bdde-4996-b4d8-06070ac8db08" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Explanation of Concepts</strong></span></summary><ul id="5f333e77-f440-453e-9c0f-6343e701922e" class="bulleted-list"><li style="list-style-type:disc"><strong>RouterLink</strong>: The <code>&lt;RouterLink&gt;</code> component is used to define navigational links in the application. It accepts a <code>to</code> prop, which specifies the path to navigate to when the link is clicked. These replace the traditional <code>&lt;a&gt;</code> tags for in-app navigation.</li></ul><ul id="3ea29521-5d43-4578-b7ca-c2e6438fe23e" class="bulleted-list"><li style="list-style-type:disc"><strong>RouterView</strong>: The <code>&lt;RouterView&gt;</code> component is a placeholder for rendering the component that corresponds to the current route. When the route changes, <code>&lt;RouterView&gt;</code> automatically updates to display the correct component.</li></ul><ul id="724c7b69-323e-4fe6-b9f5-f68b9820457a" class="bulleted-list"><li style="list-style-type:disc"><strong>Component Import and Registration</strong>: Inside the <code>&lt;script&gt;</code> section, <code>RouterLink</code> and <code>RouterView</code> are imported from the ‘vue-router’ package and registered in the <code>components</code> object, making them available within the <code>App.vue</code> template.</li></ul></details></li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e0adf641-f485-4b29-a6d0-89ce718b8a50"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">Together, these components are essential for enabling SPA navigation in Vue.js using Vue Router. They allow users to navigate between different parts of the application without requiring page reloads, providing a seamless user experience.</div></figure><h1 id="bc4ec229-f68e-40a6-a32c-cdcf1eeba378" class=""><mark class="highlight-teal">Dynamic Routing</mark></h1><p id="38d99da7-2e3e-46a2-b920-086518fcc69e" class="">A powerful feature in Vue Router that allows us to create routes that can match complex patterns and dynamically change based on the URL.</p><h2 id="258a4556-8ec0-4909-8ea9-237d1c2d2418" class=""><mark class="highlight-gray">What is Dynamic Routing?</mark></h2><ol type="1" id="f8cb6afa-b55e-49ad-9363-55c998dc2210" class="numbered-list" start="1"><li><strong>Pattern Matching</strong>: Dynamic routing enables us to define patterns for routes that can match multiple URL structures. For example, we might have a pattern like <code>/users/:id</code> where <code>:id</code> is a dynamic segment that can represent any user’s ID.</li></ol><ol type="1" id="4dff60ba-b864-44b7-ae69-1879fe9cc5bf" class="numbered-list" start="2"><li><strong>Component Re-usability</strong>: Instead of creating a new route and component for each user, dynamic routing lets us map a single route pattern to a component. This component then renders the appropriate content by accessing the dynamic segment of the URL.</li></ol><ol type="1" id="5a9c1193-73ad-439e-bf0e-da1795ded081" class="numbered-list" start="3"><li><strong>Example Usage</strong>: Consider a <code>User</code> component that displays user profiles. With dynamic routing, we only need to create on <code>User</code> component. Vue Router will render this component for all user profile routes, such as <code>/users/john</code>, <code>/users/jane</code>, etc. The dynamic part of the route (<code>:id</code>) will change, but the same <code>User</code> component will be used to render the page each time. </li></ol><ol type="1" id="8805b35b-b65f-441e-8af6-91e1d50b3822" class="numbered-list" start="4"><li><strong>Dynamic Segment</strong>: The dynamic part of the URL (the user ID in this case) is accessible within the component via <code>this.$route.params</code>. This allows the component to fetch and display data that is specific to each user.</li></ol><ol type="1" id="8fc8fc91-3ebc-4895-ab2a-a76dc3293215" class="numbered-list" start="5"><li><strong>Flexibility</strong>: Dynamic routing provides the flexibility to build a SPA with a clean and organized URL structure. It greatly simplifies the route configuration when dealing with user-generated or variable content. </li></ol><ol type="1" id="090247ef-07ff-4819-8f5f-22d5db854c8d" class="numbered-list" start="6"><li><strong>Use Cases</strong>: It’s particularly useful for situations like user profiles, product pages, or any scenario where the content changes based on an identifier in the URL. </li></ol><h3 id="3424a77b-e697-4a0a-ae29-6ee73e684d67" class=""><mark class="highlight-teal_background">Basic Dynamic Routing</mark></h3><pre id="3fe970c9-5bc6-4482-8047-0ed0275a702e" class="code"><code>const User = {
+  template: &#x27;&lt;div&gt;User&lt;/div&gt;&#x27;,
+}
+
+const routes = [
+  { path: &#x27;/users/:id&#x27;, component: User },
+]</code></pre><ul id="cca48f36-99fb-45a7-924c-413850d26af6" class="bulleted-list"><li style="list-style-type:disc"><strong>User Component</strong>: This is a simple Vue component with a placeholder template.</li></ul><ul id="716dae2f-3518-4dd8-9667-34da9ef165d3" class="bulleted-list"><li style="list-style-type:disc"><strong>Dynamic Segment</strong>: The route <code>/users/:id</code> contains a dynamic segment <code>:id</code>. This means any path matching <code>/users/x</code> will render the <code>User</code> component, where <code>x</code> represents a dynamic user ID.</li></ul><h3 id="73051de3-500d-4083-8bc3-061c47fbf59b" class=""><mark class="highlight-teal_background">Dynamic Routing with Parameters</mark></h3><p id="38fac0b9-17e8-4402-9026-3a25b8c42dbb" class="">Dynamic routing allows URLs like <code>/user/foo</code> and <code>/user/bar</code> to both map to the User component.</p><pre id="e30c80ff-2fd4-45ea-b3c6-d935a2730e41" class="code"><code>const User = {
+  template: &#x27;&lt;div&gt;User {{ $route.params.id }}&lt;/div&gt;&#x27;,
+}</code></pre><ul id="ed258080-9b63-4e04-8770-88fb57a020e3" class="bulleted-list"><li style="list-style-type:disc"><strong>Dynamic Segment Usage</strong>: The <code>id</code> from the URL is accessed within the component using <code>$route.params.id</code>, enabling the component to display or use the dynamic part of the URL.</li></ul><ul id="ab1ae046-71b2-42fd-bef6-efa714d93f8c" class="bulleted-list"><li style="list-style-type:disc"><strong>Parameter Exposure</strong>: Vue Router exposes dynamic segments as properties on <code>$route.params</code>.</li></ul><h3 id="cfc4fc37-32f3-425b-8324-74ac5dec44a8" class=""><mark class="highlight-teal_background">Multiple Dynamic Segments</mark></h3><p id="1ad8c1b7-5a9a-41a0-82a9-2bc1e47727c7" class="">Vue Router supports multiple dynamic segments in the same route.</p><table id="d9eea052-af90-4e0c-9674-05e28304dec3" class="simple-table"><thead class="simple-table-header"><tr id="7ff73ec6-cb8c-489d-ad1b-a333717b4cf8"><th id="MVS^" class="simple-table-header-color simple-table-header" style="width:258px"><strong>Pattern</strong></th><th id="&lt;~mf" class="simple-table-header-color simple-table-header"><strong>Matched Path</strong></th><th id="Js^\" class="simple-table-header-color simple-table-header" style="width:310px"><code><strong>$route.params</strong></code></th></tr></thead><tbody><tr id="9e5a9e9b-bf97-4cf5-a88f-51b8b6634b4d"><td id="MVS^" class="" style="width:258px"><code>/users/:username</code></td><td id="&lt;~mf" class=""><code>/users/eduardo</code></td><td id="Js^\" class="" style="width:310px"><code>{ username: &#x27;eduardo&#x27; }</code></td></tr><tr id="d00199cc-3796-4c24-9f25-f8ba4295f038"><td id="MVS^" class="" style="width:258px"><code>/users/:username/posts/:postId</code></td><td id="&lt;~mf" class=""><code>/users/eduardo/posts/123</code></td><td id="Js^\" class="" style="width:310px"><code>{ username: &#x27;eduardo&#x27;, postId: &#x27;123&#x27; }</code></td></tr></tbody></table><ul id="95166ace-e963-4946-932e-c64aa7078d47" class="bulleted-list"><li style="list-style-type:disc"><strong>Multiple Segments</strong>: Routes can contain multiple dynamic segments, such as <code>/users/:username/posts/:postId</code>, which maps to corresponding fields on <code>$route.params</code>.</li></ul><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><mark class="highlight-teal_background"><strong>Understanding </strong></mark><mark class="highlight-teal_background"><code><strong>$route.params</strong></code></mark></summary><div class="indented"><ol type="1" id="3799b2b9-ec82-4f05-b0b6-3b1f67425e86" class="numbered-list" start="1"><li><strong>Global Availability</strong>: When we use Vue Router, it injects the <code><strong>$route</strong></code> object into every Vue component. This object contains information about the current route, such as the matched path, query parameters, and the named parameters (dynamic segments).</li></ol><ol type="1" id="cc5dfbc9-b324-420c-ace6-176ec037775c" class="numbered-list" start="2"><li><strong>Dynamic Segments in Routes</strong>: When we define a route with a path like <code>/users/:username</code>, the <code>:username</code> is a placeholder for whatever value is in that segment of the URL when the route is visited.</li></ol><ol type="1" id="ac656dcb-8c64-4bb9-803c-9b36f543cc2b" class="numbered-list" start="3"><li><strong>Accessing Parameters in Components</strong>:<ul id="4443cd6f-dbcd-4a5f-8b7e-8f42d29bf10d" class="bulleted-list"><li style="list-style-type:disc">Inside any Vue component, we can directly access <code>$route.params</code> in our JavaScript with <code>this.$route.params</code> and in our templates with <code>{{ $route.params.someParam }}</code>.</li></ul><ul id="969515d5-e5b4-4fde-b194-e3d2610ab402" class="bulleted-list"><li style="list-style-type:disc">The dynamic segments of the URL are available on <code>this.$route.params</code> as an object.</li></ul><ul id="fc3bb2e9-f911-4e8c-a9e8-c194d047e583" class="bulleted-list"><li style="list-style-type:disc">For the route <code>/users/:username</code>, if you navigate to <code>/users/eduardo</code>, Vue Router will set <code>$route.params</code> to <code>{ username: ‘eduardo’ }</code>.</li></ul></li></ol><ol type="1" id="43a7ad96-ca1e-41f8-aefd-72467aae9497" class="numbered-list" start="3"><li><strong>Multiple Parameters</strong>: If we have a route with multiple parameters, like <code>/users/:username/posts/:postId</code>, navigating to <code>/users/eduardo/posts/123</code> will set <code>$route.params</code> to <code>{ username: &#x27;eduardo&#x27;, postId: &#x27;123&#x27; }</code>.</li></ol><ol type="1" id="61fd56db-1869-486a-9019-7c48887274a2" class="numbered-list" start="4"><li><strong>Using Params in Templates</strong>: In our template, we can display a route parameter by using mustache syntax <code>{{ }}</code>. For example:<pre id="b20032fd-69c7-4de1-8b8f-014a73044c7e" class="code"><code>&lt;div&gt;User: {{ $route.params.username }}&lt;/div&gt;</code></pre></li></ol><ol type="1" id="f95aeace-2ecc-403b-88c9-269c68d9fb5a" class="numbered-list" start="5"><li><strong>Reactivity</strong>:<ul id="bfb2c7cf-3ce8-4fe7-89fe-47156722c3f9" class="bulleted-list"><li style="list-style-type:disc">The <code>$route</code> object is reactive. If the URL changes and the active route still matches the same component (e.g., going from <code>/users/john</code> to <code>/users/jane</code>), the component will update reactively to reflect the new params.</li></ul><ul id="1c611a67-0219-47a2-b547-93b18eae82db" class="bulleted-list"><li style="list-style-type:disc">However, since the component instance itself is reused, lifecycle hooks are not called again. To respond to params changes, we can use a watcher on <code>$route</code> or the <code>beforeRouteUpdate</code> hook. </li></ul></li></ol><ol type="1" id="42e59e74-058a-4940-af17-9187711fc137" class="numbered-list" start="6"><li><strong>Location in Code</strong>:<ul id="04bb0d13-4fd6-49e7-96cc-a559b8b39daa" class="bulleted-list"><li style="list-style-type:disc">We don’t explicitly define <code>$route.params</code> in our scripts. Vue Router takes care of populating it based on the current URL and the route definitions that have dynamic segments.</li></ul><ul id="c6bd6ede-9830-4ff6-87bf-7906a72d54c4" class="bulleted-list"><li style="list-style-type:disc">In a component, we usually access it in computed properties, methods, or directly in the template to render dynamic content based on the route.</li></ul></li></ol><ol type="1" id="79bf2ae9-0392-4ddc-afaf-6bdb4fa387c6" class="numbered-list" start="7"><li><strong>Part of Vue Router&#x27;s Context</strong>: When a component is rendered by Vue Router, it&#x27;s provided with a route context that includes the <code>$route</code> object. This context is what allows the component to access route-specific data, including dynamic route parameters.</li></ol><p id="a7ff8fd4-ec19-4f5d-9836-ba7727c02da8" class=""><strong>Practical Example</strong></p><p id="40bc94b9-875a-4f13-a1a9-55c3ad461c6c" class="">Imagine a profile page for users in a social media app. The route may look like <code>/users/:id</code>, where <code>id</code> is the dynamic segment representing the user ID. When a visitor navigates to <code>/users/42</code>, the <code>$route.params</code> object inside our <code>UserProfile</code> component will be <code>{ id: &#x27;42&#x27; }</code>. Our component can then use this ID to fetch and display the correct user profile from the server.</p><p id="53cb8a93-1992-434a-99ff-b4067994c7d9" class="">By using <code>$route.params</code>, Vue Router provides a way to create dynamic and user-friendly URLs for our application, making it possible to create a single component that can handle multiple routes and display the appropriate content based on the URL.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="983437b7-856e-41a6-935c-f09f18d87610"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">In summary, <code><strong>$route.params</strong></code> is a part of the route context that Vue Router provides to components, enabling them to access and react to dynamic segments of the URL without needing to define or manage this object manually. It is inherently part of the Vue Router&#x27;s integration with your Vue application.</div></figure></div></details><h3 id="25aeb2e0-9adf-487b-8654-c4461efe015c" class=""><mark class="highlight-teal_background">Reacting to Params Changes</mark></h3><p id="9c999c1e-5e11-45c6-b8f1-93e0bf15bb11" class="">Handling changes in route parameters when the same component is used for multiple routes:</p><ul id="3971d4ee-9a74-48ea-9541-d9751ca662a6" class="bulleted-list"><li style="list-style-type:disc"><strong>Component Reuse</strong>: When navigating from <code>/user/foo</code> to <code>/user/bar</code>, Vue Router reuses the <code>User</code> component instance.</li></ul><ul id="52a2c986-2256-4ffc-ba0b-fb7941b290c9" class="bulleted-list"><li style="list-style-type:disc"><strong>Lifecycle Hooks</strong>: The component’s lifecycle hooks won’t be called again since it’s the same instance.</li></ul><ul id="1bff12ea-0334-4075-bad3-eaa3d9cbd70f" class="bulleted-list"><li style="list-style-type:disc"><strong>Reacting to Changes</strong>: To respond to param changes without re-creating the component use <code>$watch</code> or the <code>beforeRouteUpdate</code> guard.</li></ul><h3 id="a258ea1f-c41d-4f07-a52e-dadd87783d5e" class=""><mark class="highlight-teal_background">Advanced Dynamic Routing Patterns</mark></h3><p id="683b713a-5af6-491b-b856-7fd5b49556a5" class="">Vue Router’s routing can handle more complex patterns</p><ul id="39814306-1094-4f07-9e9b-55e1b71f1ba4" class="bulleted-list"><li style="list-style-type:disc"><strong>Type Params</strong>: Dynamic segments can be further specified to match only certain patterns such as numbers or strings using regex.</li></ul><ul id="e9c3b9a3-e5db-43ef-9c05-16c6ddf51ef8" class="bulleted-list"><li style="list-style-type:disc"><strong>Repeatable Params</strong>: Segments can be made repeatable by adding a <code>+</code> or <code>*</code> suffix, matching multiple segments in the URL. </li></ul><ul id="7aa439b0-4836-43cd-b431-92b53a08a7bd" class="bulleted-list"><li style="list-style-type:disc"><strong>Optional Params</strong>: Dynamic segments can be made optional with a <code>?</code> suffix, allowing for more flexible URL structures.</li></ul><pre id="08501e78-1410-4a7a-933f-9bbaf42a856d" class="code"><code>const routes = [
+  // Matches only numbers for orderId
+  { path: &#x27;/order/:orderId(\\d+)&#x27; },
+  // Matches anything for productName
+  { path: &#x27;/product/:productName&#x27; },
+  // Matches repeated segments for chapters
+  { path: &#x27;/chapters/:chapters+&#x27; },
+  // Matches optional userId
+  { path: &#x27;/users/:userId?&#x27; },
+]</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c5d919cb-4134-4ea9-adc6-e1e15f4551bd"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">Overall, dynamic routing is about creating flexible and maintainable routes that adapt to the needs of the application and provide a seamless user experience.<ul id="9b64fbb1-5830-4e06-aa39-5ce66275ef17" class="bulleted-list"><li style="list-style-type:disc">Dynamic routing provides the flexibility to handle varying URL structures with a single component.</li></ul><ul id="7430e59d-8a6e-48c5-b16e-debc03b3cc1f" class="bulleted-list"><li style="list-style-type:disc">It allows for clean and scalable route definitions, especially when dealing with user-generated or variable content.</li></ul><ul id="5d517266-5575-4d04-a234-a45a5169cd91" class="bulleted-list"><li style="list-style-type:disc">Reacting to param changes with <code>$watch</code> or <code>beforeRouteUpdate</code> guards offers fine-grained control over the component behavior when navigating within the same route pattern.</li></ul></div></figure><h1 id="f3ba8c33-1026-457e-a47d-d93ff6305759" class=""><mark class="highlight-teal">Nested Routes</mark></h1><p id="c2fa86fc-3bc2-4d3c-aeff-d721eb403e05" class="">Nested routes in Vue Router allow us to reflect the hierarchical structure of the user interface within the URL path. This is a common pattern in many web applications where the user interface is composed of components nested at multiple levels.</p><h2 id="494a78ad-6428-49a2-8c24-300fd3f9e77a" class=""><mark class="highlight-gray">What are Nested Routes?</mark></h2><ol type="1" id="ad0d2f8d-fecc-4234-bff2-e74b72fd04be" class="numbered-list" start="1"><li><strong>Hierarchical Interface</strong>: In a real application, the user interface (UI) often has multiple layers of components. For example, a main layout component might contain a sidebar component, which in turn might contain a navigation list component, and so on.</li></ol><ol type="1" id="c4e8b6ca-bff9-4b12-9009-fc58114c20f3" class="numbered-list" start="2"><li><strong>URL Segments Corresponding to UI Structure</strong>: Nested routes enable the URL to mirror this hierarchical structure. For instance, the URL <code>/dashboard/profile/edit</code> might represent a structure where <code>Dashboard</code> is the parent component, which has a <code>Profile</code> component nested within it, and within <code>Profile</code>, there is an <code>Edit</code> component.</li></ol><ol type="1" id="419890a8-4b6e-4dba-a927-16d601344453" class="numbered-list" start="3"><li><strong>Router Configuration</strong>: In Vue Router, nested routes are defined by giving a route a <code>children</code> array in the routes configuration.</li></ol><pre id="e9dc3d79-d211-4486-a807-de57a8e559de" class="code"><code>const routes = [
+  {
+    path: &#x27;/dashboard&#x27;,
+    component: Dashboard,
+    children: [
+      {
+        path: &#x27;profile&#x27;,
+        component: Profile,
+        children: [
+          {
+            path: &#x27;edit&#x27;,
+            component: EditProfile
+          }
+        ]
+      }
+    ]
+  }
+];</code></pre><p id="055d50c2-76da-4a11-877c-5bc5eeaf43a4" class="">In this structure:</p><ul id="bf6b7a46-1ddc-490b-80cb-d4e647a67bc9" class="bulleted-list"><li style="list-style-type:disc">The <code>Dashboard</code> route is the parent route</li></ul><ul id="9c452356-7498-4399-a899-999133ae9cc2" class="bulleted-list"><li style="list-style-type:disc">The <code>Profile</code> route is nested within <code>Dashboard</code> and would correspond to <code>/dashboard/profile</code> in the URL.</li></ul><ul id="a6faab4b-c98e-477f-a66f-cc709d527b4a" class="bulleted-list"><li style="list-style-type:disc">The <code>EditProfile</code> route is nested within <code>Profile</code> and would correspond to <code>/dashboard/profile/edit</code> in the URL.</li></ul><h3 id="7700ef18-9d03-4899-b35a-b6bd763a5c1a" class=""><mark class="highlight-teal_background">Example of Nested Routes</mark></h3><pre id="ba5e7d30-9905-4384-b5a6-007abbd57ef3" class="code"><code>const User = {
+  template: &#x27;&lt;div class=&quot;user&quot;&gt;&lt;router-view/&gt;&lt;/div&gt;&#x27;,
+}
+
+const UserHome = { template: &#x27;&lt;div&gt;Home&lt;/div&gt;&#x27; }
+const UserProfile = { template: &#x27;&lt;div&gt;Profile&lt;/div&gt;&#x27; }
+const UserPosts = { template: &#x27;&lt;div&gt;Posts&lt;/div&gt;&#x27; }
+
+const router = new VueRouter({
+  routes: [
+    {
+      path: &#x27;/user/:id&#x27;,
+      component: User,
+      children: [
+        // UserHome will be rendered inside User&#x27;s &lt;router-view&gt;
+        // when /user/:id is matched
+        { path: &#x27;&#x27;, component: UserHome },
+        
+        // UserProfile will be rendered inside User&#x27;s &lt;router-view&gt;
+        // when /user/:id/profile is matched
+        { path: &#x27;profile&#x27;, component: UserProfile },
+        
+        // UserPosts will be rendered inside User&#x27;s &lt;router-view&gt;
+        // when /user/:id/posts is matched
+        { path: &#x27;posts&#x27;, component: UserPosts },
+      ]
+    }
+  ]
+})</code></pre><ul id="eb81090d-293f-4ceb-a70f-cd50d8419554" class="bulleted-list"><li style="list-style-type:disc"><strong>Route Definitions</strong>: Routes are defined with a <code>path</code> and a <code>component</code>. The <code>children</code> array within a route definition is used for nesting.</li></ul><ul id="230a0270-5eee-4aff-9042-e545c0452b9b" class="bulleted-list"><li style="list-style-type:disc"><strong>Nested </strong><strong><code>&lt;router-view&gt;</code></strong>: The <code>User</code> component includes a <code>&lt;router-view/&gt;</code>, which acts as a placeholder for child components. This is where <code>UserHome</code>, <code>UserProfile</code>, or <code>UserPosts</code> will be rendered, depending on the current URL.</li></ul><ul id="7668d1b6-78c0-4865-ab02-4519d6fb9b32" class="bulleted-list"><li style="list-style-type:disc"><strong>Empty Child Path</strong>: An empty path in a child route (<code>{ path: ‘’, component: UserHome }</code>) means that <code>UserHome</code> will be the default component displayed when the parent route (<code>/user/:id</code>) is matched.</li></ul><ul id="49f537eb-ed2d-40a9-badb-c985037f073c" class="bulleted-list"><li style="list-style-type:disc"><strong>Nested Paths</strong>: Child routes append their path to be parent’s path. So, <code>UserProfile</code> corresponds to <code>/user/:id/profile</code> and <code>UserPosts</code> corresponds to <code>/user/:id/posts</code>.</li></ul><ul id="9fa18483-e13e-4c85-bc2b-9ad2c1264b30" class="bulleted-list"><li style="list-style-type:disc"><strong>Dynamic Segment</strong>: <code>:id</code> is a dynamic segment, meaning it will match any value, and the value can be accessed in the components as <code>$route.params.id</code>.</li></ul><p id="498e42be-242e-46ec-a270-241ce4b15f55" class="">This setup allows you to build a UI where navigating to <code>/user/foo</code>, <code>/user/foo/profile</code>, and <code>/user/foo/posts</code> would render the <code>User</code> component with <code>UserHome</code>, <code>UserProfile</code>, and <code>UserPosts</code> respectively, within it.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="13659fd9-2bf5-4c08-a584-203e7d671316"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">By using nested routes, Vue Router provides an elegant solution for managing complex UIs with deep component hierarchies, making it easier to keep the application organized and maintainable. </div></figure><h1 id="b3456f7a-48ce-4e2b-ba29-af8760ad02c4" class=""><mark class="highlight-teal">Programmatic Navigation</mark></h1><p id="2867342d-a76f-42a3-8863-adb9b12a8284" class="">A powerful feature of Vue Router that allows you to navigate users around an application without the need for <code>&lt;a&gt;</code> tags or any sort of link element. Instead, we can use Vue Router’s instance methods to change routes programmatically.</p><ol type="1" id="7859349c-7229-4821-904c-c641358ec3fc" class="numbered-list" start="1"><li><strong>RouterLink for Declarative Navigation</strong><ol type="a" id="5b9f3103-997b-455a-a672-e1b5477fdf25" class="numbered-list" start="1"><li>Normally, Vue Router uses the <code>&lt;RouterLink&gt;</code> component to declaratively navigate to different routes. This component is used to generate <code>&lt;a&gt;</code> tags in the rendered HTML, which when clicked navigate to the specified route.</li></ol><ol type="a" id="c6b9ab9d-f4b1-4f92-9d26-0bc2a244027b" class="numbered-list" start="2"><li>For example, <code>&lt;RouterLink to=&quot;/user/1234&quot;&gt;Go to user #1234&lt;/RouterLink&gt;</code> would render as <code>&lt;a href=&quot;/user/1234&quot;&gt;Go to user #1234&lt;/a&gt;</code>.</li></ol></li></ol><ol type="1" id="b445cf65-1fd0-4ebe-ae98-712a45036aec" class="numbered-list" start="2"><li><strong>Custom Tag with RouterLink</strong><ol type="a" id="1f627e78-f680-45a7-9be4-22c3bc4c3ad8" class="numbered-list" start="1"><li>Sometimes, we might need a different HTML element to act as a navigation trigger, not just an anchor tag. Vue Router allows us to specify the tag we want to render by using the <code>tag</code> prop on <code>&lt;RouterLink&gt;</code>.</li></ol><ol type="a" id="141a6b9a-d040-4e2e-8af3-b308500db996" class="numbered-list" start="2"><li>For instance, <code>&lt;RouterLink to=&quot;/user/1234&quot; tag=&quot;li&quot;&gt;Go to user #1234&lt;/RouterLink&gt;</code> would result in <code>&lt;li&gt;Go to user #1234&lt;/li&gt;</code> being rendered.</li></ol></li></ol><h2 id="2cd15137-ad86-41a4-8019-e451e602a1d5" class=""><mark class="highlight-gray">Programmatic Navigation Methods</mark></h2><h3 id="4beb273b-16ec-4700-9480-672f4f6ad26e" class=""><mark class="highlight-teal_background">router.push</mark></h3><ul id="950c3234-cd3b-4863-84b3-668c81ea230e" class="bulleted-list"><li style="list-style-type:disc"><code>router.push(location, onComplete?, onAbort?)</code> is used to navigate to a different URL and create a new entry in the history stack. This allows users to click the browser’s back button to return to the previous URL.</li></ul><pre id="ef3fc545-d79a-4a60-91f1-42c483b8cf2f" class="code"><code>// Navigating to a user&#x27;s profile page
+router.push(&#x27;/user/1234&#x27;)
+// The URL will change to &#x27;/user/1234&#x27;, and the history stack is updated.</code></pre><h3 id="20c5c1d3-89b4-4ab0-a09d-a8dca09a120e" class=""><mark class="highlight-teal_background">router.replace</mark></h3><ul id="92a91b96-174b-4f5f-9e26-54e4628f30dd" class="bulleted-list"><li style="list-style-type:disc"><code>router.replace(location, onComplete?, onAbort?)</code> behaves like <code>router.push</code> but does not leave a history record. The current navigation entry is replaced with the new one. This means the user cannot navigate to the previous route by clicking the browser back button.</li></ul><pre id="66e129ba-ac4c-4013-9880-9cd2a8f17d3d" class="code"><code>// Replacing the current route with a new one
+router.replace(&#x27;/user/1234&#x27;)
+// The URL will change to &#x27;/user/1234&#x27;, but no new history entry is created.</code></pre><h3 id="0c149c7f-114c-4086-9eaa-b2d6fc5f22e4" class=""><mark class="highlight-teal_background">router.go</mark></h3><ul id="bf6c4ab2-5139-4cfa-8995-62a4a1e6be99" class="bulleted-list"><li style="list-style-type:disc"><code>router.go</code> is similar to <code>window.history.go(n)</code>, allowing you to navigate through the history stack by a relative number. A positive number moves forward, and a negative number moves backward.</li></ul><pre id="b924f9a0-7515-4263-a543-05b663eb798e" class="code"><code>// Going back one step in the history stack
+router.go(-1)
+// Equivalent to pressing the browser&#x27;s back button.
+
+// Going forward two steps in the history stack
+router.go(2)
+// Equivalent to pressing the browser&#x27;s forward button twice.</code></pre><h2 id="9fad00d3-4576-4a71-98ee-97a591f89907" class=""><mark class="highlight-gray">Practical Application</mark></h2><p id="ea58c6fa-a947-4e2a-98b1-7c33ae8d50e2" class="">Imagine an application where a user interacts with a form, and upon submission, we want to navigate to a confirmation page:</p><pre id="564f99dd-cef0-4e0e-8ab4-c86716143222" class="code"><code>// After form submission
+submitForm() {
+  // ... form handling logic ...
+
+  // Then navigate to the confirmation page
+  this.$router.push(&#x27;/confirmation&#x27;);
+}</code></pre><p id="df1f86a1-c141-4032-acf7-dfedd2fdffc9" class="">In this scenario, <code>router.push</code> is used inside a method to change the route when a form is submitted programmatically. This is just one of many scenarios where programmatic navigation enhances the user experience by providing seamless transitions without manual URL changes or link clicks.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="3682744f-a9f7-4eeb-a638-ee2e36863997"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">In essence, programmatic navigation gives you the flexibility to navigate users around the application in response to various events or actions, providing a more dynamic and interactive user experience.</div></figure><h1 id="1a2e930f-1b12-4c9f-9376-61d82349c715" class=""><mark class="highlight-teal">Named Routes</mark></h1><p id="c4b971f9-2010-41fe-9757-9b60d18d6a8b" class="">Named routes in Vue Router offer a convenient way to reference routes in our application without using the full path URL. This can be particularly useful for improving code readability and making it easier to update paths throughout our application since we only need to update the route configuration rather than every link.</p><h2 id="bdc899c7-846b-4a67-bd9a-39bc72917c18" class=""><mark class="highlight-gray">What are Named Routes?</mark></h2><ol type="1" id="0e5c7c99-06bd-40fb-a735-d83897244a13" class="numbered-list" start="1"><li><strong>Identification by Name</strong>: Named routes allow us to assign a unique name to a particular route. Instead of using the route’s path to navigate or link to it, we can use its name.</li></ol><ol type="1" id="140b57b2-0a05-49f9-abc0-f65384768718" class="numbered-list" start="2"><li><strong>Convenience</strong>: When we need to perform navigations or create links to a route using a name can be simpler than specifying the entire path, especially if the path is complex or subject to change.</li></ol><ol type="1" id="3cc4771f-a687-4c21-ba28-2121c75325bb" class="numbered-list" start="3"><li><strong>Usage in </strong><strong><code>&lt;RouterLink&gt;</code></strong>: We can use named routes in a <code>&lt;RouterLink&gt;</code> component by passing an object to the <code>to</code> prop with the name of the route and any parameters it requires.</li></ol><ol type="1" id="becd4c7d-c473-4b86-a589-c313aa6d0037" class="numbered-list" start="4"><li><strong>Usage in Programmatic Navigation</strong>: The same object used in <code>&lt;RouterLink&gt;</code> can be passed to <code>router.push()</code> when navigating programmatically.</li></ol><h3 id="6ff0499a-f6a0-4167-85a3-88b330d32b3c" class=""><mark class="highlight-teal_background">Example of Named Routes</mark></h3><pre id="0b822e82-0632-4057-8c75-92565488fabd" class="code"><code>// Defining the route with a name
+const router = new VueRouter({
+  routes: [
+    { path: &#x27;/user/:userId&#x27;, name: &#x27;user&#x27;, component: User }
+  ]
+})
+
+// Using the named route in a &lt;RouterLink&gt;
+&lt;RouterLink :to=&quot;{ name: &#x27;user&#x27;, params: { userId: 123 }}&quot;&gt;Go to user #123&lt;/RouterLink&gt;
+
+// Using the named route in programmatic navigation
+router.push({ name: &#x27;user&#x27;, params: { userId: 123 } })</code></pre><ul id="33b6ce6c-66c9-4c4f-a2c9-ab01496f3df5" class="bulleted-list"><li style="list-style-type:disc"><strong>Route Definition</strong>: In the route definition, we’re giving the route a name property of <code>‘user&#x27;</code>. This name can then be used to refer to the route that matches the path <code>/user/:userId</code>.</li></ul><ul id="9ac09b1f-b69e-4828-b8b9-386969ba568e" class="bulleted-list"><li style="list-style-type:disc"><strong>In Templates</strong>: The <code>&lt;RouterLink&gt;</code> is using an object with the <code>name</code> of the route and the <code>params</code> that should be passed to that route. This tells Vue Router to navigate to the route named <code>‘user’</code> with a <code>userId</code> of <code>123</code>.</li></ul><ul id="2521a6c3-5da9-48b8-b9bc-c2419942f862" class="bulleted-list"><li style="list-style-type:disc"><strong>In Scripts</strong>: The <code>router.push()</code> method uses the same object format as <code>&lt;RouterLink&gt;</code> to programmatically navigate to the named route with the specified parameters.</li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="54d25243-c204-483c-8637-bd0a366e71d8"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">Named routes simplify the process of maintaining our application’s navigation logic by decoupling the route’s identifier from its path, which means we can change the path in one place (the route configuration) without having to update the path everywhere it is linked to in our application.</div></figure><h1 id="40793bba-0cbc-435c-a171-128349396a24" class=""><mark class="highlight-teal">Named Views</mark></h1><p id="1376894e-b329-401f-aead-de76329bef38" class="">Named views in Vue Router allow us to render multiple view components for the same route in different named outlets. This feature is particularly useful for creating complex layouts with sections that need to display different content simultaneously.</p><h2 id="afb371c3-9a96-454e-96bb-69bb02372a77" class=""><mark class="highlight-gray">What are Named Views?</mark></h2><ol type="1" id="368390a6-f2b5-4fec-af35-95ec5aae8fbe" class="numbered-list" start="1"><li><strong>Multiple Outlets</strong>: Instead of a single <code>&lt;router-view&gt;</code> outlet, we can have multiple outlets in our layout and assign different components to be rendered in each outlet by giving each <code>&lt;router-view&gt;</code> a name.</li></ol><ol type="1" id="cce72fec-1fd9-44e5-bb2f-82abb1ac3df9" class="numbered-list" start="2"><li><strong>Named Outlets</strong>: When defining our routes, we can specify which component should be rendered in each named outlet by using the <code>components</code> option, which is an object where the keys correspond to the names of the outlets.</li></ol><h2 id="aac713de-c5a0-4e41-88b9-2a0286acc75c" class=""><mark class="highlight-gray">How to Define Named Views</mark></h2><p id="da3b3b3c-0257-4bf7-b121-72eb9f96c2c4" class="">Here’s how we might define named views in our route configuration:</p><pre id="40f8db57-b619-47f5-846d-3a4e5e686620" class="code"><code>// Components to be rendered in the named views
+const Foo = { template: &#x27;&lt;div&gt;foo&lt;/div&gt;&#x27; }
+const Bar = { template: &#x27;&lt;div&gt;bar&lt;/div&gt;&#x27; }
+const Baz = { template: &#x27;&lt;div&gt;baz&lt;/div&gt;&#x27; }
+
+// Router configuration with named views
+const router = new VueRouter({
+  routes: [
+    {
+      path: &#x27;/other&#x27;,
+      components: {
+        default: Foo, // Component for unnamed or default outlet
+        a: Bar,      // Component for the outlet named &quot;a&quot;
+        b: Baz       // Component for the outlet named &quot;b&quot;
+      }
+    }
+  ]
+})</code></pre><h2 id="de7da0a1-ddb2-49f2-ad84-ee631c5789e9" class=""><mark class="highlight-gray">Usage in Templates</mark></h2><p id="9a8c99bb-8db0-4099-8a6a-e6cef2636847" class="">In our template, we would have multiple <code>&lt;router-view&gt;</code> elements, each with a <code>name</code> attribute corresponding to the keys in the <code>components</code> object of the route configuration:</p><pre id="5627dcb2-e0b1-4571-996b-7869f083d7a6" class="code"><code>&lt;div id=&quot;app&quot;&gt;
+  &lt;!-- Default unnamed router-view --&gt;
+  &lt;router-view class=&quot;view one&quot;&gt;&lt;/router-view&gt;
+  &lt;!-- Named router-view &quot;a&quot; --&gt;
+  &lt;router-view class=&quot;view two&quot; name=&quot;a&quot;&gt;&lt;/router-view&gt;
+  &lt;!-- Named router-view &quot;b&quot; --&gt;
+  &lt;router-view class=&quot;view three&quot; name=&quot;b&quot;&gt;&lt;/router-view&gt;
+&lt;/div&gt;</code></pre><h2 id="13c7de37-3cca-4668-ac76-1d0d2097413d" class=""><mark class="highlight-gray">Named Views with Nested Views</mark></h2><p id="63d86693-f453-4a06-9069-10c82ecb4264" class="">For more complex layouts, we can use named views within nested routes. This allows us to have nested components that also have named sections that change depending on the route. When doing this, we’ll also need to name nested <code>&lt;router-view&gt;</code> components.</p><p id="30963da7-1fe4-4bed-b28f-161eddc56fc6" class="">Here’s a conceptual example of how nested named views might look:</p><ul id="67a1e173-3f71-4deb-9d1b-4ab99414ed2e" class="bulleted-list"><li style="list-style-type:disc">Settings Page (<code>/settings</code>)<ul id="6d2ca77f-5c14-4f4e-bd32-78c968b17a19" class="bulleted-list"><li style="list-style-type:circle">Emails Section (<code>/settings/emails</code>)</li></ul><ul id="b41d67d0-f672-4d48-9426-dafa7f02a7db" class="bulleted-list"><li style="list-style-type:circle">Profile Section (<code>/settings/profile</code>)</li></ul></li></ul><p id="446b1b5b-6dcb-43df-9306-c1f19203fb1c" class="">The <code>settings</code> route might have nested routes for <code>emails</code> and <code>profile</code>, each with their own named views for different subsections of the page.</p><h2 id="fe536e0a-6df1-4fbe-800b-7f769dbc7877" class=""><mark class="highlight-gray">Benefits of Named Views</mark></h2><ul id="788583a8-1605-4bca-b0c2-a11c7f2d671f" class="bulleted-list"><li style="list-style-type:disc">Flexibility: Named views provide the flexibility to update different sections of a page in response to route changes. </li></ul><ul id="7dc0997d-95e5-466d-b4f7-45cc568271dd" class="bulleted-list"><li style="list-style-type:disc">Modularity: They help keep the UI modular by allowing us to map different components to different parts of the page layout, based on the current route.</li></ul><ul id="454c6069-9f36-423a-8447-abcfef064841" class="bulleted-list"><li style="list-style-type:disc">Maintainability: Using named views can make our application easier to maintain, as we have a clear structure for where each piece of content should be rendered based on the route configuration. </li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e51c9bf0-8e01-4450-8c63-a9d99b2df134"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">By utilizing named views, developers can create intricate layouts with multiple sections that update independently, enhancing the user experiece by providing a dynamic and cohesive interface.</div></figure><h1 id="7b09f3fd-6f28-4837-ae73-ceac432c02df" class=""><mark class="highlight-teal">Redirect and Alias</mark></h1><p id="18009556-358a-42f3-b462-e932f3cd776c" class="">In Vue Router, “Redirect” and “Alias” are two different ways to handle navigation in your application. They both serve to guide users and maintain the integrity of the user interface without causing confusion or errors due to URL changes.</p><h2 id="4030c8de-3550-440b-ae28-a42d1a338a63" class=""><mark class="highlight-gray">Redirect</mark></h2><p id="73770b9e-df00-4f2f-9eed-b123a8d5b69a" class="">A redirect is used when we want to send users from one path to another automatically. This is useful when we have changed the URL structure of our application or when we want to ensure that users and search engines find the new pages instead of outdated ones.</p><h3 id="8109cc23-e7df-42b6-8372-fc147e328e96" class=""><mark class="highlight-teal_background">Example of Redirect</mark></h3><p id="df44fb40-bcc3-4a91-8033-67b7139ef432" class="">Suppose we had a page accessible at <code>/a</code> but decided to change it to <code>/b</code>. To ensure that users attempting to access <code>/a</code> are automatically taken to <code>/b</code>, we would set up a redirect like this:</p><pre id="47bb57fc-6792-40b0-8670-77bda38b6bd8" class="code"><code>const router = new VueRouter({
+  routes: [
+    { path: &#x27;/a&#x27;, redirect: &#x27;/b&#x27; }
+  ]
+})</code></pre><p id="cca704ad-629a-441b-909b-a953603daec4" class="">When a user visits <code>/a</code>, Vue Router automatically redirects them to <code>/b</code>, and the URL in the browser changes to reflect this.</p><h2 id="b4ec473b-92a8-42fe-9642-3396b57c5593" class=""><mark class="highlight-gray">Alias</mark></h2><p id="412d1d4f-a22a-4df7-808c-3164ffe13931" class="">An alias is used when we want a route to be accessible by more than one path. The alias allows the URL to remain as entered by the user, but it will be matched internally as if the user visited the original path. This means that the component associated with the original path will be rendered without changing the URL.</p><h3 id="e1235084-0bbe-4a03-9ccf-8e3810b61c83" class=""><mark class="highlight-teal_background">Example of Alias</mark></h3><p id="6043ded6-3ece-4a6a-9f37-61d54ef5115f" class="">If we want <code>/a</code> to serve the same component as <code>/b</code> without redirecting, we would set up an alias like this:</p><pre id="d2efcc7e-ca8c-43d2-8596-4894d512ed50" class="code"><code>const router = new VueRouter({
+  routes: [
+    { path: &#x27;/a&#x27;, component: A, alias: &#x27;/b&#x27; }
+  ]
+})</code></pre><p id="64ae8193-0b40-47a1-b39a-6c0376c41557" class="">When a user visits <code>/b</code>, they will see the same component as if they visited <code>/a</code>, but the URL in the browser will remain <code>/b</code>.</p><h2 id="2293ec1f-7c24-49e8-94b5-2c9c7f31bfef" class=""><mark class="highlight-gray">Usage in Vue Router</mark></h2><p id="51979500-14b7-4198-a118-2be40ae77ef3" class="">Redirects and aliases provide flexibility in how we structure the navigation of our application:</p><ul id="5d7226d9-2191-4037-9f90-38647759e671" class="bulleted-list"><li style="list-style-type:disc">User <strong>redirects </strong>when we want to guide users away from old URLs or when we want to consolidate multiple paths to a single target location.</li></ul><ul id="2cb43f0a-b85b-495a-b186-4f4eea6a1aa1" class="bulleted-list"><li style="list-style-type:disc">Use <strong>aliases </strong>when we have multiple URLs that represent the same content or when we want to provide shortcuts or more readable URLs for specific paths without changing the underlying route configuration.</li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="0358866f-65c3-4eb8-9d86-62d14bec1682"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">Both features help maintain a clean and user-friendly URL structure while giving us the control over how users navigate through our application.</div></figure><h1 id="e4f8de3d-fb88-4e63-8fa3-d5b2055b8ebc" class=""><mark class="highlight-teal">Wild Paths</mark></h1><p id="05f1baf8-e63e-4d5e-98b6-5db64eff691b" class="">Wildcard paths are utilized in Vue Router to match any route not previously matched by defined routes, commonly used to display a ‘404 Not Found’ page.</p><h3 id="a1b83684-cc6a-46d3-a9b4-f167afaaf01a" class=""><mark class="highlight-teal_background">Syntax</mark></h3><p id="27d72d41-1c8f-4960-a123-1a15444fbee8" class="">The wildcard character <code>*</code> is used within the path string to denote a wildcard path. Vue Router supports custom regex patterns to fine-tune the matching criteria.</p><pre id="4554f1ac-202a-4cc0-b494-2cfcc021414b" class="code"><code>const routes = [
+  // Matches any path and captures it under `$route.params.pathMatch`
+  { path: &#x27;/:pathMatch(.*)*&#x27;, name: &#x27;NotFound&#x27;, component: NotFound },
+  // Matches anything after `/user-` and captures under `$route.params.afterUser`
+  { path: &#x27;/user-:afterUser(.*)&#x27;, component: UserGeneric },
+];</code></pre><ul id="c4e45b4c-fefc-406c-a4c1-fba29a91fa71" class="bulleted-list"><li style="list-style-type:disc">The <code>pathMatch</code> parameter with a custom regex pattern captures all segments of unmatched paths.</li></ul><ul id="28d63dcf-2eca-420f-b5a1-a2e21cf1fa18" class="bulleted-list"><li style="list-style-type:disc">Named routes like ‘NotFound’ can be used to navigate programmaticallly to catch-all route.</li></ul><ul id="e17eae40-2c99-4143-9b68-bd9e91ba5c12" class="bulleted-list"><li style="list-style-type:disc">Wildcard routes should be placed last in the routes array to act as a default case.</li></ul><p id="87370381-c5d1-43a2-b9f3-bf6ae3751746" class=""><span style="border-bottom:0.05em solid"><strong>Advanced Patterns</strong></span></p><ul id="06c4fc30-9282-4b86-aa20-e1e896fd5798" class="bulleted-list"><li style="list-style-type:disc">Vue Router’s syntax is inspired by <code>express</code>, allowing for optional params, zero or more/one or more requirements, and custom regex patterns.</li></ul><ul id="26340fb0-164b-4ee8-b8c4-8ea31c0a75ab" class="bulleted-list"><li style="list-style-type:disc">It’s crucial to properly configure the server for Hisotry mode when using wildcard paths to ensure correct handling of deep linking.</li></ul><p id="e8d3f1dd-69c2-40c4-8668-5e009d5d722c" class=""><span style="border-bottom:0.05em solid"><strong>Note</strong></span>: Always check the official Vue Router documentation for the latest updates and best practices related to wildcard paths and other advanced routing features.</p><h1 id="fa4a62b5-51a6-42a3-b4e6-729391d1ed6b" class=""><mark class="highlight-teal">Navigation Guards</mark></h1><p id="06345a06-8417-4760-9b0d-477cec56b5ae" class="">Navigation guards in Vue Router are a powerful feature that allows us to control navigation flow within our Vue application. They are particularly useful for actins such as checking user authentication, logging navigation, and even canceling the navigation under certain conditions. </p><h2 id="65986942-6588-41f2-ae55-e9c496876d60" class=""><mark class="highlight-gray">Types of Navigation Guards</mark></h2><h3 id="07c31f2c-9fae-4fbb-b3e2-4477ecf6a48e" class=""><mark class="highlight-teal_background">Global Guards</mark></h3><ol type="1" id="97ea9fa6-72a8-4a39-a95e-f606fd7d71cc" class="numbered-list" start="1"><li><strong>router.beforeEach</strong><p id="62d84e60-56f8-4c2c-b563-61adab94cbef" class="">This guard is called before every route change. It’s useful for actions that should happen before any route is resolved, like authentication checks.</p><pre id="368a7a4a-0362-4b2f-bcec-9bdb91d04eee" class="code"><code>router.beforeEach((to, from, next) =&gt; {
+  if (to.matched.some(record =&gt; record.meta.requiresAuth) &amp;&amp; !authService.loggedIn()) {
+    next({ path: &#x27;/login&#x27;, query: { redirect: to.fullPath } });
+  } else {
+    next(); // always call next()!
+  }
+});</code></pre><p id="69b5bc0c-96d3-4983-bb34-d86063b9226c" class="">This guard checks if the target route requires authentication (via <code>meta.requiresAuth</code>). If the user is not logged in (checked via <code>authService.loggedIn()</code>), it redirects them to the login page, preserving the intended destination (<code>to.fullPath</code>) so the user can be redirected back after successful login. If the user is already logged in, <code>next()</code> is called without any arguments, which means the navigation is allowed to proceed.</p></li></ol><ol type="1" id="906a07ce-a69c-4c12-931a-84121772383c" class="numbered-list" start="2"><li><strong>router.afterEach</strong><p id="70f847b4-bedd-44d0-9151-137f6ea9b517" class="">This guard is executed after every navigation is confirmed. Unlike <code>beforeEach</code>, <code>afterEach</code> does not receive a <code>next</code> function and cannot affect the navigation. It’s typically used for tasks that do not require redirecting or canceling the navigation, like updating analytics or setting page titles.</p><pre id="85172792-c436-4d35-8b95-3aed5f3c0419" class="code"><code>router.afterEach((to, from) =&gt; {
+  // Update page title to match the route&#x27;s metadata title
+  document.title = to.meta.title || &#x27;Default Page Title&#x27;;
+});</code></pre><p id="4793b35e-fb39-41bf-8980-700ed365be64" class="">In this example, after each navigation, the page title is updated to reflect the title specified in the destination route&#x27;s meta field. If no title is set, it defaults to &#x27;Default Page Title&#x27;. This guard is ideal for performing actions after the navigation has occurred, such as logging, changing classes on the body element, or other DOM manipulations.</p></li></ol><h3 id="10066740-2e10-4150-942f-8c4939210a9e" class=""><mark class="highlight-teal_background">Per-Route Guards</mark></h3><ol type="1" id="a89c0b67-8def-4900-8aec-6f2de4725811" class="numbered-list" start="1"><li><strong>beforeEnter</strong><p id="4239e094-df7f-473f-a1ca-344e2b58d26e" class="">This guard is defined on individual routes. It can be used to guard access to specific routes rather than globally</p><pre id="1bc79c5b-3d32-4099-89d8-153146bbf3cc" class="code"><code>const router = new VueRouter({
+  routes: [
+    {
+      path: &#x27;/secure&#x27;,
+      component: SecureComponent,
+      beforeEnter: (to, from, next) =&gt; {
+        if (!authService.userHasAccess(to.name)) {
+          next(&#x27;/login&#x27;);
+        } else {
+          next();
+        }
+      }
+    }
+  ]
+});</code></pre><p id="6ea0bc27-3c8d-4333-b1f0-eefdd0dc57cb" class="">This guard is specific to the route for the path <code>/secure</code>. Before entering the route, it checks if the user has access to the route named &#x27;secure&#x27; using <code>authService.userHasAccess(to.name)</code>. If the user does not have access, they are redirected to the login page; otherwise, the navigation is allowed to proceed with <code>next()</code>.</p></li></ol><h3 id="31124114-054d-40f2-80f2-1defbcd8a3ba" class=""><mark class="highlight-teal_background">In-Component Guards</mark></h3><ol type="1" id="d61f0fec-b0c1-486a-8e58-c3cfc4a64fc7" class="numbered-list" start="1"><li><strong>beforeRouteEnter</strong><p id="c41096a8-3e9f-43af-96db-bc5c339936c4" class="">This guard is used to check conditions before the component is even loaded.</p><pre id="59c166c9-cdf8-49e8-841b-78c075b19899" class="code"><code>export default {
+  beforeRouteEnter(to, from, next) {
+    if (!DataService.canEnter(to.params.id)) {
+      next(false); // cancel the navigation
+    } else {
+      next();
+    }
+  }
+};</code></pre><p id="fac91b72-0254-4a2e-8797-4e563548250d" class="">This guard is used in a component to prevent access before the component is created. It calls a service <code>DataService.canEnter</code> to check if the user can enter based on the <code>id</code> in the route parameters. If access is denied, <code>next(false)</code> is called to cancel the navigation; otherwise, <code>next()</code> allows it to proceed.</p></li></ol><ol type="1" id="fbe73683-fd47-4043-823a-285c560de408" class="numbered-list" start="2"><li><strong>beforeRouteUpdate</strong><p id="0090ee90-3ec9-4eb0-a7cc-0408d455e194" class="">This guard is called when the route changes, but the component is reused. It’s useful for reacting to changes in params or query without re-rendering the component.</p><pre id="8a64a8e9-f96a-4d3f-a0fc-6bb4d3da48ca" class="code"><code>export default {
+  beforeRouteUpdate(to, from, next) {
+    this.loadData(to.params.id);
+    next();
+  }
+};</code></pre><p id="654a5014-0ed2-435b-af26-90bfe895902b" class="">This guard is used when the same component is reused for a different route, but with changed parameters. It responds to the route changes by calling a method <code>loadData</code> to fetch new data based on the new <code>id</code> in the route parameters. <code>next()</code> is then called to finalize the navigation.</p></li></ol><ol type="1" id="8e53e865-db97-410d-9615-b469e4eafd69" class="numbered-list" start="3"><li><strong>beforeRouteLeave</strong><p id="e1817e76-51eb-4139-85c6-bba66758e042" class="">This guard is used to prevent a user from accidentally navigating away from the current view, like when unsaved changes exist.</p><pre id="68965877-027a-47ef-a823-9c1b3d698ba6" class="code"><code>export default {
+  data() {
+    return {
+      unsavedChanges: false
+    };
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.unsavedChanges) {
+      const answer = window.confirm(&#x27;You have unsaved changes. Are you sure you want to leave?&#x27;);
+      if (!answer) {
+        next(false);
+      } else {
+        next();
+      }
+    } else {
+      next();
+    }
+  }
+};</code></pre><p id="f2c58213-3012-4974-95da-7db48e81eb3b" class="">This guard is used to prevent users from leaving a component if there are unsaved changes (<code>unsavedChanges</code>). It prompts the user with a confirmation dialog when they try to navigate away. If the user confirms they want to leave, <code>next()</code> is called to proceed with the navigation. If the user cancels, <code>next(false)</code> is invoked to stop the navigation process.</p></li></ol><h2 id="c39208d8-8afc-4740-a5f2-04ee96d00bdd" class=""><mark class="highlight-gray">How They Work</mark></h2><ul id="4ff1d839-1bf7-48ab-8986-46888ad6be73" class="bulleted-list"><li style="list-style-type:disc">Guards receive <code>to</code>, <code>from</code>, and <code>next</code> arguments, allowing us to control the behavior based on the current and target route.</li></ul><ul id="d83c2ed8-c65f-4be0-a311-9f2acd4c605b" class="bulleted-list"><li style="list-style-type:disc"><code>next</code> is a function that must be called to resolve the guard, with the ability to redirect or cancel the navigation.</li></ul><h2 id="bc6fc084-2048-4fe6-91dd-997c70233f7d" class=""><mark class="highlight-gray">Common Uses</mark></h2><ul id="03836b2e-1e2c-49a4-bdf3-9e637ca7fab3" class="bulleted-list"><li style="list-style-type:disc"><strong>Authentication Checks</strong>: To ensure that users can only access routes they are authorized to view.</li></ul><ul id="07b1d822-5682-446f-8637-d31fcfde1e11" class="bulleted-list"><li style="list-style-type:disc"><strong>Data Fetching</strong>: To retrieve data before navigating to the next route. </li></ul><ul id="cf8fde8b-c432-42ea-a1a2-8e1d1792516f" class="bulleted-list"><li style="list-style-type:disc"><strong>Conditional Navigation</strong>: To prevent navigation based on certain criteria, such as unsaved changes. </li></ul><h2 id="463bcd13-cf37-4e65-ba02-b2086dc93af4" class=""><mark class="highlight-gray">Navigation Resolution Flow</mark></h2><ol type="1" id="4440f6cc-250c-45c0-b7d3-7b3ac33c5073" class="numbered-list" start="1"><li>Navigation is triggered.</li></ol><ol type="1" id="6cedf643-713e-42e0-87e5-8548394b70d5" class="numbered-list" start="2"><li>Call leave guards in deactivated components.</li></ol><ol type="1" id="f952e2b0-e42c-4c29-84b5-e23597cd8985" class="numbered-list" start="3"><li>Call global <code>beforeEach</code> guards.</li></ol><ol type="1" id="6cf78420-517d-4e98-bfe6-f63509f5de03" class="numbered-list" start="4"><li>Call <code>beforeRouteUpdate</code> guards in reused components.</li></ol><ol type="1" id="c30928f4-aa6a-4de4-a296-12a14ceeea2c" class="numbered-list" start="5"><li>Call <code>beforeEnter</code> guards in the route config.</li></ol><ol type="1" id="8bbe20c8-ae07-4063-bbc6-292cbd018e5a" class="numbered-list" start="6"><li>Resolve async route components.</li></ol><ol type="1" id="dc58bd46-ed85-4ff4-9577-171e37d0eeac" class="numbered-list" start="7"><li>Call <code>beforeRouteEnter</code> guards in activated components.</li></ol><ol type="1" id="c66b2ea7-8828-4680-abf1-ba9039f40873" class="numbered-list" start="8"><li>Call global <code>beforeResolve</code> guards.</li></ol><ol type="1" id="6ccc9c09-0e1d-4e51-a112-08d1f3a1e78f" class="numbered-list" start="9"><li>Confirm navigation.</li></ol><ol type="1" id="d804f5d4-6cdb-4154-8b58-af292afb5b7b" class="numbered-list" start="10"><li>Call global <code>afterEach</code> hooks.</li></ol><ol type="1" id="2c866ed5-d649-48d7-8a18-1d432cb33186" class="numbered-list" start="11"><li>DOM updates triggered.</li></ol><ol type="1" id="6df581a6-b85d-4bb3-95df-598efd910478" class="numbered-list" start="12"><li>Call callbacks passed to <code>next</code> in <code>beforeRouteEnter</code> guards with instantiated instances.</li></ol><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="fdc0a06b-b718-438b-a98d-3ab2a93a785a"><div style="font-size:1.5em"><span class="icon">🚧</span></div><div style="width:100%">Navigation guards provide fine-grained control over the navigation process, allowing us to protect routes and manage transitions based on our application’s logic. Using navigation guards thoughtfully can greatly enhance the security and user experience of our Vue application. They should be used to manage and protect routes, ensuring that users navigate through the app as intended.</div></figure><div id="a700ae26-f647-4504-a9b9-99889f671e10" class="column-list"><div id="8f9ec159-2b5c-4ed5-8e91-6984aae33a0b" style="width:50%" class="column"><hr id="81192a18-516f-4d5a-9680-8ff7ce958e1f"/><h1 id="a48beee5-b7d7-4a34-80be-6517f0b56d94" class="block-color-teal_background">Important Concepts</h1><ol type="1" id="fc0fca06-b3f7-47ee-94d0-ef9342f4aaac" class="numbered-list" start="1"><li><strong>SPA and Traditional Page Lifecycle</strong>: Understanding the difference in how SPAs and traditional web pages handle navigation and page loading.</li></ol><ol type="1" id="d7b8c126-afab-4dd3-8bcb-a19153221b96" class="numbered-list" start="2"><li><strong>Vue Router Setup</strong>: Integrating Vue Router in a Vue.js project, including directory structure and main.js configuration.</li></ol><ol type="1" id="cf6e292f-437f-4d23-b527-df80b8835b4e" class="numbered-list" start="3"><li><strong>Router Configuration</strong>: Defining routes in Vue Router, mapping URLs to components, and setting up dynamic, nested, and named routes.</li></ol><ol type="1" id="2d70c52e-6f3c-4a8d-8af9-8533bc0aba65" class="numbered-list" start="4"><li><strong>Dynamic Routing</strong>: Utilizing dynamic segments in URLs to create flexible and scalable route patterns.</li></ol><ol type="1" id="8903f627-e2ac-4780-8ee4-1c5a44819f20" class="numbered-list" start="5"><li><strong>Nested Routes</strong>: Implementing a hierarchical interface in SPAs using nested routes to reflect the UI structure in the URL.</li></ol><ol type="1" id="949dba51-9a3c-49e7-9625-eee83b330acf" class="numbered-list" start="6"><li><strong>Programmatic Navigation</strong>: Navigating programmatically within an application using Vue Router methods like <code><strong>router.push</strong></code>, <code><strong>router.replace</strong></code>, and <code><strong>router.go</strong></code>.</li></ol><ol type="1" id="4243b1ea-61ac-444f-bcd1-e2f8adbce500" class="numbered-list" start="7"><li><strong>Named Routes and Views</strong>: Assigning names to routes and setting up multiple views with named <code><strong>&lt;router-view&gt;</strong></code> components for complex layouts.</li></ol><ol type="1" id="3593f276-f755-40d5-af91-29874ebac683" class="numbered-list" start="8"><li><strong>Redirect and Alias</strong>: Handling URL changes and multiple paths for the same route using redirects and aliases.</li></ol><ol type="1" id="173e700c-0393-47ab-814a-dde5cdb473cf" class="numbered-list" start="9"><li><strong>Wildcard Paths</strong>: Catching unmatched routes with wildcard paths, typically used for displaying ‘404 Not Found’ pages.</li></ol><ol type="1" id="28605d2f-95fc-4449-b3a2-a924705f59bb" class="numbered-list" start="10"><li><strong>Navigation Guards</strong>: Controlling and protecting navigation flows using global, per-route, and in-component guards.</li></ol></div><div id="d9aba2c2-9261-4773-a3b1-ecaa7917f19b" style="width:50%" class="column"><hr id="97bf0d76-5476-4118-9219-baae33c38e1f"/><h1 id="beb94ad9-0441-40f9-91c3-d06de9a0e811" class="block-color-teal_background">Key Takeaways</h1><ol type="1" id="d85f7196-54ca-4811-b120-40a40d244a92" class="numbered-list" start="1"><li><strong>SPA Efficiency</strong>: SPAs enhance user experience with fewer full-page reloads, faster navigation after the initial load, and more dynamic content updates.</li></ol><ol type="1" id="f8a11663-ae84-4b16-acfd-a61ab1294c7f" class="numbered-list" start="2"><li><strong>Router Integration</strong>: Vue Router is essential for building SPAs with Vue.js, allowing for navigable components and view changes without full page reloads.</li></ol><ol type="1" id="bbb24a5c-0676-4e4d-85b8-99f0a3f8c71e" class="numbered-list" start="3"><li><strong>Route Management</strong>: Effective route management, including dynamic, nested, and named routes, is key to a well-structured SPA.</li></ol><ol type="1" id="c7638cc6-9d2c-48f9-8927-922d495f4609" class="numbered-list" start="4"><li><strong>Dynamic and Nested Routing</strong>: These features offer flexibility in URL structure and UI organization, matching various patterns and reflecting hierarchical interfaces.</li></ol><ol type="1" id="1012f7e6-48df-4a42-a50a-ee6d73990213" class="numbered-list" start="5"><li><strong>Programmatic Navigation Flexibility</strong>: Vue Router allows for dynamic user interactions beyond traditional link-based navigation.</li></ol><ol type="1" id="33c46891-eaeb-45b0-aa4b-de076c201359" class="numbered-list" start="6"><li><strong>Named Routes and Views</strong>: Enhance readability and maintainability in code, simplify updates, and support complex layouts.</li></ol><ol type="1" id="fc530874-4ddc-4c42-a0dc-b5c40524b868" class="numbered-list" start="7"><li><strong>Handling URL Changes</strong>: Redirects and aliases provide tools to manage URL changes and multiple paths for the same content without confusing users.</li></ol><ol type="1" id="913f684e-4cb6-4ab0-aaa1-e07c2505d66a" class="numbered-list" start="8"><li><strong>Wildcard Paths for Error Handling</strong>: Useful for handling invalid URLs and displaying appropriate feedback to users.</li></ol><ol type="1" id="f0d511fc-5914-4407-af79-771b9189edab" class="numbered-list" start="9"><li><strong>Controlled Navigation</strong>: Navigation guards offer precise control over routing behavior, crucial for tasks like authentication checks and data fetching.</li></ol><ol type="1" id="281a9ef6-d887-4621-ba0d-6d29b2d4550f" class="numbered-list" start="10"><li><strong>Comprehensive Routing Solution</strong>: Vue Router provides a robust, flexible, and feature-rich routing solution for Vue.js applications, vital for building modern SPAs.</li></ol></div></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
